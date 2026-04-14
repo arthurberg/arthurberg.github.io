@@ -1,0 +1,37 @@
+---
+title: "Entropy-based Sound–Character Mapping for Chinese Character Learning"
+subtitle: "Supplementary materials"
+date: "2025-05-21"
+---
+
+Supplementary materials for the paper *"Entropy-based Sound–Character
+Mapping for Chinese Character Learning,"* *International Journal of
+Chinese Language Teaching* (2025, Vol. 6, Issue 2, pp. 63–89).
+
+## Overview
+
+The paper applies information-theoretic methods to Chinese character
+acquisition. By quantifying the **entropy** of the sound-to-character
+mapping, the work identifies which characters have the most complex
+(high-uncertainty) phonetic relationships and proposes prioritizing
+those as learning targets — a data-driven strategy for mastering
+characters with irregular or high-variance pinyin mappings.
+
+## Paper
+
+[Read the article on CLT-International](https://www.clt-international.org/journal/details/info/5MTQ1eLmY5/Entropy-based-Sound-Character-Mapping-for-Chinese-Character-Learning) ·
+[DOI](https://doi.org/10.46451/ijclt.20250205)
+
+## Supplementary Materials
+
+The [supplementary site](https://www.arthurberg.com/entropy) provides
+the following downloadable resources:
+
+- [Presentation slides (演示文稿)](https://drive.google.com/file/d/1hhQZTBdi1s_497VR5eisNZKq_xAbqREV/view?usp=share_link)
+- [Character dictation worksheet (汉字听写练习)](https://drive.google.com/file/d/1G8rN1f16IhWE6gk06LyHwCNY_43X1-of/view?usp=share_link)
+- [Worksheet reference table (汉字听写练习参考表格)](https://drive.google.com/file/d/1G6hf9HcKs--f3LdYsjQqubKUebH4ALUS/view?usp=share_link)
+- [High-entropy, high-frequency pinyin character practice (熵高频高拼音汉字练习参考表格)](https://drive.google.com/file/d/19c2kzWZeew3gfeIBvUdbRnfN_P-sbOuL/view?usp=share_link)
+- [Pleco flashcard file (Pleco 闪卡文件)](https://drive.google.com/file/d/1Dh1NDvVLnJiQsQlF9nkeTUjZ96DzlI0S/view?usp=share_link) — compatible with the [Pleco](https://www.pleco.com/) mobile flashcard app
+
+Materials are designed for both educators and self-learners who want an
+evidence-based approach to Chinese character study.

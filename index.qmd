@@ -1,0 +1,91 @@
+---
+title: "Arthur Berg, Ph.D."
+subtitle: "Professor of Biostatistics · Penn State College of Medicine"
+about:
+  template: trestles
+  image: photo.jpg
+  image-shape: round
+  links:
+    - icon: envelope
+      text: Email
+      href: mailto:berg@psu.edu
+    - icon: github
+      text: GitHub
+      href: https://github.com/arthurberg
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/arthurberg
+    - text: ORCID
+      href: https://orcid.org/0000-0002-4097-7348
+    - text: Penn State Pure
+      href: https://pennstate.pure.elsevier.com/en/persons/arthur-berg
+    - text: Google Scholar
+      href: https://scholar.google.com/citations?user=asQf9VQAAAAJ
+---
+
+## About
+
+I am a tenured **Professor of Biostatistics** in the Department of Public
+Health Sciences at the Penn State College of Medicine, with joint appointments
+in the Departments of Surgery, Neurosurgery, Family and Community Medicine,
+and Statistics. I directed Penn State's Biostatistics PhD Program from 2011 to 2024, and
+currently serve as Lead Biostatistician for Pediatric Oncology Clinical
+Trials at Penn State.
+
+My research spans methodological biostatistics and applied collaborations
+across oncology, neuroscience, spinal cord injury, environmental
+physiology, and more. Recent methodological interests include Bayesian
+clinical trial design, statistical genetics, and interdisciplinary
+applications of data science — including an entropy-based approach to
+Chinese character learning.
+
+I also serve as an independent biostatistician on clinical trial
+data monitoring committees and provide biostatistical expert-witness
+services.
+
+## Highlights
+
+::: {.highlight-grid}
+::: {.highlight-card}
+### <i class="fa-solid fa-file-lines"></i> 273 Publications
+See [Publications](publications.qmd)
+:::
+
+::: {.highlight-card}
+### <i class="fa-solid fa-user-doctor"></i> Lead Biostatistician
+Pediatric Oncology Clinical Trials, Penn State (2024–present)
+:::
+
+::: {.highlight-card}
+### <i class="fa-solid fa-graduation-cap"></i> Director (2011–2024)
+Penn State Biostatistics PhD Program
+:::
+
+::: {.highlight-card}
+### <i class="fa-solid fa-pen"></i> Editor
+*Statistics Innovation* — Editorial Board (2024–present)
+:::
+
+::: {.highlight-card}
+### <i class="fa-solid fa-school"></i> Education
+**Ph.D.** & **M.S.** — UC San Diego
+
+**M.A.** & **B.S.** — University of Southern California
+:::
+
+::: {.highlight-card}
+### <i class="fa-solid fa-flask"></i> Joint Appointments
+Professor — Departments of **Surgery**, **Neurosurgery**, **Family & Community Medicine**, and **Statistics**
+:::
+
+::: {.highlight-card .highlight-card-wide}
+### <i class="fa-solid fa-users"></i> Memberships
+- Penn State Cancer Institute
+- Cancer Institute, Cancer Control Program
+- Huck Institutes of the Life Sciences
+- Bioinformatics and Genomics PhD Program Faculty
+- Biomedical Sciences PhD Program Faculty
+:::
+:::
+
+See the full [CV](cv.qmd) for details, or get in [touch](contact.qmd).

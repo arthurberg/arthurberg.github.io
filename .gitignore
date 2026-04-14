@@ -1,0 +1,11 @@
+/.quarto/
+/_site/
+.DS_Store
+*.bbl
+*.blg
+*.aux
+*.log
+*.zip
+/papers/README.md
+
+**/*.quarto_ipynb

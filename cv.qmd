@@ -1,0 +1,217 @@
+---
+title: "Curriculum Vitae"
+toc: true
+toc-depth: 2
+---
+
+[**Download full CV (PDF)**](Berg-CV.pdf){.btn .btn-primary}
+[ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}
+[Penn State Pure](https://pennstate.pure.elsevier.com/en/persons/arthur-berg){.btn .btn-outline-secondary}
+[Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}
+
+## Contact
+
+::: {.cv-contact-card}
+::: {.cv-contact-block}
+**<i class="fa-solid fa-building"></i> Address**
+
+Arthur Berg, Ph.D.<br>
+Department of Public Health Sciences, A210<br>
+Penn State College of Medicine<br>
+90 Hope Drive, Suite 2200<br>
+Hershey, PA 17033-0855
+:::
+
+::: {.cv-contact-block}
+**<i class="fa-solid fa-envelope"></i> Email**
+
+[berg@psu.edu](mailto:berg@psu.edu)
+
+**<i class="fa-solid fa-phone"></i> Cell**
+
+[717-982-7828](tel:+17179827828)
+:::
+:::
+
+## Education
+
+| Years | Degree | Institution |
+|-------|--------|-------------|
+| 2002–2007 | Ph.D., Mathematics | University of California, San Diego |
+| 2002–2005 | M.S., Statistics | University of California, San Diego |
+| 1998–2002 | M.A., Mathematics | University of Southern California |
+| 1998–2002 | B.S., Mathematics | University of Southern California |
+
+## Current Appointments & Leadership
+
+- **Lead Biostatistician** — Pediatric Oncology Clinical Trials, Penn State (2024–present)
+- **Member** — Penn State Cancer Institute Data Safety and Monitoring Committee (2024–2028)
+- **Professor (with tenure)** — Penn State College of Medicine, Department of Public Health Sciences, Division of Biostatistics and Bioinformatics (2022–present)
+- Joint Professor — Departments of Surgery, Neurosurgery, Family and Community Medicine, and Statistics
+- **Member** — Penn State Cancer Institute; Cancer Control Program; Huck Institutes of the Life Sciences; Bioinformatics and Genomics PhD Program Faculty; Biomedical Sciences PhD Program Faculty (2009–present)
+
+## Current Editorial Positions
+
+- Editorial Board — [*Statistics Innovation*](https://www.maxapress.com/stati/editorial_board) (2024–present)
+- Editorial Board — [*International Chinese Language Education Communications* 《国际中文教育通讯》](https://www.iclecommunications.com/editorial_board/) (2024–present)
+- Editorial Board — [*Open Journal of Statistics*](https://www.scirp.org/journal/editorialboard?journalid=590) (2020–present)
+
+## Past Academic Appointments
+
+| Years | Role | Institution |
+|-------|------|-------------|
+| 2011–2024 | Director, Biostatistics PhD Program | Penn State College of Medicine |
+| 2019, 2022 (Summers) | Guest Instructor | Beijing University of Chemical Technology 北京化工大学 |
+| 2013–2022 | Associate Professor (with tenure) | Penn State College of Medicine |
+| Summer 2019 | Faculty Instructor | MathPath, Grand Valley State University |
+| 2011–2015 | Leader, Biomedical Informatics Program | Penn State CTSI |
+| 2011–2015 | Director, Bioinformatics Core | Penn State College of Medicine |
+| Summer 2011 | Visiting Scholar | Peking University 北京大学 |
+| 2009–2013 | Assistant Professor (tenure-track) | Penn State College of Medicine |
+| 2007–2009 | Assistant Professor (tenure-track) | University of Florida, Department of Statistics |
+| Winter 2007 | Associate Instructor | UC San Diego, Department of Mathematics |
+| 2005–2007 | Adjunct Instructor | San Diego Miramar College |
+| 2002–2007 | Teaching Assistant | UC San Diego, Department of Mathematics |
+| 1999–2002 | Teaching Assistant | University of Southern California |
+| Summers 2001–2003 | Counselor | Program in Mathematics for Young Scientists, Boston University |
+
+## Awards
+
+- 2014 Dean's Award for Excellence in Teaching
+- 2014 Innovation in Team Science Award, Penn State Faculty Research Recognition Awards
+- 2013 Society of Distinguished Educators Junior Faculty Teaching Award (Finalist)
+- 2008 University of Florida IFAS Research Innovation Award
+- 2005–2006 UCSD Math Department Outstanding TA Award
+
+## Courses Taught
+
+**Penn State College of Medicine**
+
+- PHS 528: Bayesian Methods (2013–2024, Spring)
+- PHS 583: Asymptotic Tools (2023–2024, Spring)
+- PHS 525: Biostatistics for Lab Scientists (2011–2014, Spring)
+
+**Penn State University (Main Campus)**
+
+- PHS 516 / STA 597E: Statistical Genetics (Spring 2010, co-taught with Rongling Wu)
+
+**Beijing University of Chemical Technology** (short courses)
+
+- Bayesian Analysis and Statistical Rethinking (Summer 2022)
+- Probability, Statistics, and Bayesian Analysis (Summer 2019)
+
+**MathPath Summer Camp** (Grand Valley State University)
+
+- An Introduction to R and Monte Carlo Simulation (Summer 2019)
+- AIME Contest Preparation (Summer 2019)
+
+**University of Florida**
+
+- STA 5325 / STA 4321: Introduction to Probability
+- STA 5856 / STA 4853: Introduction to Time Series and Forecasting
+- STA 6857: Applied Time Series Analysis
+
+**UC San Diego / San Diego Miramar College**
+
+- MATH 10B: Second-Semester Calculus (UCSD)
+- MATH 252: Calculus with Analytic Geometry III
+- MATH 96: Intermediate Algebra and Geometry
+- MATH 119: Elementary Statistics
+
+## Selected Extramural Support
+
+**Current (selected)**
+
+- *Targeting Aldehyde Dehydrogenase for Cancer Prevention* — NCI R01 CA241148 (Biostatistician; PI: Robertson), $3.17M, 2020–2025
+- *Linking olfactory deficits to memory impairment and AD neurodegeneration* — NIA R01 AG070088 (Co-Investigator; PI: Karunanayaka), $3.93M, 2021–2025
+- *Phase II Study of Abemaciclib in Advanced Biliary Tract Carcinoma* — Lilly USA (Biostatistician; PI: Yee), $383K, 2020–2025
+- *Neuro-pharmacological Properties of Repurposed Posaconazole in Glioblastoma* — NCI R03 CA255992 (Biostatistician; PI: Mansouri), 2022–2025
+- *Identifying Novel Approaches for Melanoma Prevention* — DoD (Biostatistician; PI: Robertson), $830K, 2023–2026
+- *Combination Therapy for Childhood Acute Myeloid Leukemia* — Four Diamonds Fund (Biostatistician; PI: Sharma), $250K, 2023–2025
+- *A Unique Small Molecule for Triple-Negative Breast Cancer* — DoD (Biostatistician; PI: Sharma), $1.26M, 2024–2027
+
+See the [PDF CV](Berg-CV.pdf) for the complete list of current, pending, and completed grants.
+
+## Service
+
+**Grant Review**
+
+- Scientific Merit Review Panel, Healthcare Informatics Health Services Research, Department of Veterans Affairs (2020–2024)
+- Special Member, National Eye Institute Clinical Review Meeting (2021)
+- NIH Study Section — Biomedical Computing and Health Informatics (BCHI), 2016
+
+**Institutional (Penn State, selected)**
+
+- Elected Faculty Senator, Penn State Faculty Senate (2026–2030)
+- Member, Penn State University Promotion and Tenure Review Committee (2024–2026)
+- Faculty Development Advisory Committee (2021–present)
+- Public Health Sciences Program Directors & Executive Committee (2012–present)
+- Penn State Faculty Senate (2015–2019)
+- Penn State Cancer Institute Scientific Review Committee (2010–2019)
+- Institutional Review Board, Board A (2010–2016)
+
+## Selected Presentations
+
+### 2025
+
+- *基于熵值分析的汉语音形映射：通过语音分析提升语言学习* — 8th International Forum on Linguistics and Chinese Education, Princeton, April 2025
+- *Targepeutics DIPG Trial — Phase II Primary Endpoint* — Beat Childhood Cancer Annual Meeting, St. Petersburg, March 2025
+
+### 2024
+
+- *End of Induction Response Correlates with Clinical Outcomes In Patients with High-Risk Neuroblastoma* — Beat Childhood Cancer Annual Meeting, Feb 2024
+
+### 2021
+
+- *Statistical Analysis of the International Mathematical Olympiad* — MAA MathFest Conference, August 2021
+- *Introducing Bayesian Inference with the Taxicab Problem* — 10th Australian Conference on Teaching Statistics (OZCOTS 2021)
+- *Sharpening Jensen's Inequality with Applications* — Australian Statistical Society / NZSA Conference (ANZSC 2021)
+
+### 2019
+
+- *Advancing the Bayesian New Statistics Paradigm with Interval Null Hypotheses* — 2019 U.S. Conference on Teaching Statistics (USCOTS), Penn State
+- *Probability, Statistics, and Bayesian Analysis* — Summer short course, Beijing University of Chemical Technology
+- *Introduction to R and Monte Carlo Simulation* — MathPath Summer Camp, Grand Valley State University
+
+### Earlier highlights
+
+- *Reduced Bias in Nonparametric Censored Density and Hazard Estimation* — Conference on Lifetime Data Science, University of Connecticut, 2017
+- *Robustified Bayesian Inference* — Penn State Division of Biostatistics Seminar, 2017
+- *Sleep Disordered Breathing and DNA Methylation of Obesity-Related Genes in Adolescents* — European Sleep Research Annual Conference, Bologna, Italy, 2016
+- *A Statistical Potpourri: Swarthmorean Proportions, Fourier Transforms, Group Representations, and More* — Swarthmore College, 2016
+- *Bayesian Approaches to Clinical Trial Design* — Penn State Neurosurgery EBM Seminar, 2016
+- *Empirical Bayes Inference Made Robust: Picking Up Where James–Stein Left Off* — Temple University, 2012
+- *Standing Between a Bayesian and a Frequentist* — Williams College (2011), Cal State Long Beach (2011)
+- *New Functional Clustering Methodology and Applications* — Peking University, 2010
+- *A Bootstrap Test for Time Series Linearity* — Conference on Resampling Methods and High-Dimensional Data, College Station, TX, 2010
+- *Improving the Kaplan–Meier Estimator* — 2009 AMS Sectional Meeting, Florida Atlantic University
+- *Resampling the Bispectrum* — Workshop on Bootstrap and Time Series, Kaiserslautern, Germany, 2008
+
+Full list available in the [PDF CV](Berg-CV.pdf).
+
+## Graduate Advising
+
+**Selected PhD Committees**
+
+- Nour Hawila (PSU Biostatistics, advisor) — Confidence intervals for noninferiority testing; Bayesian joint modeling of reliability; topics in biostatistical modeling and statistics education. Graduated June 2023.
+- Chenqi (Stacey) Fu (PSU Biostatistics, committee) — Early-phase clinical trial designs based on predictive Bayes factor and Bayesian model averaging.
+- Daniel McGuire (PSU Biostatistics, committee) — Replicability in GWAS and large-scale EHR datasets. Graduated 2021.
+- Renan Sauteraud (PSU Biostatistics, committee) — Functional genomic analysis of the X chromosome. Graduated 2021.
+- Vishal Midya (PSU Biostatistics, co-advisor with Jason Liao) — Frequentist and Bayesian hypothesis testing with meaningful effect sizes. Graduated 2020.
+
+See the [PDF CV](Berg-CV.pdf) for additional PhD, Master's, and directed-study advising.
+
+## Other Professional Activities
+
+- **Expert Witness Services** — Biostatistical expert testimony for medical malpractice cases (written reports, depositions, court appearances).
+- **Independent Data Monitoring** — Independent biostatistician on pharmaceutical clinical trial data monitoring committees.
+
+## Music
+
+- 2025/09–present: **Director of Music** — Trinity Evangelical Lutheran Church, Lemoyne, PA
+- 2025/01–2025/09: Organist & Pianist — St. Peter's Lutheran Church, Highspire, PA
+- 2025/01–2025/05: Organist & Pianist — Salem Lutheran Church, Oberlin, PA
+- 2020–2024: Organist & Pianist — Renewed in Grace Co-Op (Trinity Lutheran, Steelton, PA & St. Peter's Lutheran, Highspire, PA)
+- 2018–2020: Choir Director, Organist & Pianist — Trinity Lutheran Church, Steelton, PA
+- 2015–2018: Pianist — Paxton Church of the Brethren, Harrisburg, PA
+- 1994–1998: Pianist — Our Saviour's Lutheran Church, Long Beach, CA

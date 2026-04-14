@@ -1,0 +1,43 @@
+---
+title: "Contact"
+---
+
+::: {.contact-grid}
+
+::: {.contact-card}
+### <i class="fa-solid fa-envelope"></i> Email
+
+**Academic**<br>
+[berg@psu.edu](mailto:berg@psu.edu)
+
+**Personal**<br>
+[StatisticalBerg@gmail.com](mailto:StatisticalBerg@gmail.com)
+
+**Music Ministry**<br>
+[TrinityLemoyneMusic@gmail.com](mailto:TrinityLemoyneMusic@gmail.com)
+:::
+
+::: {.contact-card}
+### <i class="fa-solid fa-phone"></i> Cell
+[717-982-7828](tel:+17179827828)
+:::
+
+::: {.contact-card}
+### <i class="fa-solid fa-building"></i> Mailing address
+Arthur Berg, Ph.D.<br>
+Department of Public Health Sciences, A210<br>
+Penn State College of Medicine<br>
+90 Hope Drive, Suite 2200<br>
+Hershey, PA 17033-0855
+:::
+
+::: {.contact-card}
+### <i class="fa-solid fa-globe"></i> Online
+- [<i class="fa-brands fa-github"></i> GitHub](https://github.com/arthurberg)
+- [<i class="fa-brands fa-linkedin"></i> LinkedIn](https://www.linkedin.com/in/arthurberg)
+- [<i class="ai ai-orcid"></i> ORCID](https://orcid.org/0000-0002-4097-7348)
+- [<i class="ai ai-google-scholar"></i> Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ)
+- [Penn State Pure profile](https://pennstate.pure.elsevier.com/en/persons/arthur-berg)
+:::
+
+:::
