@@ -47,10 +47,31 @@ h3 { font-weight: 600; }
 
 /* Navbar tightening */
 .navbar-brand { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; letter-spacing: -0.01em; }
-.navbar .nav-link { font-weight: 500; padding-left: 0.7rem; padding-right: 0.7rem; }
+.navbar .nav-link {
+  font-weight: 500;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: rgba(0, 0, 0, 0.95);
+}
+.navbar .nav-link.active {
+  color: var(--teal-800);
+  font-weight: 600;
+}
+.navbar .navbar-brand { color: rgba(0, 0, 0, 0.9); }
+.navbar .navbar-brand:hover { color: var(--teal-800); }
 @media (min-width: 992px) and (max-width: 1280px) {
   .navbar .nav-link { font-size: 0.95rem; padding-left: 0.55rem; padding-right: 0.55rem; }
 }
+[data-bs-theme="dark"] .navbar .nav-link { color: rgba(255, 255, 255, 0.75); }
+[data-bs-theme="dark"] .navbar .nav-link:hover,
+[data-bs-theme="dark"] .navbar .nav-link:focus { color: #fff; }
+[data-bs-theme="dark"] .navbar .nav-link.active { color: var(--teal-200); }
+[data-bs-theme="dark"] .navbar .navbar-brand { color: rgba(255, 255, 255, 0.92); }
+[data-bs-theme="dark"] .navbar .navbar-brand:hover { color: var(--teal-200); }
 
 /* ——— Fully fluid content width ——— */
 @media (min-width: 992px) {
@@ -72,9 +93,27 @@ h3 { font-weight: 600; }
   overflow-x: visible;
 }
 
-/* Links */
-a { color: var(--teal-800); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-a:hover { color: var(--teal-600); }
+/* Links: color only by default, underline on hover */
+a {
+  color: var(--teal-800);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--teal-600);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+/* Keep existing non-underlined UI bits non-underlined on hover too */
+.btn:hover, .nav-link:hover, .pub-badge:hover,
+.pub-filter-chip:hover, .area-tag:hover,
+.chip:hover, .section-nav-link:hover,
+.highlight-card a:hover, .contact-card a:hover,
+.cv-contact-block a:hover, .quarto-grid-item a:hover {
+  text-decoration: none;
+}
+[data-bs-theme="dark"] a { color: var(--teal-200); }
+[data-bs-theme="dark"] a:hover { color: #9ee0e5; }
 
 /* Buttons */
 .btn-primary {
