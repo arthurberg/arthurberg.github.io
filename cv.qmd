@@ -4,10 +4,12 @@ toc: true
 toc-depth: 2
 ---
 
-[**Download full CV (PDF)**](Berg-CV.pdf){.btn .btn-primary}
-[ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}
+::: {.cv-actions}
+[<i class="fa-solid fa-file-pdf"></i> Download full CV (PDF)](Berg-CV.pdf){.btn .btn-primary}
+[<i class="ai ai-orcid"></i> ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}
 [Penn State Pure](https://pennstate.pure.elsevier.com/en/persons/arthur-berg){.btn .btn-outline-secondary}
-[Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}
+[<i class="ai ai-google-scholar"></i> Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}
+:::
 
 ## Contact
 
@@ -47,7 +49,7 @@ Hershey, PA 17033-0855
 - **Lead Biostatistician** — Pediatric Oncology Clinical Trials, Penn State (2024–present)
 - **Member** — Penn State Cancer Institute Data Safety and Monitoring Committee (2024–2028)
 - **Professor (with tenure)** — Penn State College of Medicine, Department of Public Health Sciences, Division of Biostatistics and Bioinformatics (2022–present)
-- Joint Professor — Departments of Surgery, Neurosurgery, Family and Community Medicine, and Statistics
+- **Joint Professor** — Departments of Surgery, Neurosurgery, Family and Community Medicine, and Statistics
 - **Member** — Penn State Cancer Institute; Cancer Control Program; Huck Institutes of the Life Sciences; Bioinformatics and Genomics PhD Program Faculty; Biomedical Sciences PhD Program Faculty (2009–present)
 
 ## Current Editorial Positions
@@ -77,11 +79,11 @@ Hershey, PA 17033-0855
 
 ## Awards
 
-- 2014 Dean's Award for Excellence in Teaching
-- 2014 Innovation in Team Science Award, Penn State Faculty Research Recognition Awards
+- 2014 **Dean's Award for Excellence in Teaching** — Penn State College of Medicine
+- 2014 **Innovation in Team Science Award** — Penn State Faculty Research Recognition Awards
 - 2013 Society of Distinguished Educators Junior Faculty Teaching Award (Finalist)
 - 2008 University of Florida IFAS Research Innovation Award
-- 2005–2006 UCSD Math Department Outstanding TA Award
+- 2005–2006 UCSD Mathematics Department Outstanding TA Award
 
 ## Courses Taught
 
@@ -193,11 +195,11 @@ Full list available in the [PDF CV](Berg-CV.pdf).
 
 **Selected PhD Committees**
 
-- Nour Hawila (PSU Biostatistics, advisor) — Confidence intervals for noninferiority testing; Bayesian joint modeling of reliability; topics in biostatistical modeling and statistics education. Graduated June 2023.
-- Chenqi (Stacey) Fu (PSU Biostatistics, committee) — Early-phase clinical trial designs based on predictive Bayes factor and Bayesian model averaging.
-- Daniel McGuire (PSU Biostatistics, committee) — Replicability in GWAS and large-scale EHR datasets. Graduated 2021.
-- Renan Sauteraud (PSU Biostatistics, committee) — Functional genomic analysis of the X chromosome. Graduated 2021.
-- Vishal Midya (PSU Biostatistics, co-advisor with Jason Liao) — Frequentist and Bayesian hypothesis testing with meaningful effect sizes. Graduated 2020.
+- **Nour Hawila** (PSU Biostatistics, advisor) — Confidence intervals for noninferiority testing; Bayesian joint modeling of reliability; topics in biostatistical modeling and statistics education. Graduated June 2023.
+- **Chenqi (Stacey) Fu** (PSU Biostatistics, committee) — Early-phase clinical trial designs based on predictive Bayes factor and Bayesian model averaging.
+- **Daniel McGuire** (PSU Biostatistics, committee) — Replicability in GWAS and large-scale EHR datasets. Graduated 2021.
+- **Renan Sauteraud** (PSU Biostatistics, committee) — Functional genomic analysis of the X chromosome. Graduated 2021.
+- **Vishal Midya** (PSU Biostatistics, co-advisor with Jason Liao) — Frequentist and Bayesian hypothesis testing with meaningful effect sizes. Graduated 2020.
 
 See the [PDF CV](Berg-CV.pdf) for additional PhD, Master's, and directed-study advising.
 
@@ -208,10 +210,10 @@ See the [PDF CV](Berg-CV.pdf) for additional PhD, Master's, and directed-study a
 
 ## Music
 
-- 2025/09–present: **Director of Music** — Trinity Evangelical Lutheran Church, Lemoyne, PA
-- 2025/01–2025/09: Organist & Pianist — St. Peter's Lutheran Church, Highspire, PA
-- 2025/01–2025/05: Organist & Pianist — Salem Lutheran Church, Oberlin, PA
-- 2020–2024: Organist & Pianist — Renewed in Grace Co-Op (Trinity Lutheran, Steelton, PA & St. Peter's Lutheran, Highspire, PA)
-- 2018–2020: Choir Director, Organist & Pianist — Trinity Lutheran Church, Steelton, PA
-- 2015–2018: Pianist — Paxton Church of the Brethren, Harrisburg, PA
-- 1994–1998: Pianist — Our Saviour's Lutheran Church, Long Beach, CA
+- **2025/09–present** — **Director of Music**, Trinity Evangelical Lutheran Church, Lemoyne, PA
+- 2025/01–2025/09 — Organist & Pianist, St. Peter's Lutheran Church, Highspire, PA
+- 2025/01–2025/05 — Organist & Pianist, Salem Lutheran Church, Oberlin, PA
+- 2020–2024 — Organist & Pianist, Renewed in Grace Co-Op (Trinity Lutheran, Steelton, PA & St. Peter's Lutheran, Highspire, PA)
+- 2018–2020 — Choir Director, Organist & Pianist, Trinity Lutheran Church, Steelton, PA
+- 2015–2018 — Pianist, Paxton Church of the Brethren, Harrisburg, PA
+- 1994–1998 — Pianist, Our Saviour's Lutheran Church, Long Beach, CA

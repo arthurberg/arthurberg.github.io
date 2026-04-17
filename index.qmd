@@ -5,6 +5,7 @@ about:
   template: trestles
   image: photo.jpg
   image-shape: round
+  image-width: 15em
   links:
     - icon: envelope
       text: Email
@@ -26,66 +27,33 @@ about:
 ## About
 
 I am a tenured **Professor of Biostatistics** in the Department of Public
-Health Sciences at the Penn State College of Medicine, with joint appointments
-in the Departments of Surgery, Neurosurgery, Family and Community Medicine,
-and Statistics. I directed Penn State's Biostatistics PhD Program from 2011 to 2024, and
-currently serve as Lead Biostatistician for Pediatric Oncology Clinical
-Trials at Penn State.
+Health Sciences at the Penn State College of Medicine, with joint
+appointments in the Departments of Surgery, Neurosurgery, Family and
+Community Medicine, and Statistics. I directed Penn State's Biostatistics
+PhD Program from 2011 to 2024, and currently serve as **Lead Biostatistician
+for Pediatric Oncology Clinical Trials** at Penn State — with a central
+role in the [Beat Childhood Cancer Research Consortium](bcc.qmd).
 
-My research spans methodological biostatistics and applied collaborations
-across oncology, neuroscience, spinal cord injury, environmental
-physiology, and more. Recent methodological interests include Bayesian
-clinical trial design, statistical genetics, and interdisciplinary
-applications of data science — including an entropy-based approach to
-Chinese character learning.
+My [research](research.qmd) spans methodological biostatistics and applied
+collaborations across oncology, neuroscience, spinal cord injury,
+environmental physiology, and more. Recent methodological interests
+include Bayesian clinical trial design, statistical genetics, and
+interdisciplinary applications of data science — including an
+entropy-based approach to Chinese character learning.
 
-I also serve as an independent biostatistician on clinical trial
-data monitoring committees and provide biostatistical expert-witness
-services.
+Outside of my Penn State work, I provide [biostatistical expert-witness
+testimony](services.qmd) and serve as an [independent biostatistician on
+data monitoring committees](services.qmd). I also serve as **Director of
+Music** at [Trinity Evangelical Lutheran Church in Lemoyne, PA](music.qmd).
 
-## Highlights
+Raised in [Grifton, North Carolina](https://grifton.com/) — home of the
+annual [Shad Festival](https://griftonshadfestival.com/). Attended
+[Wiley Elementary School](https://www.wcpss.net/wileyes) and
+[Leesville Road Middle School](https://www.wcpss.net/leesvilleroadms) in
+Raleigh, [Ayden-Grifton High School](https://aghs.pitt.k12.nc.us/), and the
+[North Carolina School of Science and Mathematics](https://www.ncssm.edu/).
 
-::: {.highlight-grid}
-::: {.highlight-card}
-### <i class="fa-solid fa-file-lines"></i> 273 Publications
-See [Publications](publications.qmd)
-:::
-
-::: {.highlight-card}
-### <i class="fa-solid fa-user-doctor"></i> Lead Biostatistician
-Pediatric Oncology Clinical Trials, Penn State (2024–present)
-:::
-
-::: {.highlight-card}
-### <i class="fa-solid fa-graduation-cap"></i> Director (2011–2024)
-Penn State Biostatistics PhD Program
-:::
-
-::: {.highlight-card}
-### <i class="fa-solid fa-pen"></i> Editor
-*Statistics Innovation* — Editorial Board (2024–present)
-:::
-
-::: {.highlight-card}
-### <i class="fa-solid fa-school"></i> Education
-**Ph.D.** & **M.S.** — UC San Diego
-
-**M.A.** & **B.S.** — University of Southern California
-:::
-
-::: {.highlight-card}
-### <i class="fa-solid fa-flask"></i> Joint Appointments
-Professor — Departments of **Surgery**, **Neurosurgery**, **Family & Community Medicine**, and **Statistics**
-:::
-
-::: {.highlight-card .highlight-card-wide}
-### <i class="fa-solid fa-users"></i> Memberships
-- Penn State Cancer Institute
-- Cancer Institute, Cancer Control Program
-- Huck Institutes of the Life Sciences
-- Bioinformatics and Genomics PhD Program Faculty
-- Biomedical Sciences PhD Program Faculty
-:::
-:::
-
-See the full [CV](cv.qmd) for details, or get in [touch](contact.qmd).
+[Explore research →](research.qmd){.btn .btn-primary}
+[Beat Childhood Cancer](bcc.qmd){.btn .btn-outline-secondary}
+[Download CV (PDF)](Berg-CV.pdf){.btn .btn-outline-secondary}
+[Get in touch](contact.qmd){.btn .btn-outline-secondary}

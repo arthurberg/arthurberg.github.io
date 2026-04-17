@@ -4,17 +4,27 @@ project:
 
 website:
   title: "Arthur Berg, Ph.D."
-  description: "Biostatistician, Penn State College of Medicine"
+  description: "Professor of Biostatistics, Penn State College of Medicine. Research in Bayesian methods, clinical trials, statistical genetics, and interdisciplinary data science."
   site-url: https://arthurberg.com
+  favicon: favicon.svg
   page-navigation: true
+  open-graph: true
+  twitter-card: true
   navbar:
+    pinned: true
     left:
       - href: index.qmd
         text: Home
+      - href: research.qmd
+        text: Research
+      - href: bcc.qmd
+        text: BCC
       - href: cv.qmd
         text: CV
-      - href: publications.qmd
-        text: Publications
+      - href: services.qmd
+        text: Services
+      - href: music.qmd
+        text: Music
       - href: contact.qmd
         text: Contact
     right:
@@ -36,11 +46,156 @@ format:
     smooth-scroll: true
     include-in-header:
       text: |
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/brands.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    include-after-body:
+      text: |
+        <button id="back-to-top" aria-label="Back to top" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+        <script>
+        (function(){
+          const btn = document.getElementById('back-to-top');
+          if (btn) {
+            const toggle = () => btn.classList.toggle('visible', window.scrollY > 400);
+            window.addEventListener('scroll', toggle, { passive: true });
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            toggle();
+          }
+
+          // ——— Research filter (area + type) ———
+          const areaChips = document.querySelectorAll('.pub-filter-chip[data-filter]');
+          if (!areaChips.length) return;
+          const typeChips = document.querySelectorAll('.pub-filter-chip[data-type-filter]');
+          const entries = document.querySelectorAll('.pub-entry');
+          const sections = document.querySelectorAll('.research-section');
+          const pubYears = document.querySelectorAll('.pub-year');
+          const pubTypes = document.querySelectorAll('.pub-type');
+          const statusHeads = document.querySelectorAll('.grant-status-heading');
+          const countEl = document.getElementById('pub-filter-count');
+
+          let state = { area: 'all', type: 'all' };
+
+          const hideEmptyHeadingsIn = (nodeList, stopSelector) => {
+            nodeList.forEach((h) => {
+              let next = h.nextElementSibling;
+              let hasVisible = false;
+              while (next && !(next.matches && next.matches(stopSelector))) {
+                if (next.classList && next.classList.contains('pub-entry') && !next.classList.contains('is-hidden')) {
+                  hasVisible = true;
+                  break;
+                }
+                next = next.nextElementSibling;
+              }
+              h.classList.toggle('is-hidden', !hasVisible);
+            });
+          };
+
+          const render = () => {
+            areaChips.forEach(c => c.classList.toggle('active', c.dataset.filter === state.area));
+            typeChips.forEach(c => c.classList.toggle('active', c.dataset.typeFilter === state.type));
+
+            const byType = { publication: 0, grant: 0, protocol: 0 };
+            let totalVisible = 0;
+
+            entries.forEach(e => {
+              const areas = (e.dataset.areas || '').split(/\s+/);
+              const type = e.dataset.type || 'publication';
+              const areaMatch = state.area === 'all' || areas.includes(state.area);
+              const typeMatch = state.type === 'all' || state.type === type;
+              const match = areaMatch && typeMatch;
+              e.classList.toggle('is-hidden', !match);
+              if (match) { totalVisible++; byType[type] = (byType[type] || 0) + 1; }
+            });
+
+            // Process deepest → shallowest so each scope is resolved correctly.
+            // pub-type (h4) stops at any same-or-higher heading.
+            // pub-year (h3) stops at next year or section boundary (NOT pub-type).
+            // grant-status-heading stops at next status or section boundary.
+            hideEmptyHeadingsIn(pubTypes, '.pub-type, .pub-year, .section-heading');
+            hideEmptyHeadingsIn(pubYears, '.pub-year, .section-heading');
+            hideEmptyHeadingsIn(statusHeads, '.grant-status-heading, .section-heading');
+
+            // Hide entire sections that have zero visible entries (after filtering)
+            sections.forEach(sec => {
+              const visible = sec.querySelectorAll('.pub-entry:not(.is-hidden)').length;
+              sec.classList.toggle('is-hidden', visible === 0);
+            });
+
+            if (countEl) {
+              const parts = [];
+              if (state.type === 'all' || state.type === 'publication') parts.push(`${byType.publication} pub${byType.publication === 1 ? '' : 's'}`);
+              if (state.type === 'all' || state.type === 'grant') parts.push(`${byType.grant} grant${byType.grant === 1 ? '' : 's'}`);
+              if (state.type === 'all' || state.type === 'protocol') parts.push(`${byType.protocol} protocol${byType.protocol === 1 ? '' : 's'}`);
+              countEl.textContent = parts.join(' · ');
+            }
+
+            // Show empty-state card if no results
+            let emptyEl = document.getElementById('pub-empty-state');
+            if (totalVisible === 0) {
+              if (!emptyEl) {
+                emptyEl = document.createElement('div');
+                emptyEl.id = 'pub-empty-state';
+                emptyEl.innerHTML = 'No items match the current filters. <button type="button" id="pub-reset-btn">Reset filters</button>';
+                const container = sections[0] && sections[0].parentNode;
+                if (container) container.insertBefore(emptyEl, sections[0]);
+                document.getElementById('pub-reset-btn').addEventListener('click', () => {
+                  state = { area: 'all', type: 'all' };
+                  render();
+                });
+              }
+              emptyEl.style.display = '';
+            } else if (emptyEl) {
+              emptyEl.style.display = 'none';
+            }
+
+            // Reflect in URL hash
+            const hashParts = [];
+            if (state.area !== 'all') hashParts.push('area=' + state.area);
+            if (state.type !== 'all') hashParts.push('type=' + state.type);
+            const hash = hashParts.length ? '#' + hashParts.join('&') : '';
+            if (history.replaceState) history.replaceState(null, '', location.pathname + location.search + hash);
+          };
+
+          areaChips.forEach(chip => {
+            chip.addEventListener('click', () => { state.area = chip.dataset.filter; render(); });
+          });
+          typeChips.forEach(chip => {
+            chip.addEventListener('click', () => { state.type = chip.dataset.typeFilter; render(); });
+          });
+
+          document.querySelectorAll('.area-filter-link').forEach(a => {
+            a.addEventListener('click', (ev) => {
+              const slug = a.dataset.filter;
+              if (slug) { state.area = slug; render(); }
+            });
+          });
+          document.addEventListener('click', (ev) => {
+            const tag = ev.target.closest('.area-tag');
+            if (tag && tag.dataset.area) {
+              state.area = tag.dataset.area;
+              render();
+              const filterBar = document.querySelector('.pub-filter');
+              if (filterBar) filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+
+          // Parse URL hash for initial state
+          const hash = location.hash.replace(/^#/, '');
+          if (hash) {
+            hash.split('&').forEach(pair => {
+              const [k, v] = pair.split('=');
+              if (k === 'area' && [...areaChips].some(c => c.dataset.filter === v)) state.area = v;
+              if (k === 'type' && [...typeChips].some(c => c.dataset.typeFilter === v)) state.type = v;
+            });
+          }
+          render();
+        })();
+        </script>
     grid:
       sidebar-width: 250px
-      body-width: 2000px
-      margin-width: 150px
+      body-width: 1400px
+      margin-width: 200px
       gutter-width: 1.5rem

@@ -1,0 +1,27 @@
+---
+title: "Research"
+subtitle: "Publications, grants, and protocols across methodological biostatistics and applied collaborations — use the filter bar to browse by type and research area."
+toc: true
+toc-depth: 3
+---
+
+My research portfolio has two strands that continuously inform each other:
+
+- **Methodological biostatistics** — Bayesian design and inference, robust
+  empirical-Bayes methods, noninferiority testing, replicability in
+  genome-wide studies, and information-theoretic methods for applied
+  problems.
+- **Applied collaboration** — long-term partnerships across pediatric
+  oncology, spinal cord injury, neuroscience, and public health, where
+  I serve as the primary biostatistician on trial designs, observational
+  studies, and secondary analyses.
+
+For the pediatric-oncology clinical-trial portfolio, see the
+[Beat Childhood Cancer](bcc.qmd) page.
+
+[**Download full CV (PDF)**](Berg-CV.pdf){.btn .btn-primary}
+[ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}
+[Penn State Pure](https://pennstate.pure.elsevier.com/en/persons/arthur-berg){.btn .btn-outline-secondary}
+[Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}
+
+{{< include _research-body.qmd >}}

@@ -2,6 +2,10 @@
 title: "Contact"
 ---
 
+The best way to reach me is by email. For collaboration, data-monitoring,
+or expert-witness inquiries, feel free to include a brief description of
+your project.
+
 ::: {.contact-grid}
 
 ::: {.contact-card}
@@ -18,12 +22,15 @@ title: "Contact"
 :::
 
 ::: {.contact-card}
-### <i class="fa-solid fa-phone"></i> Cell
+### <i class="fa-solid fa-phone"></i> Phone
+
+**Cell**<br>
 [717-982-7828](tel:+17179827828)
 :::
 
 ::: {.contact-card}
 ### <i class="fa-solid fa-building"></i> Mailing address
+
 Arthur Berg, Ph.D.<br>
 Department of Public Health Sciences, A210<br>
 Penn State College of Medicine<br>
@@ -33,6 +40,7 @@ Hershey, PA 17033-0855
 
 ::: {.contact-card}
 ### <i class="fa-solid fa-globe"></i> Online
+
 - [<i class="fa-brands fa-github"></i> GitHub](https://github.com/arthurberg)
 - [<i class="fa-brands fa-linkedin"></i> LinkedIn](https://www.linkedin.com/in/arthurberg)
 - [<i class="ai ai-orcid"></i> ORCID](https://orcid.org/0000-0002-4097-7348)

@@ -1,0 +1,103 @@
+---
+title: "Professional Services"
+subtitle: "Biostatistical expert testimony and independent data monitoring for clinical trials."
+toc: true
+toc-depth: 2
+---
+
+In addition to academic research, I maintain two ongoing professional
+practices outside of Penn State: **biostatistical expert-witness services**
+in medical and scientific litigation, and **independent data monitoring**
+for pharmaceutical and academic clinical trials. Both draw on the same
+methodological toolkit — careful study design, quantitative reasoning
+under uncertainty, and clear statistical communication to
+non-statistical audiences.
+
+## Expert Witness Services
+
+::: {.service-card}
+### What I offer
+
+I provide biostatistical expert opinions and testimony in medical
+malpractice, pharmaceutical, and scientific causation matters, with
+engagements that typically include:
+
+- **Written expert reports** quantifying statistical evidence,
+  epidemiological risk, or scientific reliability
+- **Deposition testimony** and **trial testimony** in state and federal
+  courts
+- **Daubert/Frye** admissibility analyses and rebuttals of opposing
+  experts
+- **Literature review** and critical appraisal of published studies,
+  meta-analyses, and regulatory submissions
+- **Case consultation** with counsel on statistical strategy and
+  discovery
+:::
+
+::: {.service-card}
+### Areas of emphasis
+
+- Medical malpractice involving diagnostic performance and clinical
+  decision-making
+- Pharmacoepidemiology and adverse-event causation
+- Interpretation of clinical-trial endpoints and regulatory evidence
+- Scientific methodology disputes involving probability, sampling,
+  or causal inference
+:::
+
+::: {.service-card}
+### Engagement & fees
+
+I take a limited number of matters each year to ensure careful,
+personal attention. My current **fee schedule is available on request** —
+please reach out via [email](mailto:berg@psu.edu) with a brief
+description of the matter, jurisdiction, and anticipated timeline, and
+I will respond with availability and rates.
+
+A curriculum vitae is available [here](Berg-CV.pdf) for filings and
+disclosures.
+:::
+
+## Independent Data Monitoring
+
+::: {.service-card}
+### DSMC/DMC roles
+
+I serve as an independent biostatistician on Data Safety and Monitoring
+Committees (DSMCs) and Data Monitoring Committees (DMCs) for
+investigator-initiated and industry-sponsored clinical trials.
+Responsibilities include:
+
+- Pre-trial review of statistical-monitoring plans and stopping rules
+- Unblinded interim analyses of efficacy and safety
+- Presentation of statistical reports to DSMC/DMC deliberations
+- Ad hoc consultation on signal evaluation, sample-size adaptation,
+  and protocol amendments
+:::
+
+::: {.service-card}
+### Prior engagements
+
+- **Penn State Cancer Institute Data Safety and Monitoring Committee**
+  — Member (2024–2026), with additional earlier service to Penn State
+  Cancer Institute research-oversight committees.
+- **Industry-sponsored pharmaceutical DMCs** — Independent biostatistician
+  on multiple sponsor-led clinical trials spanning oncology and other
+  therapeutic areas. *(Specific sponsors and study details are governed
+  by confidentiality agreements.)*
+
+If your sponsor or academic center is seeking an independent DMC
+biostatistician, please [contact me](contact.qmd) to discuss fit,
+availability, and conflict checks.
+:::
+
+## Related Credentials
+
+- **Professor of Biostatistics (with tenure)**, Penn State College of Medicine (2022–present)
+- **Former Director**, Penn State Biostatistics PhD Program (2011–2024)
+- **Editorial Board**, *Statistics Innovation*, *Open Journal of Statistics*,
+  and *International Chinese Language Education Communications*
+- Ph.D. Mathematics (UC San Diego, 2007); M.S. Statistics (UC San Diego, 2005)
+
+[Download CV (PDF)](Berg-CV.pdf){.btn .btn-primary}
+[Contact](contact.qmd){.btn .btn-outline-secondary}

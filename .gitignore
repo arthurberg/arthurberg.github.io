@@ -1,5 +1,6 @@
 /.quarto/
 /_site/
+/_freeze/
 .DS_Store
 *.bbl
 *.blg
@@ -7,5 +8,13 @@
 *.log
 *.zip
 /papers/README.md
+
+# Python
+__pycache__/
+*.pyc
+
+# Private data source files (raw myResearch portal exports).
+# The parsed, sanitized versions live in data/grants.yml and data/protocols.yml.
+/myresearch.psu.edu/
 
 **/*.quarto_ipynb

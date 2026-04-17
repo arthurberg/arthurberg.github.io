@@ -1,0 +1,74 @@
+---
+title: "Beat Childhood Cancer"
+subtitle: "Lead Biostatistician for the Beat Childhood Cancer Research Consortium — multicenter pediatric oncology trials for neuroblastoma, brain tumors, sarcomas, and rare cancers."
+toc: true
+toc-depth: 2
+---
+
+## About the Consortium
+
+The [**Beat Childhood Cancer Research Consortium**](https://research.beatcc.org)
+(BCC) is a dynamic network of **50+ member universities and children's
+hospitals** offering a worldwide network of childhood-cancer clinical
+trials and collaboration. BCC's international scope ensures that
+children with cancer have access to a full range of medical services —
+including targeted therapies such as precision immunotherapy for
+neuroblastoma, brain tumors, sarcomas, and rare cancers.
+
+The consortium is primarily funded by the **Beat Childhood Cancer
+Foundation**, founded and led by parents, with support from **Four
+Diamonds** and other foundations. BCC joined **Penn State College of
+Medicine** in September 2023.
+
+- **Chair and Founder** — Dr. Giselle Saulnier Sholler, MD, MSc (Division
+  Chief of Pediatric Hematology and Oncology, Penn State Health Children's
+  Hospital)
+- **Lead Biostatistician** — Arthur Berg, Ph.D. (2024–present)
+- **Enrollment inquiries** — [BCCEnroll@pennstatehealth.psu.edu](mailto:BCCEnroll@pennstatehealth.psu.edu)
+- **Consortium website** — [research.beatcc.org](https://research.beatcc.org)
+
+## My Role
+
+As Lead Biostatistician I provide statistical leadership across the
+active portfolio, including protocol design, sample-size and power
+calculation, endpoint definition, interim monitoring, FDA correspondence
+on statistical sections, and end-of-study analyses. Much of the recent
+work has centered on Bayesian and noninferiority designs for rare
+pediatric cohorts, where standard frequentist approaches are poorly
+powered and Bayesian borrowing of information improves sensitivity.
+
+## Trial Portfolio
+
+The following trials are open, active, or in development through the
+BCC network. Full entry criteria, sites, and investigator-contact
+information are available on [ClinicalTrials.gov](https://clinicaltrials.gov).
+
+::: {.trial-table}
+| Trial | Title | Phase | Status | NCT |
+|-------|-------|:-----:|--------|-----|
+| **BCC015** | DFMO + Etoposide for Relapsed/Refractory Neuroblastoma | II | Active | — |
+| **BCC016** | DFMO as Maintenance Therapy for Medulloblastoma | II | Active | [NCT04696029](https://clinicaltrials.gov/study/NCT04696029) |
+| **BCC017** | PEACH: Precision Medicine & Adoptive Cellular Therapy for NBL/DIPG | I | Active | [NCT04837547](https://clinicaltrials.gov/study/NCT04837547) |
+| **BCC018** | Naxitamab Added to Induction Therapy for Newly Diagnosed HR-NBL | II | Active | [NCT05489887](https://clinicaltrials.gov/study/NCT05489887) |
+| **BCC020** | DFMO + AMXT-1501 Dose Escalation for NBL, CNS Tumors, and Sarcomas | I/II | Active | [NCT06465199](https://clinicaltrials.gov/study/NCT06465199) |
+| **BCC021** | Silmitasertib + Chemo for Relapsed/Refractory Solid Tumors | I/II | Active | [NCT06541262](https://clinicaltrials.gov/study/NCT06541262) |
+| **BCC022** | Tipifarnib + Naxitamab for Relapsed/Refractory Neuroblastoma | II | Active | [NCT06540963](https://clinicaltrials.gov/study/NCT06540963) |
+| **BCC023** | DFMO for Ewing Sarcoma and Osteosarcoma (Basket) | II | Active | [NCT07321912](https://clinicaltrials.gov/study/NCT07321912) |
+| **BCC024** | IL13Rα2-Targeting Immunotoxin GB13 for DIPG (Targepeutics) | I | In development | — |
+| **BCC025** | NEXT-NB: Transplant-Free Naxitamab Consolidation for HR-NBL | II | In development | — |
+| **NMTRC012** | MGT Upfront RCT: Immunotherapy ± DFMO for Newly Diagnosed HR-NBL | — | Part B Open | [NCT02559778](https://clinicaltrials.gov/study/NCT02559778) |
+| **NMTRC014** | DFMO Maintenance Therapy Trial | — | Active | — |
+:::
+
+Trial acronyms: **NBL** = neuroblastoma · **HR-NBL** = high-risk
+neuroblastoma · **DIPG** = diffuse intrinsic pontine glioma · **CNS** =
+central nervous system · **EFS** = event-free survival · **OS** =
+overall survival · **DFMO** = eflornithine · **NEXT-NB** = non-myeloablative
+transplant-free high-risk neuroblastoma consolidation.
+
+For BCC-related biostatistical publications, see the
+[pediatric-oncology filter](research.qmd#area=pediatric-oncology) on the
+Research page.
+
+[Explore research →](research.qmd){.btn .btn-primary}
+[Contact for collaboration](contact.qmd){.btn .btn-outline-secondary}

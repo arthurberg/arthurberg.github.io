@@ -1,0 +1,137 @@
+# Penn State IRB/IACUC/IBC/UIC protocols (Arthur Berg)
+# Data source: myResearch Portal CATS export (2026-04-17).
+# Edit this file to add, remove, or retag protocols; no regeneration step.
+- id: AFFILVEGGIERX
+  type: Human
+  title: Fruit and Vegetable Prescription Program Proposal (Veggie Rx)
+  sponsor: College of Medicine; Penn State Health St. Joseph Medical Center; United
+    Way of Berks County, Inc.
+  role: Research Support
+  approval_date: 2018-06-26
+  expiration_date: 2026-06-29
+  status: active
+- id: STUDY00000181
+  type: Human
+  title: Biomarker Analysis of Barrett's Esophagus
+  sponsor: None
+  role: Co-Investigator
+  approval_date: 2014-02-25
+  status: active
+- id: STUDY00007918
+  type: Human
+  title: Advancement of Women Faculty in Family & Community Medicine
+  sponsor: None
+  role: Other
+  approval_date: 2017-10-26
+  status: active
+- id: STUDY00007977
+  type: Human
+  title: Raising a Child with Type 1 Diabetes and Autism; Qualitative Thematic Analysis
+    (Blogs)
+  sponsor: None
+  role: Other
+  approval_date: 2017-09-15
+  status: active
+- id: STUDY00008364
+  type: Human
+  title: Assessing burnout in mother physician residents in comparison to their physician
+    residents cohort
+  sponsor: None
+  role: Co-Investigator
+  approval_date: 2018-05-21
+  status: active
+- id: STUDY00008462
+  type: Human
+  title: Burnout and Vitality Survey of Penn State College of Medicine Department
+    of Family & Community Medicine Providers
+  sponsor: None
+  role: Co-Investigator
+  approval_date: 2017-11-14
+  status: active
+- id: STUDY00009290
+  type: Human
+  title: Effects of the establishment of a procedure clinic within a family medicine
+    residency practice site
+  sponsor: None
+  role: Research Support
+  approval_date: 2018-04-04
+  status: active
+- id: STUDY00010679
+  type: Human
+  title: PSCI 18-041 Extracellular Vesicles as Biomarkers for Early Detection of Recurrent
+    Pancreatic Carcinoma
+  sponsor: Hirshberg Foundation for Pancreatic Cancer Research
+  role: Research Support
+  approval_date: 2018-10-22
+  expiration_date: 2026-08-14
+  status: active
+- id: STUDY00012229
+  type: Human
+  title: PSCI-18-131 Micro/Nano Technology for Isolation of Extracellular Vesicles
+    and Towards Non-Invasive Diagnosis of Pancreatic Cancer
+  sponsor: Carnegie Mellon University; National Institutes of Health (NIH)
+  role: Co-Investigator
+  approval_date: 2020-02-04
+  status: active
+- id: STUDY00013449
+  type: Human
+  title: 'Bridging the Divide between Penn State Health and Community Health Centers:
+    Translating a Colorectal Screening Program to Address the Needs of At-risk Populations
+    in Central PA'
+  sponsor: Penn State Clinical and Translational Science Institute / NIH (HERSHEY)
+  role: Co-Investigator
+  approval_date: 2021-03-11
+  status: active
+- id: STUDY00013887
+  type: Human
+  title: Assessment of third-year medical student attainment of the Pennsylvania state
+    core competencies for education on opioids and addiction
+  sponsor: Health Resources and Services Administration
+  role: Co-Investigator
+  approval_date: 2019-11-25
+  status: active
+- id: STUDY00017346
+  type: Human
+  title: Value of Telephone, Televideo, and In-Person Visit Equivalent as Measured
+    by Number of Diagnoses per Encounter
+  sponsor: None
+  role: Co-Investigator
+  approval_date: 2021-05-12
+  status: active
+- id: STUDY00018386
+  type: Human
+  title: A Retrospective Review of Colon, Rectal, and Anal Cancers
+  sponsor: None
+  role: Research Support
+  approval_date: 2021-08-17
+  status: active
+- id: STUDY00018557
+  type: Human
+  title: Linking olfactory deficits to memory impairment and AD neurodegeneration
+  sponsor: National Institutes of Health (NIH)
+  role: Co-Investigator
+  approval_date: 2021-11-23
+  expiration_date: 2026-09-09
+  status: active
+- id: STUDY00018825
+  type: Human
+  title: Prospective proteogenomic analysis of CNS tumors
+  sponsor: American Brain Tumor Association; Illumina, Incorporated; Neurosurgery
+    (HERSHEY)
+  role: Co-Investigator
+  approval_date: 2022-04-11
+  expiration_date: 2026-12-03
+  status: active
+- id: STUDY00025813
+  type: Human
+  title: Comparing runners' perception of their biomechanics through validation of
+    RunScribe wearable technology in an outdoor environment
+  sponsor: Orthopaedics and Therapy Services (HERSHEY)
+  role: Other, Research Support
+  approval_date: 2025-04-15
+  status: active
+- id: STUDY00027897
+  type: Human
+  sponsor: Beat Childhood Cancer Foundation Inc
+  role: Research Support
+  status: pending
