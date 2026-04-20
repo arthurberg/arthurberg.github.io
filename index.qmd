@@ -53,7 +53,8 @@ annual [Shad Festival](https://griftonshadfestival.com/). Attended
 Raleigh, [Ayden-Grifton High School](https://aghs.pitt.k12.nc.us/), and the
 [North Carolina School of Science and Mathematics](https://www.ncssm.edu/).
 
-[Explore research →](research.qmd){.btn .btn-primary}
+[View CV →](cv.qmd){.btn .btn-primary}
+[Research](research.qmd){.btn .btn-outline-secondary}
 [Beat Childhood Cancer](bcc.qmd){.btn .btn-outline-secondary}
 [Download CV (PDF)](Berg-CV.pdf){.btn .btn-outline-secondary}
 [Get in touch](contact.qmd){.btn .btn-outline-secondary}

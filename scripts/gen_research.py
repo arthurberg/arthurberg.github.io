@@ -258,7 +258,14 @@ def render_grant(g: dict) -> str:
     budget = g.get("budget", "")
     award_num = g.get("award_number", "")
 
-    title = g.get("title", "").strip()
+    # Pending grants often contain confidential specific-aims language in the
+    # submitted title. When a `topic` field is supplied for a pending grant we
+    # display that general topic area instead of the submitted title.
+    topic = (g.get("topic") or "").strip()
+    if g.get("status") == "pending" and topic:
+        title = f"Topic area — {topic}"
+    else:
+        title = g.get("title", "").strip()
 
     meta_parts = []
     if period:

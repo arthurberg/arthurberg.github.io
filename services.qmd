@@ -1,17 +1,71 @@
 ---
 title: "Professional Services"
-subtitle: "Biostatistical expert testimony and independent data monitoring for clinical trials."
+subtitle: "AI-powered research and workflow consulting, biostatistical expert testimony, and independent data monitoring."
 toc: true
 toc-depth: 2
 ---
 
-In addition to academic research, I maintain two ongoing professional
-practices outside of Penn State: **biostatistical expert-witness services**
-in medical and scientific litigation, and **independent data monitoring**
-for pharmaceutical and academic clinical trials. Both draw on the same
-methodological toolkit — careful study design, quantitative reasoning
-under uncertainty, and clear statistical communication to
-non-statistical audiences.
+Alongside my academic work, I offer a few professional services on a
+consulting basis: **AI-powered research and workflow consulting** for
+those looking to put modern generative-AI tooling to good use;
+**biostatistical expert-witness services** in medical and scientific
+litigation; and **independent data monitoring** for pharmaceutical and
+academic clinical trials. Each practice draws on the same methodological
+toolkit — careful study design, quantitative reasoning under
+uncertainty, and clear communication to non-technical audiences — now
+augmented by hands-on experience with modern large-language-model
+tooling.
+
+## AI-Powered Research & Workflow Consulting
+
+::: {.service-card}
+### Advancing your work with modern AI
+
+I have worked with **researchers, professionals, and organizations
+across a wide range of fields** who are looking to bring modern
+generative-AI tooling into their work in a thoughtful, practical way.
+Engagements can draw on either mainstream cloud-based AI services or
+**locally-hosted large-language-model deployments**, depending on
+what fits best for the work.
+
+Representative capabilities include:
+
+- **Literature and evidence organization** — structured search,
+  triage, indexing, and synthesis across large bodies of research or
+  domain documents, with traceable, verifiable outputs that support
+  the expertise of the author rather than replace it
+- **Document and data-pipeline automation** — ingestion, extraction,
+  summarization, and quality-controlled reporting over heterogeneous
+  document sets (PDFs, spreadsheets, email, specialized file formats)
+- **Statistical and analytical workflow support** — reproducible
+  analyses, simulation studies, and Bayesian modeling prototypes
+- **Custom integrations and small-scale automation** — purpose-built
+  tooling that lets AI agents work safely with your domain-specific
+  software, documents, and databases
+- **Strategic advisory and team enablement** — helping leadership and
+  staff make informed decisions about where AI fits (and where it
+  doesn't), with a focus on validation, confidentiality, and
+  long-term maintainability
+:::
+
+::: {.service-card}
+### Sectors I've worked across
+
+I have applied these tools across a broad range of domains, which
+helps in transferring patterns that work in one field to problems in
+another:
+
+- **Academic and clinical research** — evidence synthesis and
+  collaborative research workflows
+- **Legal and regulatory matters** — document review and organization
+  of case-related materials
+- **Healthcare operations and education** — course design,
+  assessment workflows, and document curation
+- **Professional and creative practices** — LaTeX-based publishing,
+  scientific typesetting, and custom tooling for specialized software
+- **Civic and nonprofit work** — policy analysis, board-level
+  reporting, and long-form document drafting
+:::
 
 ## Expert Witness Services
 
@@ -35,7 +89,9 @@ engagements that typically include:
 :::
 
 ::: {.service-card}
-### Areas of emphasis
+### Representative case experience
+
+Past matters have involved:
 
 - Medical malpractice involving diagnostic performance and clinical
   decision-making
@@ -45,28 +101,15 @@ engagements that typically include:
   or causal inference
 :::
 
-::: {.service-card}
-### Engagement & fees
-
-I take a limited number of matters each year to ensure careful,
-personal attention. My current **fee schedule is available on request** —
-please reach out via [email](mailto:berg@psu.edu) with a brief
-description of the matter, jurisdiction, and anticipated timeline, and
-I will respond with availability and rates.
-
-A curriculum vitae is available [here](Berg-CV.pdf) for filings and
-disclosures.
-:::
-
 ## Independent Data Monitoring
 
 ::: {.service-card}
 ### DSMC/DMC roles
 
-I serve as an independent biostatistician on Data Safety and Monitoring
-Committees (DSMCs) and Data Monitoring Committees (DMCs) for
-investigator-initiated and industry-sponsored clinical trials.
-Responsibilities include:
+I have served as an independent biostatistician on Data Safety and
+Monitoring Committees (DSMCs) and Data Monitoring Committees (DMCs)
+for investigator-initiated and industry-sponsored clinical trials.
+Responsibilities have included:
 
 - Pre-trial review of statistical-monitoring plans and stopping rules
 - Unblinded interim analyses of efficacy and safety
@@ -83,8 +126,7 @@ Responsibilities include:
   Cancer Institute research-oversight committees.
 - **Industry-sponsored pharmaceutical DMCs** — Independent biostatistician
   on multiple sponsor-led clinical trials spanning oncology and other
-  therapeutic areas. *(Specific sponsors and study details are governed
-  by confidentiality agreements.)*
+  therapeutic areas.
 
 If your sponsor or academic center is seeking an independent DMC
 biostatistician, please [contact me](contact.qmd) to discuss fit,

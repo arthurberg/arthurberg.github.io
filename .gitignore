@@ -17,4 +17,7 @@ __pycache__/
 # The parsed, sanitized versions live in data/grants.yml and data/protocols.yml.
 /myresearch.psu.edu/
 
+# Personal/local notes (e.g., LinkedIn build-out guide)
+/linkedin/
+
 **/*.quarto_ipynb

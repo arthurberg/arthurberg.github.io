@@ -120,6 +120,22 @@ Hershey, PA 17033-0855
 - MATH 96: Intermediate Algebra and Geometry
 - MATH 119: Elementary Statistics
 
+## Selected Publications
+
+A short list of featured papers chosen for their breadth across methodological
+biostatistics, clinical collaboration, and interdisciplinary applications of
+data science. For the full list (270+ publications), see the
+[Research page](research.qmd).
+
+- **Berg, A.** (2025). [Entropy-based Sound-Character Mapping for Chinese Character Learning](https://doi.org/10.46451/ijclt.20250205). *International Journal of Chinese Language Teaching*, 6(2), 63–89.
+- Farkas, G.J., Caldera, L.J., …, **Berg, A.** (2025). Cardiometabolic Risk in Chronic Spinal Cord Injury: A Systematic Review with Meta-Analysis and Temporal and Geographical Trends. *Journal of Clinical Medicine*, 14(2872), 1–31.
+- Hawila, N., **Berg, A.**, et al. (2023). [Exact-corrected confidence interval for risk difference in noninferiority binomial trials](https://doi.org/10.1111/biom.13688). *Biometrics*, 79(2), 1133–1144.
+- Hawila, N., **Berg, A.** (2021). [Assessing the impact of COVID-19 on registered interventional clinical trials](https://doi.org/10.1111/cts.13034). *Clinical and Translational Science*, 14(3), 1147–1154.
+- **Berg, A.** (2021). [Statistical analysis of the International Mathematical Olympiad](https://doi.org/10.1007/s00283-020-10015-z). *The Mathematical Intelligencer*, 43(1), 105–112.
+- Liao, J.G., **Berg, A.** (2019). [Sharpening Jensen's inequality](https://doi.org/10.1080/00031305.2017.1419145). *The American Statistician*, 73(3), 278–281.
+
+[See all publications →](research.qmd){.btn .btn-outline-secondary}
+
 ## Selected Extramural Support
 
 **Current (selected)**

@@ -961,6 +961,9 @@ main.content table tbody td {
 }
 
 /* ——— TOC (sidebar) ——— */
+/* Keep the flat top-level TOC visible — we always want it expanded regardless of
+   Bootstrap's default .collapse behavior. */
+#TOC > ul.collapse { display: block; }
 #TOC a, #quarto-margin-sidebar a { color: var(--ink-500); }
 #TOC a.active, #quarto-margin-sidebar a.active {
   color: var(--teal-800);

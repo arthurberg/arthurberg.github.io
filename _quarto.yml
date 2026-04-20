@@ -15,12 +15,12 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: cv.qmd
+        text: CV
       - href: research.qmd
         text: Research
       - href: bcc.qmd
         text: BCC
-      - href: cv.qmd
-        text: CV
       - href: services.qmd
         text: Services
       - href: music.qmd
@@ -41,6 +41,7 @@ format:
       dark: darkly
     css: styles.css
     toc: true
+    toc-expand: true
     link-external-newwindow: true
     anchor-sections: true
     smooth-scroll: true
