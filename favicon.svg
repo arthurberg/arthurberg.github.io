@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#043D42"/>
-  <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle"
-        font-family="Georgia, 'Source Serif 4', serif" font-weight="700" font-size="36"
-        fill="#e5b845">AB</text>
+  <circle cx="32" cy="32" r="32" fill="#6b1f1f"/>
+  <text x="36%" y="56%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Source Serif 4, Georgia, serif" font-weight="700" font-size="44"
+        fill="#f5e7bf" stroke="#e5b845" stroke-width="1.2" paint-order="stroke fill">A</text>
+  <text x="64%" y="56%" dominant-baseline="middle" text-anchor="middle"
+        font-family="Source Serif 4, Georgia, serif" font-weight="700" font-size="44"
+        fill="#f5e7bf" fill-opacity="0.6" stroke="#e5b845" stroke-width="1.2" paint-order="stroke fill">B</text>
 </svg>
