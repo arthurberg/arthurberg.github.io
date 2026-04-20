@@ -540,11 +540,11 @@ h4.pub-type {
   border-left-color: #b45309;
   background: rgba(180, 83, 9, 0.045);
 }
-.grant-entry {
+.pub-entry.grant-entry {
   border-left-color: #15803d;
   background: rgba(21, 128, 61, 0.045);
 }
-.protocol-entry {
+.pub-entry.protocol-entry {
   border-left-color: #7c3aed;
   background: rgba(124, 58, 237, 0.045);
 }
@@ -559,11 +559,11 @@ h4.pub-type {
   border-left-color: #fbbf24;
   background: rgba(251, 191, 36, 0.06);
 }
-[data-bs-theme="dark"] .grant-entry {
+[data-bs-theme="dark"] .pub-entry.grant-entry {
   border-left-color: #4ade80;
   background: rgba(74, 222, 128, 0.06);
 }
-[data-bs-theme="dark"] .protocol-entry {
+[data-bs-theme="dark"] .pub-entry.protocol-entry {
   border-left-color: #a78bfa;
   background: rgba(167, 139, 250, 0.06);
 }
