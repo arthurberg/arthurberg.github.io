@@ -529,13 +529,44 @@ h4.pub-type {
 [data-bs-theme="dark"] .grant-status-heading[data-status="pending"] { color: #facc15; border-left-color: #facc15; }
 [data-bs-theme="dark"] .grant-status-heading[data-status="completed"] { color: #9aa3a9; border-left-color: #5a6770; }
 
-/* Grant / protocol entries reuse .pub-entry base styling */
-.grant-entry { border-left-color: #15803d; }
-.grant-entry:hover { border-left-color: var(--gold-500); }
-.protocol-entry { border-left-color: #7c3aed; }
+/* Per-type accent: left border color + a very subtle background tint
+   distinguish publications, abstracts, grants, and protocols at a glance.
+   Hover rolls each border to the gold highlight. */
+.pub-entry[data-type="publication"] {
+  border-left-color: var(--teal-600);
+  background: rgba(4, 61, 66, 0.025);
+}
+.pub-entry[data-type="abstract"] {
+  border-left-color: #b45309;
+  background: rgba(180, 83, 9, 0.045);
+}
+.grant-entry {
+  border-left-color: #15803d;
+  background: rgba(21, 128, 61, 0.045);
+}
+.protocol-entry {
+  border-left-color: #7c3aed;
+  background: rgba(124, 58, 237, 0.045);
+}
+.pub-entry:hover,
+.grant-entry:hover,
 .protocol-entry:hover { border-left-color: var(--gold-500); }
-[data-bs-theme="dark"] .grant-entry { border-left-color: #4ade80; }
-[data-bs-theme="dark"] .protocol-entry { border-left-color: #a78bfa; }
+[data-bs-theme="dark"] .pub-entry[data-type="publication"] {
+  border-left-color: var(--teal-400);
+  background: rgba(14, 165, 233, 0.06);
+}
+[data-bs-theme="dark"] .pub-entry[data-type="abstract"] {
+  border-left-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.06);
+}
+[data-bs-theme="dark"] .grant-entry {
+  border-left-color: #4ade80;
+  background: rgba(74, 222, 128, 0.06);
+}
+[data-bs-theme="dark"] .protocol-entry {
+  border-left-color: #a78bfa;
+  background: rgba(167, 139, 250, 0.06);
+}
 
 /* ——— Empty-state card when filter returns zero ——— */
 #pub-empty-state {
@@ -958,6 +989,24 @@ main.content table tbody td {
 #back-to-top:hover {
   background: var(--gold-500);
   color: var(--teal-900);
+}
+
+/* ——— Publication annotation (BibDesk `annote` field) ——— */
+.pub-annote {
+  margin-top: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink-500);
+  background: rgba(4, 61, 66, 0.035);
+  border-left: 2px solid rgba(4, 61, 66, 0.25);
+  border-radius: 0 4px 4px 0;
+}
+.pub-annote a { word-break: break-word; }
+[data-bs-theme="dark"] .pub-annote {
+  color: #cfd4d6;
+  background: rgba(255, 255, 255, 0.03);
+  border-left-color: rgba(255, 255, 255, 0.20);
 }
 
 /* ——— TOC (sidebar) ——— */

@@ -82,6 +82,7 @@ def area_tags_html(areas: list[str]) -> str:
 TYPE_FILTERS = [
     ("all", "Everything"),
     ("publication", "Publications"),
+    ("abstract", "Abstracts"),
     ("grant", "Grants"),
     ("protocol", "Protocols"),
 ]
@@ -134,6 +135,29 @@ def pdf_filename(bibkey: str) -> str:
 
 # ——— Publications rendering ———
 
+_ANNOTE_CLEAN_RX = [
+    (re.compile(r"\\emph\{([^{}]*)\}"), r"<em>\1</em>"),
+    (re.compile(r"\\textit\{([^{}]*)\}"), r"<em>\1</em>"),
+    (re.compile(r"\\textbf\{([^{}]*)\}"), r"<strong>\1</strong>"),
+    (re.compile(r"\\url\{([^{}]*)\}"), r'<a href="\1">\1</a>'),
+    (re.compile(r"\\MYhref\{([^{}]*)\}\{[^{}]*\}"), r'<a href="\1">\1</a>'),
+    (re.compile(r"\\href\{([^{}]*)\}\{([^{}]*)\}"), r'<a href="\1">\2</a>'),
+    (re.compile(r"\\nolinkurl\{([^{}]*)\}"), r"\1"),
+    (re.compile(r"\\&"), "&amp;"),
+]
+
+
+def format_annote(raw: str) -> str:
+    if not raw:
+        return ""
+    text = raw.replace("\n", " ")
+    for pat, repl in _ANNOTE_CLEAN_RX:
+        text = pat.sub(repl, text)
+    # drop any stray { } left behind from nested latex
+    text = text.replace("{", "").replace("}", "")
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def render_pub(entry: dict) -> str:
     bibkey = entry.get("ID", "")
     authors = format_authors(entry.get("author", ""))
@@ -146,6 +170,7 @@ def render_pub(entry: dict) -> str:
     pages = clean(entry.get("pages", ""))
     doi = entry.get("doi", "").strip()
     url = entry.get("url", "").strip()
+    annote = format_annote(entry.get("annote", "") or entry.get("annotation", ""))
 
     vp = ""
     if venue:
@@ -172,14 +197,16 @@ def render_pub(entry: dict) -> str:
 
     areas = tag_entry(entry)
     data_areas = " ".join(areas)
+    data_type = "abstract" if entry.get("keywords") == "conference" else "publication"
 
     title_html = f'<span class="pub-title">{title}.</span>'
     venue_html = f' <span class="pub-venue">{vp}</span>' if vp else ""
     meta_html = f'<div class="pub-meta">{authors} ({year}).</div>'
     tags_html = area_tags_html(areas)
-    body_html = f'<div class="pub-body">{title_html}{venue_html}{link_str}{tags_html}</div>'
+    annote_html = f'<div class="pub-annote">{annote}</div>' if annote else ""
+    body_html = f'<div class="pub-body">{title_html}{venue_html}{link_str}{tags_html}{annote_html}</div>'
     return (
-        f'<div class="pub-entry" data-type="publication" data-areas="{data_areas}">'
+        f'<div class="pub-entry" data-type="{data_type}" data-areas="{data_areas}">'
         f'{meta_html}{body_html}</div>'
     )
 
@@ -432,10 +459,13 @@ def load_protocols() -> list[dict]:
 # ——— Assemble output ———
 
 def research_stats_block(entries: list[dict], grants: list[dict], protocols: list[dict]) -> str:
+    n_abs = sum(1 for e in entries if e.get("keywords") == "conference")
+    n_pub = len(entries) - n_abs
     return (
         '::: {.pub-summary}\n'
         '::: {.pub-stats}\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{len(entries)}</span><span class="pub-stat-label">publications</span></div>\n'
+        f'<div class="pub-stat"><span class="pub-stat-num">{n_pub}</span><span class="pub-stat-label">publications</span></div>\n'
+        f'<div class="pub-stat"><span class="pub-stat-num">{n_abs}</span><span class="pub-stat-label">abstracts</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{len(grants)}</span><span class="pub-stat-label">grants</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{len(protocols)}</span><span class="pub-stat-label">protocols</span></div>\n'
         ':::\n:::\n'
@@ -443,29 +473,28 @@ def research_stats_block(entries: list[dict], grants: list[dict], protocols: lis
 
 
 def pub_only_stats_block(entries: list[dict]) -> str:
-    total = len(entries)
+    n_abs = sum(1 for e in entries if e.get("keywords") == "conference")
+    n_pub = len(entries) - n_abs
     years = sorted({re.sub(r"\D", "", e["year"]) for e in entries if e.get("year")})
     year_range = f"{years[0]}–{years[-1]}" if years else ""
-    n_article = sum(1 for e in entries if e.get("ENTRYTYPE", "").lower() == "article")
-    n_proc = sum(1 for e in entries if e.get("ENTRYTYPE", "").lower() == "inproceedings")
     n_pdf = sum(1 for e in entries if (PDF_DIR / pdf_filename(e.get("ID", ""))).exists())
 
     return (
         '::: {.pub-summary}\n'
         '::: {.pub-stats}\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{total}</span><span class="pub-stat-label">publications</span></div>\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{n_article}</span><span class="pub-stat-label">journal</span></div>\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{n_proc}</span><span class="pub-stat-label">proceedings</span></div>\n'
+        f'<div class="pub-stat"><span class="pub-stat-num">{n_pub}</span><span class="pub-stat-label">publications</span></div>\n'
+        f'<div class="pub-stat"><span class="pub-stat-num">{n_abs}</span><span class="pub-stat-label">abstracts</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{n_pdf}</span><span class="pub-stat-label">with PDFs</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{year_range}</span><span class="pub-stat-label">years</span></div>\n'
         ':::\n:::\n'
     )
 
 
-def build_publications_section(entries: list[dict]) -> list[str]:
+def _build_entries_section(entries: list[dict], section_id: str, data_section: str,
+                           heading: str) -> list[str]:
     out = [
-        '<section id="sec-publications" class="research-section" data-section="publication">',
-        '<h2 class="section-heading">Publications</h2>',
+        f'<section id="{section_id}" class="research-section" data-section="{data_section}">',
+        f'<h2 class="section-heading">{heading}</h2>',
     ]
     current_year = None
     current_type = None
@@ -482,6 +511,18 @@ def build_publications_section(entries: list[dict]) -> list[str]:
             current_type = t
         out.append(render_pub(e))
     out.append('</section>')
+    return out
+
+
+def build_publications_section(entries: list[dict]) -> list[str]:
+    pubs = [e for e in entries if e.get("keywords") != "conference"]
+    abstracts = [e for e in entries if e.get("keywords") == "conference"]
+    out: list[str] = []
+    if pubs:
+        out.extend(_build_entries_section(pubs, "sec-publications", "publication", "Publications"))
+    if abstracts:
+        out.extend(_build_entries_section(abstracts, "sec-abstracts", "abstract",
+                                          "Abstracts &amp; Conference Presentations"))
     return out
 
 

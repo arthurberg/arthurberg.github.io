@@ -20,4 +20,7 @@ __pycache__/
 # Personal/local notes (e.g., LinkedIn build-out guide)
 /linkedin/
 
+# Local review documents — not for publication
+/reviews/
+
 **/*.quarto_ipynb
