@@ -27,3 +27,6 @@ __pycache__/
 
 # Claude Code project metadata
 /.claude/
+
+# Local bulletin-cover helper (uses macOS-only qlmanage paths)
+/scripts/extract_bulletin_covers.py
