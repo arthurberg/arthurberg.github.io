@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Music at Trinity Lemoyne — v3</title>
+<title>Music Calendar</title>
 <style>
   :root {
     --teal-800: #043D42;
@@ -24,6 +24,22 @@
   }
   h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; margin: 0 0 0.2rem; color: var(--teal-800); font-size: 1.75rem; }
   .page-sub { color: var(--ink-500); font-size: 0.95rem; margin-bottom: 1.2rem; }
+
+  /* Invitation block at the foot of the calendar */
+  .join-invite {
+    margin: 2rem auto 0.5rem;
+    max-width: 900px;
+    padding: 0.9rem 1.2rem;
+    background: linear-gradient(135deg, #fffaf0 0%, #f7ead0 100%);
+    border: 1px solid rgba(179, 138, 32, 0.28);
+    border-left: 4px solid var(--gold-500);
+    border-radius: 6px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-700);
+  }
+  .join-invite strong { color: #6b1f1f; }
+  .join-invite a { color: #6b1f1f; font-weight: 600; }
 
   .tabs {
     display: flex;
@@ -111,7 +127,9 @@
   .group-tag.choir { background: #0d5a3a; color: #fff; }
   .group-tag.youth { background: #8a5700; color: #fff; }
   .group-tag.bells { background: #4a1e6a; color: #fff; }
-  .group-tag.flute { background: #256a3b; color: #fff; }
+  .group-tag.organ { background: #1f3a5a; color: #fff; }
+  .group-tag.piano { background: #3a2a6a; color: #fff; }
+  .group-tag.flute { background: #0a5c58; color: #fff; }
   .group-tag.violin { background: #6a1e1e; color: #fff; }
   .group-tag.vocalist { background: #6a3a0c; color: #fff; }
   .group-tag.assembly { background: #4b5563; color: #fff; }
@@ -278,7 +296,8 @@
   .tag.youth { background: #fff1d6; color: #8a5700; }
   .tag.bells { background: #f1e7f5; color: #4a1e6a; }
   .tag.organ { background: #e7eef5; color: #1f3a5a; }
-  .tag.flute { background: #e9f4ee; color: #256a3b; }
+  .tag.piano { background: #e5e0ec; color: #3a2a6a; }
+  .tag.flute { background: #d7eeea; color: #0a5c58; }
   .tag.violin { background: #f5e7e7; color: #6a1e1e; }
   .tag.vocalist { background: #f5ebe0; color: #6a3a0c; }
   .tag.assembly { background: #e5e7eb; color: #374151; }
@@ -434,7 +453,7 @@
         </div>
       </header>
       <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+2:42-47&amp;version=nrsvae" target="_blank" rel="noopener">Acts 2:42-47</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+23&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 23</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Peter+2:19-25&amp;version=nrsvae" target="_blank" rel="noopener">1 Peter 2:19-25</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+10:1-10&amp;version=nrsvae" target="_blank" rel="noopener">John 10:1-10</a></div>
-      <div class="intro">Good Shepherd Sunday turns on Jesus&#x27; promise: &quot;I came that they may have life, and have it abundantly.&quot; Psalm 23 names what that abundance looks like — not wealth but presence, a shepherd beside still waters, a table prepared even among enemies, goodness and mercy following close behind. 1 Peter calls this same shepherd the guardian of our souls, and Acts shows the first Christians living his abundance together — breaking bread, sharing what they have, making sure no one goes without.</div>
+      <div class="intro">&quot;The Lord is my shepherd&quot; — the psalm we have known since childhood meets its fullest voice in today&#x27;s gospel. Jesus calls himself the gate, the way in and out of abundant life. We come beside still waters here each week, and leave with the same shepherd still walking beside us.</div>
       <div class="items">
         <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=CPCN8a6Pok0" target="_blank" rel="noopener">The King Of Love, My Shepherd Is</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>The King of Love My Shepherd Is</em> paraphrases Psalm 23, the psalm appointed for today. The Good Shepherd who leads beside still waters and through the valley of death is the same one Jesus describes in John 10—the one who calls his own sheep by name and leads them out to abundant life.</div></div>
         <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cga1298-always-in-your-presence/8001/" target="_blank" rel="noopener">Always in Your Presence</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Always in Your Presence</em> reflects the intimate relationship between shepherd and flock described in both the psalm and the Gospel—the assurance that we dwell in God's presence, guided and protected, as Peter writes: <span class="quote">“You have returned to the shepherd and guardian of your souls.”</span></div></div>
@@ -731,7 +750,7 @@
       <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+42:1-9&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 42:1-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+29&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 29</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Acts+10:34-43&amp;version=nrsvae" target="_blank" rel="noopener">Acts 10:34-43</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+3:13-17&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 3:13-17</a></div>
       <div class="intro">At the Jordan, Jesus steps into the water and is named Beloved. Isaiah calls this Servant the one who will bring justice — quietly, patiently, without breaking a bruised reed. In our own baptism we are named beloved too, and sent into a world that still needs the gentle justice of Christ.</div>
       <div class="items">
-        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Introducing ELW Setting Two</span> <span class="tag organ">Piano</span><span class="tag assembly">Guitar</span></div></div><div class="desc">Arthur and Ed will introduce <strong>Setting Two</strong> from <em>Evangelical Lutheran Worship</em> (pp. 120–137), by Marty Haugen. Crafted with piano accompaniment in mind, this sung liturgy will guide our worship throughout the Time after Epiphany.</div></div>
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Introducing ELW Setting Two</span> <span class="tag piano">Piano</span><span class="tag assembly">Guitar</span></div></div><div class="desc">Arthur and Ed will introduce <strong>Setting Two</strong> from <em>Evangelical Lutheran Worship</em> (pp. 120–137), by Marty Haugen. Crafted with piano accompaniment in mind, this sung liturgy will guide our worship throughout the Time after Epiphany.</div></div>
         <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=vDmAYNq2YDw" target="_blank" rel="noopener">Baptized in Water</a> <span class="tag youth">Youth</span><span class="tag choir">Choir</span></div></div><div class="desc">This offertory hymn, <em>Baptized in Water</em>, places our praise at the font. In water and Spirit, God names us beloved and sends us to live with mercy and courage.</div></div>
         <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=vYPWDw3J4MU" target="_blank" rel="noopener">I&#x27;ve Just Come from the Fountain</a> </div></div><div class="desc"><em>I've Just Come from the Fountain</em> celebrates grace that is not only remembered but lived. Refreshed by God's mercy, we go in peace to serve our neighbors with gladness.</div></div>
       </div>
@@ -823,7 +842,7 @@
       <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+58:1-9a+[9b-12]&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 58:1-9a [9b-12]</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+112:1-9+[10]&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 112:1-9 [10]</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Corinthians+2:1-12+[13-16]&amp;version=nrsvae" target="_blank" rel="noopener">1 Corinthians 2:1-12 [13-16]</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+5:13-20&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 5:13-20</a></div>
       <div class="intro">Isaiah is blunt: the fast that God chooses is the loosing of every unjust bond and the sharing of bread. Jesus takes up the same thread — you are salt and light, he says, if you are willing to be flavor and illumination for somebody else&#x27;s life. Baptism commissions us for exactly that work.</div>
       <div class="items">
-        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=Frobrm1t61A" target="_blank" rel="noopener">Go Light Your World</a> </div></div><div class="desc"><em>Go Light Your World</em> calls us to carry Christ's flame into every corner of darkness—letting our light shine before others so they may give glory to our Father in heaven.</div></div>
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=Frobrm1t61A" target="_blank" rel="noopener">Go Light Your World</a> <span class="tag vocalist">Vocalist</span></div></div><div class="desc"><em>Go Light Your World</em> calls us to carry Christ's flame into every corner of darkness—letting our light shine before others so they may give glory to our Father in heaven.</div></div>
         <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cgb586-lord-whose-love-through-humble-service-god-whose-giving-knows-no-ending/1821/" target="_blank" rel="noopener">Lord, Whose Love through Humble Service</a> <span class="tag bells">Handbells</span></div></div><div class="desc"><em>Lord, Whose Love through Humble Service</em> echoes Isaiah's call: share your bread with the hungry, bring the homeless poor into your house, and your light shall break forth like the dawn.</div></div>
         <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=G88rhg1W4xw" target="_blank" rel="noopener">Bring Forth the Kingdom</a> </div></div><div class="desc"><em>Bring Forth the Kingdom</em> sends us as salt and light. Do justice, love mercy, let your good works shine before others to the glory of the Father.</div></div>
       </div>
@@ -839,7 +858,7 @@
           <span class="star" title="Festival / principal feast">★</span>
         </div>
         <div class="rhs">
-          <span class="group-tag choir">Choir</span>
+          <span class="group-tag choir">Choir</span><span class="group-tag vocalist">Vocalist</span>
           
         </div>
       </header>
@@ -862,7 +881,7 @@
           <span class="star" title="Festival / principal feast">★</span>
         </div>
         <div class="rhs">
-          <span class="group-tag assembly">All</span>
+          <span class="group-tag choir">Choir</span><span class="group-tag youth">Youth Choir</span><span class="group-tag bells">Handbells</span><span class="group-tag vocalist">Vocalist</span>
           
         </div>
       </header>
@@ -915,7 +934,7 @@
       <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Jeremiah+31:7-14&amp;version=nrsvae" target="_blank" rel="noopener">Jeremiah 31:7-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+147:12-20&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 147:12-20</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Ephesians+1:3-14&amp;version=nrsvae" target="_blank" rel="noopener">Ephesians 1:3-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+1:[1-9]+10-18&amp;version=nrsvae" target="_blank" rel="noopener">John 1:[1-9] 10-18</a></div>
       <div class="intro">The great prologue of John sings the mystery: in Jesus, the Word who was with God from the beginning has pitched a tent among us. What sounds abstract becomes intimate at font and table — ordinary bread, ordinary water, ordinary words that carry the fullness of grace and truth.</div>
       <div class="items">
-        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Dearest Jesus, We Are Here</span> <span class="tag organ">Piano</span></div></div><div class="desc">Today we hear music shaped by the day’s theme: the Word made flesh, present among us. Valerie A. Floeter’s <span class="quote">“Dearest Jesus, We Are Here”</span> combines <span class="quote">“Dearest Jesus, at Your Word”</span> (Liebster Jesu, wir sind hier) with <span class="quote">“Word of God, Come Down on Earth,”</span> inviting us to receive Christ’s light and grace in Word and Sacrament.</div></div>
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Dearest Jesus, We Are Here</span> <span class="tag piano">Piano</span></div></div><div class="desc">Today we hear music shaped by the day’s theme: the Word made flesh, present among us. Valerie A. Floeter’s <span class="quote">“Dearest Jesus, We Are Here”</span> combines <span class="quote">“Dearest Jesus, at Your Word”</span> (Liebster Jesu, wir sind hier) with <span class="quote">“Word of God, Come Down on Earth,”</span> inviting us to receive Christ’s light and grace in Word and Sacrament.</div></div>
         <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=l1ogh31Sc1g" target="_blank" rel="noopener">For the Beauty of the Earth</a> <span class="tag choir">Choir</span><span class="tag flute">Flute</span><span class="tag assembly">Assembly</span></div></div><div class="desc"><em>For the Beauty of the Earth</em> (John Rutter) thanks God for the gifts of creation and love, as we offer our gratitude and our gifts back to God.</div></div>
         <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=dQl4izxPeNU" target="_blank" rel="noopener">King of Kings</a> </div></div><div class="desc">Our postlude, <em>King of Kings</em> (Hillsong Worship), sends us out rejoicing in the One through whom all things came into being and in whom heaven and earth are gathered up. Having heard that the Word became flesh and made his home among us, we go in praise and thanksgiving, ready to bear the light of Christ the King into the world.</div></div>
       </div>
@@ -1244,6 +1263,14 @@
       <div class="clear"></div>
     </section></div>
 </div>
+
+<aside class="join-invite">
+  <strong>All are welcome to participate.</strong> New singers, ringers, and
+  instrumentalists — no audition required, just a love of sharing music in
+  worship. Drop in for a rehearsal (adult choir Weds 8&thinsp;pm; handbells
+  Weds 7&thinsp;pm; youth choir after Sunday School), or email
+  <a href="mailto:TrinityLemoyneMusic@gmail.com">TrinityLemoyneMusic@gmail.com</a>.
+</aside>
 
 <script>
   // Map of sunday dates to their season, built at mockup render time.

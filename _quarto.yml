@@ -28,6 +28,9 @@ website:
       - href: contact.qmd
         text: Contact
     right:
+      - icon: calendar-week
+        href: music-calendar.html
+        aria-label: Weekly Music Calendar
       - icon: github
         href: https://github.com/arthurberg
         aria-label: GitHub
@@ -36,9 +39,7 @@ website:
         aria-label: Email
 format:
   html:
-    theme:
-      light: litera
-      dark: darkly
+    theme: litera
     css: styles.css
     toc: true
     toc-expand: true

@@ -1,5 +1,6 @@
 ---
 title: "Music Ministry"
+pagetitle: "Music"
 subtitle: "Director of Music, Trinity Evangelical Lutheran Church — Lemoyne, Pennsylvania"
 toc: true
 toc-depth: 2
@@ -12,15 +13,6 @@ where my responsibilities include planning and leading the music for
 weekly worship, selecting hymns and service music aligned with the
 lectionary, directing the choir and handbells, and accompanying
 congregational song from the organ and piano.
-
-## Weekly Music Calendar
-
-::: {.calendar-teaser}
-[<i class="fa-solid fa-calendar-days"></i> **Open the Weekly Music Calendar** →](./music-calendar.html){.calendar-teaser-cta}
-
-Special music for each service of the lectionary year, with brief notes
-on how each piece connects to the theme of the day.
-:::
 
 ## Current Role
 
@@ -35,8 +27,27 @@ September 2025 – present
 - Preparation of service bulletins, calendars, music listings, and custom score engravings in [MuseScore](https://musescore.org/)
 :::
 
+New singers, ringers, and instrumentalists are always welcome — no
+audition required, just a love of sharing music in worship. Come try a
+rehearsal, show up on a Sunday morning, or get in touch with any
+questions.
+
+- **Adult Choir** — Wednesdays 8:00 pm *(plus Sunday 8:30 am when the choir sings)*
+- **Handbell Choir** — Wednesdays 7:00 pm *(plus Sunday 8:45 am when the bells play)*
+- **Youth Choir** — Sunday mornings following Sunday School
+- **Instrumentalists** — any instrument welcome; please reach out so we can plan a piece together
+
 Contact for music-ministry inquiries:
 [TrinityLemoyneMusic@gmail.com](mailto:TrinityLemoyneMusic@gmail.com)
+
+## Weekly Music Calendar
+
+::: {.calendar-teaser}
+[<i class="fa-solid fa-calendar-days"></i> **Open the Weekly Music Calendar** →](./music-calendar.html){.calendar-teaser-cta}
+
+Special music for each service of the lectionary year, with brief notes
+on how each piece connects to the theme of the day.
+:::
 
 ## Background
 
