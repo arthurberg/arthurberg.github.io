@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Music at Trinity Lemoyne — v3</title>
+<style>
+  :root {
+    --teal-800: #043D42;
+    --teal-600: #0c7680;
+    --gold-500: #b38a20;
+    --ink-700: #32404b;
+    --ink-500: #6b7684;
+  }
+  body {
+    font-family: Inter, system-ui, sans-serif;
+    background: #fafafa;
+    color: var(--ink-700);
+    margin: 0;
+    padding: 1.5rem 1rem;
+    line-height: 1.5;
+    max-width: 880px;
+    margin-left: auto; margin-right: auto;
+  }
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; margin: 0 0 0.2rem; color: var(--teal-800); font-size: 1.75rem; }
+  .page-sub { color: var(--ink-500); font-size: 0.95rem; margin-bottom: 1.2rem; }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    border-bottom: 2px solid var(--teal-800);
+    margin-bottom: 1.25rem;
+  }
+  .tab {
+    appearance: none;
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: 3px solid var(--tab-accent);
+    padding: 0.5rem 0.95rem;
+    font: inherit;
+    color: var(--ink-500);
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    font-weight: 500;
+    font-family: "Source Serif 4", Georgia, serif;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+  .tab:hover { color: var(--teal-800); background: #eef2f3; }
+  .tab.active {
+    background: var(--tab-accent);
+    color: #fff;
+    font-weight: 600;
+    border-color: var(--tab-accent);
+  }
+  .tab .count {
+    display: inline-block;
+    font-size: 0.75rem;
+    background: rgba(255,255,255,0.22);
+    padding: 0 0.35rem;
+    border-radius: 999px;
+    margin-left: 0.3rem;
+    vertical-align: 0.1em;
+  }
+  .tab:not(.active) .count { background: #eef2f3; color: var(--ink-500); }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .week {
+    background: var(--row-bg);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-left: 4px solid var(--row-accent);
+    border-radius: 8px;
+    margin: 0.7rem 0;
+    padding: 0.75rem 1rem 0.6rem;
+  }
+  .week-head {
+    display: flex; justify-content: space-between;
+    align-items: baseline; gap: 0.75rem;
+    flex-wrap: wrap; margin-bottom: 0.5rem;
+  }
+  .week-head .lhs { display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
+  .week-head .rhs { display: flex; align-items: baseline; gap: 0.3rem; flex-wrap: wrap; }
+  .week-head .date { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; color: var(--teal-800); font-size: 1.05rem; }
+  .week-head .sub { font-size: 0.85rem; color: var(--ink-500); }
+  .star { color: #b38a20; font-size: 0.95rem; }
+
+  /* Feasts + festivals: lift the subtitle so the day name (e.g.
+     "Christmas Eve", "Easter Day") carries visual weight */
+  .week-head.festival .sub {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--row-accent, #b38a20);
+    letter-spacing: 0.01em;
+  }
+  .week-head.festival .star { font-size: 1.1rem; }
+  .note-tag { font-size: 0.78rem; color: var(--gold-500); font-style: italic; }
+
+  .group-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.12rem 0.55rem;
+    border-radius: 4px;
+  }
+  .group-tag.choir { background: #0d5a3a; color: #fff; }
+  .group-tag.youth { background: #8a5700; color: #fff; }
+  .group-tag.bells { background: #4a1e6a; color: #fff; }
+  .group-tag.flute { background: #256a3b; color: #fff; }
+  .group-tag.violin { background: #6a1e1e; color: #fff; }
+  .group-tag.vocalist { background: #6a3a0c; color: #fff; }
+  .group-tag.assembly { background: #4b5563; color: #fff; }
+
+  .items { border-top: 1px dashed rgba(0,0,0,0.07); padding-top: 0.4rem; }
+  .item-row {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 0.15rem 0.7rem;
+    padding: 0.3rem 0;
+    align-items: baseline;
+  }
+  .item-row .label {
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    color: var(--teal-800);
+    padding-top: 0.15em;
+  }
+  .item-row .title { font-weight: 600; color: var(--ink-700); }
+  .item-row .title-link {
+    font-weight: 600;
+    color: var(--ink-700);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--teal-600);
+  }
+  .item-row .title-link:hover { color: var(--teal-800); border-bottom-color: var(--gold-500); }
+  .item-row .title-line { font-size: 0.94rem; line-height: 1.45; }
+  .item-row .desc {
+    grid-column: 2;
+    margin: 0.2rem 0 0.3rem;
+    padding: 0.1rem 0 0.1rem 0.85rem;
+    border-left: 2px solid rgba(179, 138, 32, 0.35);
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #545b66;
+  }
+  .item-row .desc em { font-style: italic; color: var(--teal-800); font-weight: 500; }
+  /* Quoted lyric / scripture phrases: deep burgundy italic with a bolder
+     first-letter (the smart-quote mark) so the quotation reads as a
+     small pull-quote. Stands cleanly against the gold card background. */
+  .item-row .desc .quote {
+    color: #6b1f1f;
+    font-weight: 500;
+    font-style: italic;
+  }
+  .item-row .desc .quote::first-letter {
+    font-size: 1.15em;
+    font-weight: 600;
+    color: #b38a20;
+  }
+
+  /* Readings meta line + Intro-to-the-Day (surfaced from bulletin PDF) */
+  .readings {
+    font-size: 0.82rem;
+    color: var(--ink-500);
+    margin: 0.35rem 0 0.5rem;
+    font-family: "Source Serif 4", Georgia, serif;
+  }
+  .readings .rlabel {
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    color: var(--teal-800);
+    margin-right: 0.45em;
+  }
+  .readings a {
+    color: var(--teal-600);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(12, 118, 128, 0.4);
+  }
+  .readings a:hover { color: var(--gold-500); border-bottom-color: var(--gold-500); }
+  .readings .sep { color: var(--ink-300); margin: 0 0.4em; }
+
+  .intro {
+    padding: 0.3rem 0 0.6rem;
+    font-size: 0.93rem;
+    line-height: 1.6;
+    color: var(--ink-700);
+    font-family: "Source Serif 4", Georgia, serif;
+    font-style: italic;
+    border-bottom: 1px dashed rgba(179, 138, 32, 0.4);
+    margin-bottom: 0.6rem;
+  }
+
+  /* Bulletin cover — floated right, text wraps alongside */
+  .cover-float {
+    float: right;
+    width: 220px;
+    margin: 0.1rem 0 0.6rem 1.1rem;
+    shape-outside: margin-box;
+  }
+  .cover-float img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  /* Verse pull-quote (used in place of cover image) */
+  .verse-float {
+    float: right;
+    width: 240px;
+    margin: 0 0 0 1.2rem;
+    padding: 0.2rem 0.8rem 0.2rem;
+    border-left: 3px solid var(--row-accent, #b38a20);
+    background: color-mix(in srgb, var(--row-bg, #faf5e7) 70%, white);
+    border-radius: 2px 6px 6px 2px;
+    shape-outside: margin-box;
+  }
+  .verse-float .verse-text {
+    font-family: Georgia, 'Adobe Caslon Pro', 'Palatino Linotype', serif;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    font-style: italic;
+    color: #3a2a18;
+    quotes: "\201C" "\201D";
+  }
+  .verse-float .verse-text::before { content: open-quote; color: var(--row-accent, #b38a20); margin-right: 0.1em; }
+  .verse-float .verse-text::after  { content: close-quote; color: var(--row-accent, #b38a20); margin-left: 0.05em; }
+  .verse-float .verse-citation {
+    display: block;
+    margin-top: 0.15rem;
+    font-style: normal;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--row-accent, #b38a20);
+  }
+  .clear { clear: both; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 600;
+    padding: 0.08rem 0.45rem; border-radius: 999px;
+    margin-left: 0.25rem; vertical-align: 0.08em;
+  }
+  .sc { font-variant: small-caps; letter-spacing: 0.03em; }
+
+  /* Today's Sunday is spotlighted when the page opens */
+  section.week.current {
+    box-shadow: 0 0 0 3px var(--row-accent, #b38a20),
+                0 6px 16px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  section.week.current::before {
+    content: "Upcoming Sunday";
+    position: absolute;
+    top: -0.65rem; left: 0.9rem;
+    padding: 0.1rem 0.55rem;
+    background: var(--row-accent, #b38a20);
+    color: #fff;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border-radius: 3px;
+  }
+
+  .tag.choir { background: #e7f1ed; color: #0d5a3a; }
+  .tag.youth { background: #fff1d6; color: #8a5700; }
+  .tag.bells { background: #f1e7f5; color: #4a1e6a; }
+  .tag.organ { background: #e7eef5; color: #1f3a5a; }
+  .tag.flute { background: #e9f4ee; color: #256a3b; }
+  .tag.violin { background: #f5e7e7; color: #6a1e1e; }
+  .tag.vocalist { background: #f5ebe0; color: #6a3a0c; }
+  .tag.assembly { background: #e5e7eb; color: #374151; }
+
+  @media (max-width: 620px) {
+    .cover-float { float: none; width: 160px; margin: 0 auto 0.7rem; display: block; }
+    .verse-float { float: none; width: auto; margin: 0 0 0.7rem; }
+  }
+  @media (max-width: 520px) {
+    .item-row { grid-template-columns: 5rem 1fr; gap: 0.1rem 0.5rem; }
+    .item-row .label { font-size: 0.68rem; }
+    .week-head { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Weekly Music Calendar — Trinity Lemoyne</h1>
+<p class="page-sub">Special music for each service of the lectionary year, with brief notes on how each piece connects to the theme of the day. Some titles link to reference recordings; ★ marks feasts and festivals.</p>
+
+<div class="tabs" role="tablist"><button class="tab" data-tab="Trinity" style="--tab-accent: #b38a20;">Trinity <span class="count">1</span></button><button class="tab" data-tab="Pentecost" style="--tab-accent: #8b2a2a;">Pentecost <span class="count">1</span></button><button class="tab active" data-tab="Easter" style="--tab-accent: #b38a20;">Easter <span class="count">7</span></button><button class="tab" data-tab="Holy Week" style="--tab-accent: #8b2a2a;">Holy Week <span class="count">3</span></button><button class="tab" data-tab="Lent" style="--tab-accent: #6b3a8b;">Lent <span class="count">6</span></button><button class="tab" data-tab="Epiphany" style="--tab-accent: #5d8d6e;">Epiphany <span class="count">6</span></button><button class="tab" data-tab="Christmas" style="--tab-accent: #b38a20;">Christmas <span class="count">3</span></button><button class="tab" data-tab="Advent" style="--tab-accent: #6b3a8b;">Advent <span class="count">4</span></button><button class="tab" data-tab="Time After Pentecost" style="--tab-accent: #5d8d6e;">Time After Pentecost <span class="count">10</span></button></div>
+
+<div class="panels">
+<div class="panel" data-panel="Trinity">
+    <section class="week" id="week-2026-05-31" data-date="2026-05-31" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">I am with you always</div><cite class="verse-citation">Matthew 28:20</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">May 31, 2026</span>
+          <span class="sub">Trinity</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span><span class="group-tag vocalist">Vocalist</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Genesis+1:1—2:4a&amp;version=nrsvae" target="_blank" rel="noopener">Genesis 1:1—2:4a</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+8&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 8</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Corinthians+13:11-13&amp;version=nrsvae" target="_blank" rel="noopener">2 Corinthians 13:11-13</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+28:16-20&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 28:16-20</a></div>
+      <div class="intro">The word &quot;trinity&quot; never appears in scripture — and yet the shape of God&#x27;s life comes through on every page. Creator, Christ, Spirit: three ways God is God, each known to us personally. We rest not in having solved the mystery, but in having been embraced by it, and sent out in its name to make more disciples.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=tuIkZjesYp8" target="_blank" rel="noopener">How Majestic Is Your Name</a> <span class="tag vocalist">Vocalist</span></div></div><div class="desc">Michael W. Smith's <em>How Majestic Is Your Name</em> sets Psalm 8, the very psalm appointed for today. <span class="quote">“O Lord, our Lord, how majestic is your name in all the earth”</span>—creation's song to the God who formed it, fitting for a feast that begins where Scripture itself begins: with the Father, the Word, and the Spirit brooding over the waters.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=nf7LY8QdyDQ" target="_blank" rel="noopener">Our Song Shall Rise To Thee</a> <span class="tag choir">Choir</span></div></div><div class="desc">Joseph M. Martin's choral anthem <em>Our Song Shall Rise To Thee</em> builds on Reginald Heber's classic Trinity hymn <span class="quote">“Holy, Holy, Holy”</span> (<span class="sc">Nicaea</span>). <span class="quote">“God in three persons, blessed Trinity”</span>—the same confession that echoes Paul's apostolic greeting from today's second reading: <span class="quote">“The grace of our Lord Jesus Christ, the love of God, and the communion of the Holy Spirit be with you all.”</span></div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=TdqfAkHCZnA" target="_blank" rel="noopener">Great Is the Lord</a> </div></div><div class="desc">Michael W. and Deborah D. Smith's <em>Great Is the Lord</em> sends the congregation out with unrestrained Trinitarian praise. <span class="quote">“Holy, holy, great is the Lord”</span>—a fitting final word on a day when the church is sent, as in Matthew 28, to baptize all nations in the name of the Father, and the Son, and the Holy Spirit.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel" data-panel="Pentecost">
+    <section class="week" id="week-2026-05-24" data-date="2026-05-24" style="--row-bg: #f3e2e2; --row-accent: #8b2a2a;">
+      <aside class="verse-float"><div class="verse-text">Receive the Holy Spirit</div><cite class="verse-citation">John 20:22</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">May 24, 2026</span>
+          <span class="sub">Pentecost</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+2:1-21&amp;version=nrsvae" target="_blank" rel="noopener">Acts 2:1-21</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+104:24-34,+35b&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 104:24-34, 35b</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Corinthians+12:3b-13&amp;version=nrsvae" target="_blank" rel="noopener">1 Corinthians 12:3b-13</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+20:19-23&amp;version=nrsvae" target="_blank" rel="noopener">John 20:19-23</a></div>
+      <div class="intro">Fifty days after Easter, the Spirit arrives like wind and fire, and disciples who had been huddled behind locked doors are suddenly speaking in every language they hear. The same Spirit that hovered over the waters at creation is poured out on ordinary people, equipping them for a work bigger than themselves. That work is still going.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Sheep May Safely Graze</span> <span class="tag flute">Flute</span></div></div><div class="desc">Before the Pentecost wind rushes in, Sidney Lawton's flute duet arrangement of Bach's <em>Sheep May Safely Graze</em> offers a moment of pastoral stillness. The melody sings of the safety of the flock under a faithful shepherd—a gentle reminder, as the church prepares to receive the Spirit, that the same Lord who breathed <span class="quote">“peace be with you”</span> on the disciples (John 20) sends us the Advocate who guards us still.</div></div>
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cgb848-spirituals-for-twelve-bells-five-spirituals-in-f-major/4484/" target="_blank" rel="noopener">Every Time I Feel the Spirit</a> <span class="tag bells">Handbells</span></div></div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cgb923-breathe-on-me-breath-of-god-2-or-3-octaves/6220/" target="_blank" rel="noopener">Breathe on Me, Breath of God</a> <span class="tag bells">Handbells</span></div></div><div class="desc">Anna Laura Page's handbell setting of <span class="sc">Trentham</span> carries Edwin Hatch's prayer <em>Breathe on Me, Breath of God</em>—the essence of Pentecost in a single line. As the Spirit descends in rushing wind and flame in Acts 2, and as Jesus breathes on his disciples in John 20, the bells sound the church's answering prayer: <span class="quote">“breathe on me, breath of God, fill me with life anew.”</span></div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=yTPJtHwDBsI" target="_blank" rel="noopener">Send Us Your Spirit</a> </div></div><div class="desc">Dan Schutte's <em>Send Us Your Spirit</em> sends the congregation out with the very petition of the day: <span class="quote">“Send us your spirit, O Lord; wake the morning light.”</span> It is the prayer that Pentecost both answers and makes our own, as we are sent with the Spirit's gifts <span class="quote">“for the common good”</span> (1 Corinthians 12).</div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel active" data-panel="Easter">
+    <section class="week" id="week-2026-04-05" data-date="2026-04-05" style="--row-bg: #faebc7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Alleluia! Christ is risen!</div></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Apr 5, 2026</span>
+          <span class="sub">Easter Day</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span><span class="group-tag youth">Youth Choir</span><span class="group-tag bells">Handbells</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+10:34-43&amp;version=nrsvae" target="_blank" rel="noopener">Acts 10:34-43</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+118:1-2,+14-24&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 118:1-2, 14-24</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Colossians+3:1-4&amp;version=nrsvae" target="_blank" rel="noopener">Colossians 3:1-4</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+28:1-10&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 28:1-10</a></div>
+      <div class="intro">&quot;This is the day that the Lord has made&quot; — and the reason we dare say it is that Christ is risen. The stone is rolled away; the women come back from the tomb astonished and unable to keep quiet. We cannot keep quiet either. We sing; we feast; and we carry the news back out of the sanctuary with us.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=4GZSjrstvf0" target="_blank" rel="noopener">Rejoice!</a> <span class="tag choir">Choir</span></div></div><div class="desc">Joseph M. Martin's jubilant Easter anthem proclaims the resurrection: <span class="quote">“Christ is risen, sing alleluia; love has triumphed over the grave.”</span> On this Easter morning, the Choir leads us into worship with the joy proclaimed in Psalm 118: rejoice and be glad!</div></div>
+        <div class="item-row"><div class="label">Youth</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=4GZSjrstvf0" target="_blank" rel="noopener">Early Easter Morning</a> <span class="tag youth">Youth</span><span class="tag bells">Handbells</span></div></div><div class="desc">The youth bring the Easter story to life in this joyful canon by Jennifer Kerr Breedlove. Two-part voices and handbells retell the women's visit to the tomb—from weeping at dawn to the angel's proclamation: <span class="quote">“He is risen!”</span></div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=4i-fxbGoM2c" target="_blank" rel="noopener">Redeemer</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Redeemer</em> celebrates the redemptive work of Christ. Acts 10 proclaims that God raised Jesus on the third day, and this gospel-infused anthem responds with exuberant praise: <span class="quote">“I know my Redeemer lives!”</span></div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=sowh2cCxZDc" target="_blank" rel="noopener">This is The Day</a> </div></div><div class="desc"><em>This Is the Day</em> captures the heart of Easter's joy in Psalm 118:24: <span class="quote">“This is the day that the Lord has made.”</span> This sending piece carries the congregation out with the psalm's triumphant declaration, a fitting close to the most celebratory day in the church year.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-04-12" data-date="2026-04-12" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Do not doubt but believe</div><cite class="verse-citation">John 20:27</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Apr 12, 2026</span>
+          <span class="sub">Easter 2</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+2:14a,+22-32&amp;version=nrsvae" target="_blank" rel="noopener">Acts 2:14a, 22-32</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+16&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 16</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Peter+1:3-9&amp;version=nrsvae" target="_blank" rel="noopener">1 Peter 1:3-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+20:19-31&amp;version=nrsvae" target="_blank" rel="noopener">John 20:19-31</a></div>
+      <div class="intro">On the first day of the week — and a week later — Jesus stands among his frightened disciples and simply says, &quot;Peace.&quot; Thomas&#x27;s doubt is met not with rebuke but with an invitation to touch and see. Our own doubts, today and every Sunday, find the same gentle hospitality here.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=UW2LxVz4LgE" target="_blank" rel="noopener">Come Away to the Skies</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Come Away to the Skies</em> invites believers to joyful celebration. As Peter preaches in Acts 2 about the risen Christ, this Easter hymn sustains the season's upward gaze toward the living hope described in 1 Peter.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=TYBEiMg5nyY" target="_blank" rel="noopener">Touch That Soothes and Heals</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Touch That Soothes and Heals</em> speaks of Christ's healing presence. In John 20, the risen Jesus shows his wounds to the disciples and offers peace. Thomas touches those wounds and believes—the touch that soothes and heals is the touch of the risen Lord.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=FB3fdvPQDRI" target="_blank" rel="noopener">Shalom</a> </div></div><div class="desc"><em>Shalom</em>—peace—is the risen Christ's first word to his fearful disciples behind locked doors (John 20:19, 21). This benedictory piece sends the congregation out with the peace that Jesus breathed on his followers.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-04-19" data-date="2026-04-19" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Were not our hearts burning within us?</div><cite class="verse-citation">Luke 24:32</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Apr 19, 2026</span>
+          <span class="sub">Easter 3</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span><span class="group-tag vocalist">Vocalist</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+2:14a,+36-41&amp;version=nrsvae" target="_blank" rel="noopener">Acts 2:14a, 36-41</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+116:1-4,+12-19&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 116:1-4, 12-19</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Peter+1:17-23&amp;version=nrsvae" target="_blank" rel="noopener">1 Peter 1:17-23</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+24:13-35&amp;version=nrsvae" target="_blank" rel="noopener">Luke 24:13-35</a></div>
+      <div class="intro">Two disciples leave Jerusalem grieving, certain that the story has ended badly. A stranger walks with them and opens the scriptures; then, at table, their eyes are opened in the breaking of bread. Every Sunday gathering is the Emmaus walk in miniature — hearts warmed by the word, Christ recognized in the meal, feet sent back to Jerusalem with news.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=qtSC8Q3Sj0U" target="_blank" rel="noopener">Stay with Us</a> <span class="tag vocalist">Vocalist</span></div></div><div class="desc"><em>Stay with Us</em> captures the heartfelt plea of the disciples on the Emmaus road: <span class="quote">“Stay with us, for it is almost evening”</span>—the moment just before their eyes are opened and they recognize the risen Christ.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cgb748-i-will-arise-and-go-to-jesus-3-4-or-5-octaves/1988/" target="_blank" rel="noopener">I Will Arise and Go to Jesus</a> <span class="tag bells">Handbells</span></div></div><div class="desc"><em>I Will Arise and Go to Jesus</em> mirrors the Emmaus disciples' response: after encountering the risen Lord, they immediately arise and return to Jerusalem. As Peter preaches in Acts, <span class="quote">“Repent and be baptized,”</span> we too arise and go to Jesus.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><span class="title">To Emmaus, We Are Fleeing</span> </div></div><div class="desc"><em>To Emmaus, We Are Fleeing</em> tells the Emmaus story, capturing the disciples' journey from grief to recognition. As they walk away from Jerusalem in despair, Christ walks alongside them, and in the breaking of bread their eyes are opened—a powerful image of how the risen Lord meets us in our doubt and reveals himself in worship.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-04-26" data-date="2026-04-26" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">I came that they may have life and have it abundantly</div><cite class="verse-citation">John 10:10</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Apr 26, 2026</span>
+          <span class="sub">Easter 4</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+2:42-47&amp;version=nrsvae" target="_blank" rel="noopener">Acts 2:42-47</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+23&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 23</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Peter+2:19-25&amp;version=nrsvae" target="_blank" rel="noopener">1 Peter 2:19-25</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+10:1-10&amp;version=nrsvae" target="_blank" rel="noopener">John 10:1-10</a></div>
+      <div class="intro">Good Shepherd Sunday turns on Jesus&#x27; promise: &quot;I came that they may have life, and have it abundantly.&quot; Psalm 23 names what that abundance looks like — not wealth but presence, a shepherd beside still waters, a table prepared even among enemies, goodness and mercy following close behind. 1 Peter calls this same shepherd the guardian of our souls, and Acts shows the first Christians living his abundance together — breaking bread, sharing what they have, making sure no one goes without.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=CPCN8a6Pok0" target="_blank" rel="noopener">The King Of Love, My Shepherd Is</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>The King of Love My Shepherd Is</em> paraphrases Psalm 23, the psalm appointed for today. The Good Shepherd who leads beside still waters and through the valley of death is the same one Jesus describes in John 10—the one who calls his own sheep by name and leads them out to abundant life.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cga1298-always-in-your-presence/8001/" target="_blank" rel="noopener">Always in Your Presence</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Always in Your Presence</em> reflects the intimate relationship between shepherd and flock described in both the psalm and the Gospel—the assurance that we dwell in God's presence, guided and protected, as Peter writes: <span class="quote">“You have returned to the shepherd and guardian of your souls.”</span></div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=pN4tPkX0MG0" target="_blank" rel="noopener">The Lord&#x27;s My Shepherd</a> </div></div><div class="desc"><em>The Lord's My Shepherd</em> sends the congregation out with the confidence of the psalmist's declaration. Having heard the Gospel promise of abundant life through the Good Shepherd, we go forth trusting that goodness and mercy shall follow us all the days of our life.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-05-03" data-date="2026-05-03" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">In my Father&#x27;s house there are many dwelling places</div><cite class="verse-citation">John 14:2</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">May 3, 2026</span>
+          <span class="sub">Easter 5</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+7:55-60&amp;version=nrsvae" target="_blank" rel="noopener">Acts 7:55-60</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+31:1-5,+15-16&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 31:1-5, 15-16</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Peter+2:2-10&amp;version=nrsvae" target="_blank" rel="noopener">1 Peter 2:2-10</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+14:1-14&amp;version=nrsvae" target="_blank" rel="noopener">John 14:1-14</a></div>
+      <div class="intro">Jesus promises his troubled disciples a dwelling place — not an abstract heaven but the steady presence of the Father in whose house there is room for everyone. 1 Peter calls us living stones, built into that same house. Stephen, full of the Spirit, sees it all and commits his life into the same hands.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=Sgm9lkTNQmc" target="_blank" rel="noopener">You Are Mine</a> <span class="tag choir">Choir</span></div></div><div class="desc"><span class="quote">“Do not let your hearts be troubled,”</span> Jesus tells his disciples before promising to prepare a place for them. David Haas's <em>You Are Mine</em> echoes that assurance in the first person—<span class="quote">“I will come to you in the silence,… I will be your light, I will call your name.”</span> The Gospel's promise becomes a love song from Christ to the assembly.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=9Fvwd9Y6xlg" target="_blank" rel="noopener">I Am the Way and the Truth and the Life</a> <span class="tag choir">Choir</span><span class="tag flute">Flute</span><span class="tag violin">Violin</span><span class="tag assembly">Assembly</span></div></div><div class="desc">Bob Hurd's <em>I Am the Way and the Truth and the Life</em> sets both epistle and gospel in a single anthem. The refrain quotes Jesus' words from John 14:6, while the verses draw directly from 1 Peter's <span class="quote">“living stones”</span> and <span class="quote">“chosen people”</span> imagery. The choir and assembly answer the Gospel with the very words of the Gospel.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=hDEBx5YvL9U" target="_blank" rel="noopener">The Church Song</a> </div></div><div class="desc">Jay Beech's <em>The Church Song</em> sends the congregation out with 1 Peter's vision in plain speech: <span class="quote">“The church is not a building… the church, it is the people living out their lives, called, enlightened, sanctified for the work of Jesus Christ.”</span> Having heard that we are living stones built into a spiritual house, we go to be that house in the world.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-05-10" data-date="2026-05-10" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Because I live, you also will live</div><cite class="verse-citation">John 14:19</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">May 10, 2026</span>
+          <span class="sub">Easter 6</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span><span class="group-tag youth">Youth Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+17:22-31&amp;version=nrsvae" target="_blank" rel="noopener">Acts 17:22-31</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+66:8-20&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 66:8-20</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Peter+3:13-22&amp;version=nrsvae" target="_blank" rel="noopener">1 Peter 3:13-22</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+14:15-21&amp;version=nrsvae" target="_blank" rel="noopener">John 14:15-21</a></div>
+      <div class="intro">Jesus will not leave his followers orphans. As Pentecost draws near, we are promised another Advocate — the Spirit who abides with us and teaches us to love as we have been loved. Paul tells the Athenians that the unknown God they have worshiped is already, in Christ, a God not far from any of us.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.hopepublishing.com/W1369_JESUS_LOVES_ME/" target="_blank" rel="noopener">Jesus Loves Me</a> <span class="tag choir">Choir</span><span class="tag youth">Youth</span></div></div><div class="desc">Joel Raney's choral setting of <em>Jesus Loves Me</em> weaves Anna Warner's familiar text together with his own refrain, <span class="quote">“We are all God's children.”</span> On a day when Jesus promises, <span class="quote">“I will not leave you orphaned,”</span> the simplest of Christian songs proclaims the deepest of Christian truths—a word the combined choir offers to the gathered children of the heavenly Father.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.jwpepper.com/children-of-the-heavenly-father-10456859/p?srsltid=AfmBOopa1mURDrXuteMuOqas049iDV8sE3ZpOVGMRsAHbSCxn_Gt3DeX" target="_blank" rel="noopener">Children of the Heavenly Father</a> <span class="tag choir">Choir</span><span class="tag youth">Youth</span></div></div><div class="desc">Jeremy S. Bakken's setting of Caroline V. Sandell Berg's beloved Swedish hymn <em>Children of the Heavenly Father</em> (<span class="sc">Tryggare kan ingen vara</span>) answers the Gospel's promise directly: <span class="quote">“I will not leave you orphaned.”</span> <span class="quote">“Children of the heavenly Father safely in his bosom gather”</span>—the Spirit whom Jesus sends is the Advocate who keeps us always in the care of a God <span class="quote">“not far from each one of us”</span> (Acts 17).</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=edq3iV4sw6o" target="_blank" rel="noopener">Go My Children, with My Blessing</a> </div></div><div class="desc">Koin\'e's contemporary setting of Jaroslav Vajda's <em>Go, My Children, with My Blessing</em>, paired with the traditional Welsh tune <span class="sc">Ar hyd y nos</span>, sends the congregation out in the voice of the parent God: <span class="quote">“Waking, sleeping, I am with you; you are my own.”</span> This is the gentle assurance that answers Jesus' promise in today's gospel—<span class="quote">“I will not leave you orphaned.”</span></div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-05-17" data-date="2026-05-17" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">May they be one, as we are one</div><cite class="verse-citation">John 17:11</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">May 17, 2026</span>
+          <span class="sub">Easter 7</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span><span class="group-tag youth">Youth Choir</span><span class="group-tag bells">Handbells</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Acts+1:6-14&amp;version=nrsvae" target="_blank" rel="noopener">Acts 1:6-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+68:1-10,+32-35&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 68:1-10, 32-35</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Peter+4:12-14;+5:6-11&amp;version=nrsvae" target="_blank" rel="noopener">1 Peter 4:12-14; 5:6-11</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+17:1-11&amp;version=nrsvae" target="_blank" rel="noopener">John 17:1-11</a></div>
+      <div class="intro">In the quiet between Ascension and Pentecost, the disciples gather in the upper room and wait. Jesus&#x27;s own prayer on the last night he was with them is not for himself but for their unity — that they may be one. It remains the church&#x27;s truest prayer, and its hardest one.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://handbellworld.com/music/MusicPiece.cfm?Piece=16365" target="_blank" rel="noopener">I Come with Joy</a> <span class="tag bells">Handbells</span></div></div><div class="desc">Karen Thompson's handbell setting of the American folk tune <span class="sc">Dove of Peace</span> carries Brian Wren's text <em>I Come with Joy</em>—a hymn of unity in Christ: <span class="quote">“As Christ breaks bread and bids us share, each proud division ends.”</span> In the days between Ascension and Pentecost, as we wait with the disciples for the Spirit, the bells sound the prayer of today's gospel: that they may be one.</div></div>
+        <div class="item-row"><div class="label">Youth</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=IH2dIEODoF0" target="_blank" rel="noopener">My Spirit Rejoices</a> <span class="tag youth">Youth</span></div></div><div class="desc">Dolores Hruby's setting of <em>My Spirit Rejoices</em>, adapted from Bach's choral writing, gives the youth an Easter proclamation drawn from Mary's song (Luke 1:47): <span class="quote">“My spirit rejoices, arises with joy! Christ Jesus, you save us and death you destroy.”</span> In these days between Ascension and Pentecost, their song keeps the resurrection alive in the voice of the whole church—the witness Jesus prays for in today's gospel.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=sImj0Ep38tY" target="_blank" rel="noopener">One Song</a> <span class="tag choir">Choir</span></div></div><div class="desc">Pepper Choplin's <em>One Song</em> is a direct setting of today's gospel: <span class="quote">“I pray for all believers, that they will be one, as you, Father, are in me, and I in you.”</span> As Jesus prays for the unity of his followers in John 17, the choir makes his prayer its own—that the world may believe.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=jQg2XqZcZjI" target="_blank" rel="noopener">Go Now In Peace</a> </div></div><div class="desc">Don Besig and Nancy Price's <em>Go Now In Peace</em> sends the congregation out with a gentle benediction: <span class="quote">“God's pure light shine on you, God's true love surround you, everywhere, everywhere you may go.”</span> As Jesus prays that his followers be kept in the Father's name, this farewell carries his intercession into the week ahead.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel" data-panel="Holy Week">
+    <section class="week" id="week-2026-03-29" data-date="2026-03-29" style="--row-bg: #fafaf9; --row-accent: #888;">
+      <aside class="verse-float"><div class="verse-text">Hosanna to the Son of David</div><cite class="verse-citation">Matthew 21:9</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Mar 29, 2026</span>
+          <span class="sub">Passion/Palm</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span><span class="group-tag youth">Youth Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+50:4-9a&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 50:4-9a</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+31:9-16&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 31:9-16</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Philippians+2:5-11&amp;version=nrsvae" target="_blank" rel="noopener">Philippians 2:5-11</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+21:1-11&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 21:1-11</a></div>
+      <div class="intro">The palms we wave today are already being laid in the road of the Passion. Jesus enters Jerusalem not on a warhorse but on a borrowed donkey, and the same crowd that shouts Hosanna will shout Crucify before the week is out. Paul names it cleanly: he emptied himself, all the way down to a cross — and there is the glory.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cga84-little-grey-donkey/7648/" target="_blank" rel="noopener">Little Gray Donkey</a> <span class="tag youth">Youth</span><span class="tag choir">Choir</span><span class="tag flute">Flute</span></div></div><div class="desc"><em>Little Gray Donkey</em> tells the story of the humble donkey that carried Jesus into Jerusalem. On Palm Sunday, we remember the triumphal entry—a king arriving not on a warhorse but on a lowly donkey, fulfilling Zechariah's prophecy.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=LpH4DL55zLs" target="_blank" rel="noopener">And Can It Be?</a> <span class="tag choir">Choir</span></div></div><div class="desc">Dan Forrest's setting of Wesley's text marvels at the mystery of the cross we hear proclaimed in today's Passion. Echoing Philippians 2, the choir sings of Christ who <span class="quote">“emptied himself of all but love”</span> and bled for us all.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=aTl1Q8yudfM" target="_blank" rel="noopener">The King of Glory</a> </div></div><div class="desc"><em>The King of Glory</em> echoes Psalm 24 and the Palm Sunday acclamation: <span class="quote">“The King of Glory comes, the nation rejoices!”</span> As the crowds shouted <span class="quote">“Hosanna,”</span> we too proclaim the King of Glory who enters in the name of the Lord.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-04-02" data-date="2026-04-02" style="--row-bg: #fafaf9; --row-accent: #888;">
+      <aside class="verse-float"><div class="verse-text">This is my body that is for you</div><cite class="verse-citation">1 Corinthians 11:24</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Apr 2, 2026</span>
+          <span class="sub">Maundy Thursday</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Exodus+12:1-4+[5-10]+11-14&amp;version=nrsvae" target="_blank" rel="noopener">Exodus 12:1-4 [5-10] 11-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+116:1-2,+12-19&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 116:1-2, 12-19</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Corinthians+11:23-26&amp;version=nrsvae" target="_blank" rel="noopener">1 Corinthians 11:23-26</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+13:1-17,+31b-35&amp;version=nrsvae" target="_blank" rel="noopener">John 13:1-17, 31b-35</a></div>
+      <div class="intro">On his last evening with his disciples, Jesus did not deliver a final lecture. He bent down with a basin and towel. &quot;A new commandment I give you,&quot; he said: &quot;love one another as I have loved you.&quot; Tonight we eat and remember, and ready ourselves to walk the hard days ahead together.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=y8rW6kRN9rE" target="_blank" rel="noopener">Bring Us Home</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Bring Us Home</em> sets a tone of tender longing as Jesus gathered his disciples for a final meal, calling them to love one another. The prayer to be brought home echoes the disciples' need for comfort on this solemn night.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=sCUfTx8dzE4" target="_blank" rel="noopener">In Remembrance</a> <span class="tag choir">Choir</span><span class="tag flute">Flute</span></div></div><div class="desc"><em>In Remembrance</em> directly references Jesus's words at the Last Supper: <span class="quote">“Do this in remembrance of me.”</span> As Paul recounts in 1 Corinthians 11, the bread and cup proclaim the Lord's death, and this anthem carries that command with gentle intimacy.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-04-03" data-date="2026-04-03" style="--row-bg: #fafaf9; --row-accent: #888;">
+      <aside class="verse-float"><div class="verse-text">It is finished</div><cite class="verse-citation">John 19:30</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Apr 3, 2026</span>
+          <span class="sub">Good Friday - Tenebrae</span>
+          
+        </div>
+        <div class="rhs">
+          
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+52:13—53:12&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 52:13—53:12</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+22&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 22</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Hebrews+10:16-25&amp;version=nrsvae" target="_blank" rel="noopener">Hebrews 10:16-25</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+18:1—19:42&amp;version=nrsvae" target="_blank" rel="noopener">John 18:1—19:42</a></div>
+      <div class="intro">Good Friday is a day of long silences and hard looking. Isaiah&#x27;s suffering servant bears our wounds; John&#x27;s passion shows a king reigning from a cross. We stand beneath the tree today not in despair but in the ancient Christian confidence that the tree itself turns out to be, somehow, a tree of life.</div>
+      <div class="items">
+        
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel" data-panel="Lent">
+    <section class="week" id="week-2026-02-18" data-date="2026-02-18" style="--row-bg: #ece5f0; --row-accent: #6b3a8b;">
+      <aside class="verse-float"><div class="verse-text">Renew a right spirit within me</div><cite class="verse-citation">Psalm 51:10</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Feb 18, 2026</span>
+          <span class="sub">Ash Wednesday</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Joel+2:1-2,+12-17&amp;version=nrsvae" target="_blank" rel="noopener">Joel 2:1-2, 12-17</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+51:1-17&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 51:1-17</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Corinthians+5:20b—6:10&amp;version=nrsvae" target="_blank" rel="noopener">2 Corinthians 5:20b—6:10</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+6:1-6,+16-21&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 6:1-6, 16-21</a></div>
+      <div class="intro">On our foreheads we receive the dust that we will one day become — and in the same mark we trace the cross that has already claimed us. Joel calls us to return; Paul says we are, in Christ, already reconciled. Lent begins here: honest about our mortality, unafraid because of mercy.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=pJvOejpJltA" target="_blank" rel="noopener">Ashes</a> <span class="tag choir">Choir</span></div></div><div class="desc">We are dust, yet from that dust God creates anew.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-02-22" data-date="2026-02-22" style="--row-bg: #ece5f0; --row-accent: #6b3a8b;">
+      <aside class="verse-float"><div class="verse-text">Worship the Lord your God</div><cite class="verse-citation">Matthew 4:10</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Feb 22, 2026</span>
+          <span class="sub">Lent 1</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Genesis+2:15-17;+3:1-7&amp;version=nrsvae" target="_blank" rel="noopener">Genesis 2:15-17; 3:1-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+32&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 32</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+5:12-19&amp;version=nrsvae" target="_blank" rel="noopener">Romans 5:12-19</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+4:1-11&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 4:1-11</a></div>
+      <div class="intro">The first Sunday of Lent finds Jesus in the wilderness for forty days, being tested — and answering each temptation not with his own strength but with scripture. We join that long walk, not because God is absent in the wilderness, but because the wilderness turns out to be the place where God is unmistakably present.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Kyrie Eleison</span> <span class="tag choir">Choir</span></div></div><div class="desc">The Choir opens our Lenten journey with <em>Kyrie Eleison</em>: Lord, have mercy. Its verses pray that God's Spirit would center our lives in the water and the word. Listen for the melody now, and we will sing this song together at the end of the service.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cga1324-a-mighty-fortress/7914/" target="_blank" rel="noopener">A Mighty Fortress</a> <span class="tag choir">Choir</span></div></div><div class="desc">The Choir sings Luther's <em>A Mighty Fortress</em> in an arrangement by Ken Berg. Led by the Spirit into the wilderness, Jesus met every temptation not with divine power but with the word of God alone. Luther's hymn answers with the same defiant trust: God's truth endures through every age.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><span class="title">Thy Word</span> </div></div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-03-01" data-date="2026-03-01" style="--row-bg: #ece5f0; --row-accent: #6b3a8b;">
+      <aside class="verse-float"><div class="verse-text">Nicodemus came to Jesus by night</div><cite class="verse-citation">John 3:2</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Mar 1, 2026</span>
+          <span class="sub">Lent 2</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Genesis+12:1-4a&amp;version=nrsvae" target="_blank" rel="noopener">Genesis 12:1-4a</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+121&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 121</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+4:1-5,+13-17&amp;version=nrsvae" target="_blank" rel="noopener">Romans 4:1-5, 13-17</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+3:1-17&amp;version=nrsvae" target="_blank" rel="noopener">John 3:1-17</a></div>
+      <div class="intro">Abraham is told to leave what he knows and go. Nicodemus is told he must be born from above. Both stories describe the strange work of a God who does not let us stay put. Lent is a season for saying yes to that kind of unsettling invitation — trusting the promise even before we see where it leads.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=h-OPPkenXvY" target="_blank" rel="noopener">Unto the Hills</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Unto the Hills</em> echoes Psalm 121 as the Choir gathers us into worship: <span class="quote">“I lift up my eyes to the hills; from where does my help come?”</span> Like Abram, who left everything familiar to follow God's call into unknown territory, we begin worship looking upward in trust. Our help comes from the Lord, the maker of heaven and earth.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.augsburgfortress.org/store/product/9780806697635/God-So-Loved-the-World" target="_blank" rel="noopener">God So Loved the World</a> <span class="tag choir">Choir</span><span class="tag flute">Flute</span><span class="tag assembly">Assembly</span></div></div><div class="desc"><em>God So Loved the World</em> places John 3:16 on our lips. In today's gospel, Jesus reveals to Nicodemus that God's love is not a reward for the righteous but a gift for the whole world. Let us all join in and proclaim this promise in song.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=veXyN37AgMU" target="_blank" rel="noopener">I Lift My Eyes Up</a> </div></div><div class="desc"><em>I Lift My Eyes Up</em> returns us to Psalm 121 as we go. The psalm's promise frames our sending: the Lord will watch over our coming and going, both now and forevermore.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-03-08" data-date="2026-03-08" style="--row-bg: #ece5f0; --row-accent: #6b3a8b;">
+      <aside class="verse-float"><div class="verse-text">Where do you get that living water?</div><cite class="verse-citation">John 4:11</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Mar 8, 2026</span>
+          <span class="sub">Lent 3</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span><span class="group-tag vocalist">Vocalist</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Exodus+17:1-7&amp;version=nrsvae" target="_blank" rel="noopener">Exodus 17:1-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+95&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 95</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+5:1-11&amp;version=nrsvae" target="_blank" rel="noopener">Romans 5:1-11</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+4:5-42&amp;version=nrsvae" target="_blank" rel="noopener">John 4:5-42</a></div>
+      <div class="intro">A thirsty people in the desert; a thirsty woman at a Samaritan well. God supplies water from a rock; Jesus offers a water that becomes a spring inside us. Lent circles back again and again to the font — to the promise that the water given there will not run dry.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=_SNKC2IC3Ko" target="_blank" rel="noopener">Fill My Cup, Lord</a> <span class="tag vocalist">Vocalist</span></div></div><div class="desc">The theme of spiritual thirst runs through today's readings—Israel thirsting in the wilderness, the Samaritan woman at the well. <em>Fill My Cup, Lord</em> (arr. Dennis Richardson) opens the service with a prayer to be filled by the living water Jesus offers.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://handbellworld.com/music/MusicPiece.cfm?Piece=19624" target="_blank" rel="noopener">I Heard The Voice of Jesus Say</a> <span class="tag bells">Handbells</span></div></div><div class="desc">The Handbell Choir echoes today's Hymn of the Day: <em>I Heard the Voice of Jesus Say</em> (arr. Jefferey A. Hall), which recalls the Gospel encounter at Jacob's well. Jesus's invitation to the Samaritan woman—and to all who are weary—resonates in the words: <span class="quote">“I heard the voice of Jesus say, `Come unto me and rest.'\,”</span></div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=W1gKmZBtoiI" target="_blank" rel="noopener">Come to the Water</a> </div></div><div class="desc"><em>Come to the Water</em> (John B. Foley) draws on Isaiah's invitation and the baptismal imagery of today's Gospel. As the woman at the well discovered living water, this postlude invites all to come freely to the water of life.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-03-15" data-date="2026-03-15" style="--row-bg: #ece5f0; --row-accent: #6b3a8b;">
+      <aside class="verse-float"><div class="verse-text">Lord, I believe</div><cite class="verse-citation">John 9:38</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Mar 15, 2026</span>
+          <span class="sub">Lent 4</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=1+Samuel+16:1-13&amp;version=nrsvae" target="_blank" rel="noopener">1 Samuel 16:1-13</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+23&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 23</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Ephesians+5:8-14&amp;version=nrsvae" target="_blank" rel="noopener">Ephesians 5:8-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+9:1-41&amp;version=nrsvae" target="_blank" rel="noopener">John 9:1-41</a></div>
+      <div class="intro">A young shepherd is chosen for what the prophet could not see by looking at him. A man born blind is given eyes that see what the religious authorities refuse to. Baptism is sometimes called enlightenment for this reason — it teaches us to see differently, and then to trust what we see.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=TCyrpSAh4EI" target="_blank" rel="noopener">Be Thou My Vision</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Be Thou My Vision</em> (arr. Marie Pooler) is a prayer for spiritual sight, echoing the Gospel's healing of the man born blind. As Jesus opens the eyes of one who has never seen, we ask God to be our vision—the true light that overcomes all darkness, just as Paul urges in Ephesians: <span class="quote">“Once you were darkness, but now in the Lord you are light.”</span></div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=sAJISL7yotE" target="_blank" rel="noopener">Open My Eyes</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Open My Eyes</em> connects directly to the Gospel story of Jesus healing the man born blind. The prayer to have one's eyes opened mirrors the physical and spiritual sight Jesus grants in John 9.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=sZ950yFkWx0" target="_blank" rel="noopener">At the Foot of the Cross</a> </div></div><div class="desc"><em>At the Foot of the Cross</em> (Derek Bond) kneels in awe at the mercy of Calvary. As the man born blind discovered sight he never imagined, this song marvels that the King of all creation died for us—and sends us forth to praise his majesty.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-03-22" data-date="2026-03-22" style="--row-bg: #ece5f0; --row-accent: #6b3a8b;">
+      <aside class="verse-float"><div class="verse-text">Unbind him, and let him go</div><cite class="verse-citation">John 11:44</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Mar 22, 2026</span>
+          <span class="sub">Lent 5</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span><span class="group-tag vocalist">Vocalist</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Ezekiel+37:1-14&amp;version=nrsvae" target="_blank" rel="noopener">Ezekiel 37:1-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+130&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 130</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+8:6-11&amp;version=nrsvae" target="_blank" rel="noopener">Romans 8:6-11</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+11:1-45&amp;version=nrsvae" target="_blank" rel="noopener">John 11:1-45</a></div>
+      <div class="intro">In a valley of dry bones, God breathes life back into what looked finished. Outside Bethany&#x27;s tomb, Jesus calls Lazarus out by name. The stories do not promise that we will be spared loss — they promise that loss does not have the last word. The baptismal promise is the same.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.hopepublishing.com/W1312_HYMN_OF_PROMISE/" target="_blank" rel="noopener">Hymn of Promise</a> <span class="tag vocalist">Vocalist</span></div></div><div class="desc"><em>Hymn of Promise</em> speaks of life hidden within apparent death—the flower within the seed, the butterfly within the cocoon. This mirrors Ezekiel's valley of dry bones brought to life and the raising of Lazarus in today's Gospel.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=jhRsi5kCJcY" target="_blank" rel="noopener">Wondrous Love</a> <span class="tag bells">Handbells</span></div></div><div class="desc"><em>Wondrous Love</em> reflects the depth of Christ's compassion shown in the raising of Lazarus. Jesus wept at Lazarus's tomb, revealing a love so wondrous that it conquers death itself.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><span class="title">Here on Jesus Christ I Will Stand</span> </div></div><div class="desc"><em>Here on Jesus Christ I Will Stand</em> responds to Paul's assurance in Romans 8 that the Spirit who raised Christ will give life to our mortal bodies. Standing on Jesus Christ is standing on the promise of resurrection.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel" data-panel="Epiphany">
+    <section class="week" id="week-2026-01-11" data-date="2026-01-11" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">This is my Son, the Beloved</div><cite class="verse-citation">Matthew 3:17</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Jan 11, 2026</span>
+          <span class="sub">Baptism of Christ</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag youth">Youth Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+42:1-9&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 42:1-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+29&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 29</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Acts+10:34-43&amp;version=nrsvae" target="_blank" rel="noopener">Acts 10:34-43</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+3:13-17&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 3:13-17</a></div>
+      <div class="intro">At the Jordan, Jesus steps into the water and is named Beloved. Isaiah calls this Servant the one who will bring justice — quietly, patiently, without breaking a bruised reed. In our own baptism we are named beloved too, and sent into a world that still needs the gentle justice of Christ.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Introducing ELW Setting Two</span> <span class="tag organ">Piano</span><span class="tag assembly">Guitar</span></div></div><div class="desc">Arthur and Ed will introduce <strong>Setting Two</strong> from <em>Evangelical Lutheran Worship</em> (pp. 120–137), by Marty Haugen. Crafted with piano accompaniment in mind, this sung liturgy will guide our worship throughout the Time after Epiphany.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=vDmAYNq2YDw" target="_blank" rel="noopener">Baptized in Water</a> <span class="tag youth">Youth</span><span class="tag choir">Choir</span></div></div><div class="desc">This offertory hymn, <em>Baptized in Water</em>, places our praise at the font. In water and Spirit, God names us beloved and sends us to live with mercy and courage.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=vYPWDw3J4MU" target="_blank" rel="noopener">I&#x27;ve Just Come from the Fountain</a> </div></div><div class="desc"><em>I've Just Come from the Fountain</em> celebrates grace that is not only remembered but lived. Refreshed by God's mercy, we go in peace to serve our neighbors with gladness.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-01-18" data-date="2026-01-18" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">Here is the Lamb of God</div><cite class="verse-citation">John 1:29</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Jan 18, 2026</span>
+          <span class="sub">Epiphany 2</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+49:1-7&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 49:1-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+40:1-11&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 40:1-11</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Corinthians+1:1-9&amp;version=nrsvae" target="_blank" rel="noopener">1 Corinthians 1:1-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+1:29-42&amp;version=nrsvae" target="_blank" rel="noopener">John 1:29-42</a></div>
+      <div class="intro">John points and says, &quot;Look — the Lamb of God.&quot; Two disciples ask where Jesus is staying, and he answers simply: &quot;Come and see.&quot; The whole Christian life begins with that quiet invitation, rediscovered each week as we come again to word and meal and see for ourselves.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">We Will Glorify</span> <span class="tag bells">Handbells</span></div></div><div class="desc"><em>We Will Glorify</em> (Twila Paris) exhalts the Lamb whom John proclaims in today's gospel. Bells and voices together declare him King of kings and Lord of lords. All are invited to sing.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://giamusic.com/resource/just-as-i-am-20-1881sf" target="_blank" rel="noopener">Just As I Am</a> <span class="tag bells">Handbells</span></div></div><div class="desc"><em>Just As I Am</em> (William B. Bradbury, arr. Brenda Austin) echoes today's invitation to "come and see." As we listen to the sustained, prayerful tones of singing bells, we are reminded that Christ welcomes us without precondition, just as we are, broken and beloved, and calls us to abide with him.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=inu7hjBeRhs" target="_blank" rel="noopener">Psalm 40: Here I Am</a> </div></div><div class="desc"><em>Psalm 40: Here I Am</em> (Rory Cooney) sends us with the disciples' response on our lips. Called to come and see, we answer, "Here I am, Lord; I come to do your will."</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-01-25" data-date="2026-01-25" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">Follow me, and I will make you fishers of people</div><cite class="verse-citation">Matthew 4:19</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Jan 25, 2026</span>
+          <span class="sub">Epiphany 3</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+9:1-4&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 9:1-4</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+27:1,+4-9&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 27:1, 4-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Corinthians+1:10-18&amp;version=nrsvae" target="_blank" rel="noopener">1 Corinthians 1:10-18</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+4:12-23&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 4:12-23</a></div>
+      <div class="intro">Jesus walks the lakeshore and calls fishermen away from their nets — not because their work was unworthy, but because he had work for them that would be worthy of everything. We come each Sunday to be called afresh, and then sent back to the places we ordinarily live and work, bearing a greater light.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=dmc85Q4HHig" target="_blank" rel="noopener">Come, Follow Me</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Come, Follow Me</em> echoes Jesus’ invitation to the first disciples, preparing our hearts to hear his call and walk in his light.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=DGkTQxoK_F4" target="_blank" rel="noopener">Come Follow Me Forever</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Come Follow Me Forever</em> (Michael Haydn, arr. Patrick M. Liebergen) calls us to praise God’s holy name and follow Christ together, offering our lives along with these gifts.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=nYnF86ZzHH8" target="_blank" rel="noopener">Let Us Talents and Tongues Employ</a> </div></div><div class="desc"><em>Let Us Talents and Tongues Employ</em> sends us forth to use our gifts and voices, sharing the good news with all we meet.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-02-01" data-date="2026-02-01" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">Blessed are the peacemakers</div><cite class="verse-citation">Matthew 5:9</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Feb 1, 2026</span>
+          <span class="sub">Epiphany 4</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Micah+6:1-8&amp;version=nrsvae" target="_blank" rel="noopener">Micah 6:1-8</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+15&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 15</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Corinthians+1:18-31&amp;version=nrsvae" target="_blank" rel="noopener">1 Corinthians 1:18-31</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+5:1-12&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 5:1-12</a></div>
+      <div class="intro">Micah tells us what is required: do justice, love kindness, walk humbly. Jesus opens the Sermon on the Mount by calling blessed the very people the world does not bless — the poor in spirit, the mourners, the peacemakers. This is the wisdom Paul names as foolishness and rejoices in anyway.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=rdj4N8FMYeY" target="_blank" rel="noopener">We Are Called</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>We Are Called</em> gathers us with Micah's ancient charge: to act with justice, to love tenderly, to walk humbly with God. As we assemble, we prepare to hear who the blessed ones are—the poor, the meek, the merciful—and to receive our calling to live this countercultural way.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=rzH-Vo4ocRo" target="_blank" rel="noopener">Blest are They</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Blest Are They</em> accompanies our offering with the Beatitudes' promise: rejoice and be glad, for your reward is great in heaven.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=rBZiPRPogn0" target="_blank" rel="noopener">Now That I&#x27;ve Held Him in My Arms</a> </div></div><div class="desc">With the Presentation of Our Lord tomorrow, our postlude echoes Simeon's song: having seen God's salvation, he departs in peace.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-02-08" data-date="2026-02-08" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">A city built on a hill cannot be hid</div><cite class="verse-citation">Matthew 5:14</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Feb 8, 2026</span>
+          <span class="sub">Epiphany 5</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+58:1-9a+[9b-12]&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 58:1-9a [9b-12]</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+112:1-9+[10]&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 112:1-9 [10]</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Corinthians+2:1-12+[13-16]&amp;version=nrsvae" target="_blank" rel="noopener">1 Corinthians 2:1-12 [13-16]</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+5:13-20&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 5:13-20</a></div>
+      <div class="intro">Isaiah is blunt: the fast that God chooses is the loosing of every unjust bond and the sharing of bread. Jesus takes up the same thread — you are salt and light, he says, if you are willing to be flavor and illumination for somebody else&#x27;s life. Baptism commissions us for exactly that work.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=Frobrm1t61A" target="_blank" rel="noopener">Go Light Your World</a> </div></div><div class="desc"><em>Go Light Your World</em> calls us to carry Christ's flame into every corner of darkness—letting our light shine before others so they may give glory to our Father in heaven.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cgb586-lord-whose-love-through-humble-service-god-whose-giving-knows-no-ending/1821/" target="_blank" rel="noopener">Lord, Whose Love through Humble Service</a> <span class="tag bells">Handbells</span></div></div><div class="desc"><em>Lord, Whose Love through Humble Service</em> echoes Isaiah's call: share your bread with the hungry, bring the homeless poor into your house, and your light shall break forth like the dawn.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=G88rhg1W4xw" target="_blank" rel="noopener">Bring Forth the Kingdom</a> </div></div><div class="desc"><em>Bring Forth the Kingdom</em> sends us as salt and light. Do justice, love mercy, let your good works shine before others to the glory of the Father.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-02-15" data-date="2026-02-15" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Jesus was transfigured before them</div><cite class="verse-citation">Matthew 17:2</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Feb 15, 2026</span>
+          <span class="sub">Transfiguration</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Exodus+24:12-18&amp;version=nrsvae" target="_blank" rel="noopener">Exodus 24:12-18</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+2&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 2</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Peter+1:16-21&amp;version=nrsvae" target="_blank" rel="noopener">2 Peter 1:16-21</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+17:1-9&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 17:1-9</a></div>
+      <div class="intro">On the mountaintop, just before the long road toward Jerusalem, Peter and James and John catch a glimpse of Jesus blazing with the glory that was always there. This last Sunday before Lent gives us the same glimpse — enough light to carry us through the forty days ahead.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=wVC6p0Nyv3Y" target="_blank" rel="noopener">Hallelujah</a> <span class="tag vocalist">Vocalist</span></div></div><div class="desc">On this last Sunday before Lent, <em>Hallelujah</em> sounds the church's great word of praise once more. We sing it fully today, knowing it will be set aside until Easter's dawn.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=unR_0KJW7IQ" target="_blank" rel="noopener">Days of Elijah</a> <span class="tag choir">Choir</span></div></div><div class="desc">Elijah stands alongside Moses on the mount of Transfiguration, beholding the radiant glory of God's beloved Son. Echoing this triumphant vision, the Choir sings, <span class="quote">“There is no god like Jehovah.”</span></div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=oyPBtExE4W0" target="_blank" rel="noopener">Beautiful Things</a> </div></div><div class="desc"><em>Beautiful Things</em> sends us from the mountaintop toward Ash Wednesday: God makes beautiful things out of dust. The Christ who shines in glory today will meet us in the ashes.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel" data-panel="Christmas">
+    <section class="week" id="week-2025-12-24" data-date="2025-12-24" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">I am bringing you good news of great joy</div><cite class="verse-citation">Luke 2:10</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Dec 24, 2025</span>
+          <span class="sub">Christmas Eve</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag assembly">All</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+9:2-7&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 9:2-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+96&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 96</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Titus+2:11-14&amp;version=nrsvae" target="_blank" rel="noopener">Titus 2:11-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+2:1-14+[15-20]&amp;version=nrsvae" target="_blank" rel="noopener">Luke 2:1-14 [15-20]</a></div>
+      <div class="intro">On the longest nights of the year, a child is born who is called Light — and the world&#x27;s darkness, for a moment, cannot hold him back. Angels sing to shepherds on a Judean hillside; Paul tells Titus that the grace of God has appeared to all people. We gather by candlelight to receive that grace and carry its small flame back out into the night.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=g1EASWDGcSk" target="_blank" rel="noopener">Carol of the Bells</a> <span class="tag bells">Handbells</span></div></div><div class="desc">A lone bell grows into shimmering waves of sound, calling us to worship and celebrating the birth of Christ with festive energy.</div></div>
+        <div class="item-row"><div class="label">Youth</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=gql0t60p2GU" target="_blank" rel="noopener">Away in a Manger</a> <span class="tag youth">Youth</span><span class="tag violin">Violin</span></div></div><div class="desc">Arranged for young voices with violin accompaniment, this gentle carol invites us to wonder at the Christ-child asleep in a humble manger.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.hopepublishing.com/W1278_HEAVENS_ROSE/" target="_blank" rel="noopener">Heaven&#x27;s Rose</a> <span class="tag choir">Choir</span></div></div><div class="desc">With images of a fragile rose in the cold, this piece invites us to marvel that heaven’s beauty has taken flesh among us.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=nTCFd6ntGXY" target="_blank" rel="noopener">Joy to the World</a> </div></div><div class="desc">Our postlude, <span class="quote">“Joy to the World,”</span> sends us out rejoicing with the angels’ good news of great joy for all people, inviting us to carry the light of Christ into the winter night and to share his peace with the world.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-12-28" data-date="2025-12-28" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Take the child and his mother, and flee</div><cite class="verse-citation">Matthew 2:13</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Dec 28, 2025</span>
+          <span class="sub">Christmas 1</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag youth">Youth Choir</span><span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+63:7-9&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 63:7-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+148&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 148</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Hebrews+2:10-18&amp;version=nrsvae" target="_blank" rel="noopener">Hebrews 2:10-18</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+2:13-23&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 2:13-23</a></div>
+      <div class="intro">Christmas carries us, unavoidably, into Matthew&#x27;s account of the Holy Innocents — children killed by Herod&#x27;s fear. The birth of the light does not banish the world&#x27;s shadows, but it stands beside every innocent who has suffered. The Lord who fled to Egypt as a refugee knows our losses and holds them in mercy.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=k5P65DMhr6s" target="_blank" rel="noopener">Hallelujah Round of Praise</a> <span class="tag youth">Youth</span><span class="tag choir">Choir</span></div></div><div class="desc"><em>Hallelujah Round of Praise</em> (Mozart, arr. Austin Lovelace) is a joyful round of praise to the Creator, inviting us to lift our hallelujahs as we bring our gifts.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=WHWqj6gKS9g" target="_blank" rel="noopener">Angels We Have Heard On High</a> </div></div><div class="desc">Our postlude, <span class="quote">“Angels We Have Heard on High,”</span> sends us out with the angels’ song of Gloria in excelsis Deo, lifting our eyes from the sorrows of the world to the Christ who comes among the lowly and invites all creation to rejoice in God’s saving love.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2026-01-04" data-date="2026-01-04" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">The Word became flesh and lived among us</div><cite class="verse-citation">John 1:14</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Jan 4, 2026</span>
+          <span class="sub">Christmas 2</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Jeremiah+31:7-14&amp;version=nrsvae" target="_blank" rel="noopener">Jeremiah 31:7-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+147:12-20&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 147:12-20</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Ephesians+1:3-14&amp;version=nrsvae" target="_blank" rel="noopener">Ephesians 1:3-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+1:[1-9]+10-18&amp;version=nrsvae" target="_blank" rel="noopener">John 1:[1-9] 10-18</a></div>
+      <div class="intro">The great prologue of John sings the mystery: in Jesus, the Word who was with God from the beginning has pitched a tent among us. What sounds abstract becomes intimate at font and table — ordinary bread, ordinary water, ordinary words that carry the fullness of grace and truth.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Dearest Jesus, We Are Here</span> <span class="tag organ">Piano</span></div></div><div class="desc">Today we hear music shaped by the day’s theme: the Word made flesh, present among us. Valerie A. Floeter’s <span class="quote">“Dearest Jesus, We Are Here”</span> combines <span class="quote">“Dearest Jesus, at Your Word”</span> (Liebster Jesu, wir sind hier) with <span class="quote">“Word of God, Come Down on Earth,”</span> inviting us to receive Christ’s light and grace in Word and Sacrament.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=l1ogh31Sc1g" target="_blank" rel="noopener">For the Beauty of the Earth</a> <span class="tag choir">Choir</span><span class="tag flute">Flute</span><span class="tag assembly">Assembly</span></div></div><div class="desc"><em>For the Beauty of the Earth</em> (John Rutter) thanks God for the gifts of creation and love, as we offer our gratitude and our gifts back to God.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=dQl4izxPeNU" target="_blank" rel="noopener">King of Kings</a> </div></div><div class="desc">Our postlude, <em>King of Kings</em> (Hillsong Worship), sends us out rejoicing in the One through whom all things came into being and in whom heaven and earth are gathered up. Having heard that the Word became flesh and made his home among us, we go in praise and thanksgiving, ready to bear the light of Christ the King into the world.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel" data-panel="Advent">
+    <section class="week" id="week-2025-11-30" data-date="2025-11-30" style="--row-bg: #e3ecf4; --row-accent: #1f3a5a;">
+      <aside class="verse-float"><div class="verse-text">About that day and hour no one knows</div><cite class="verse-citation">Matthew 24:36</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Nov 30, 2025</span>
+          <span class="sub">Advent 1</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag youth">Youth Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+2:1-5&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 2:1-5</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+122&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 122</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+13:11-14&amp;version=nrsvae" target="_blank" rel="noopener">Romans 13:11-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+24:36-44&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 24:36-44</a></div>
+      <div class="intro">The church&#x27;s new year begins not with resolutions but with a wake-up call. Isaiah dreams of swords beaten into plowshares; Jesus warns us to stay alert — for the Lord is coming, and indeed comes among us already, in word and meal. Advent is the practice of living awake to that arriving grace.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=inRs0MQeooE" target="_blank" rel="noopener">I Rejoiced When I Heard Them Say (Psalm 122)</a> <span class="tag youth">Youth</span></div></div><div class="desc"><em>I Rejoiced When I Heard Them Say</em> (arr. John Michael Talbot) begins Advent with a pilgrim’s song—<span class="quote">“let us go to the house of the Lord”</span>—our feet set for peace as we enter God’s city and walk in the light.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=lveOxYgV_r8" target="_blank" rel="noopener">Advent Prayer</a> <span class="tag youth">Youth</span><span class="tag flute">Flute</span></div></div><div class="desc"><em>Advent Prayer</em> (Mark Patterson), offered by our Youth Choir, is a watchman’s plea: Light, Child, Savior—come quickly and guide us. In hope we place our gifts and keep awake.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=pFloWX1yuyQ" target="_blank" rel="noopener">Come Thou Long Expected Jesus</a> </div></div><div class="desc"><em>Come, Thou Long-Expected Jesus</em> (arr. Nathan Drake) sends us out awake and expectant—born to set your people free, reign in us, and bring your gracious kingdom.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-12-07" data-date="2025-12-07" style="--row-bg: #e3ecf4; --row-accent: #1f3a5a;">
+      <aside class="verse-float"><div class="verse-text">A little child shall lead them</div><cite class="verse-citation">Isaiah 11:6</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Dec 7, 2025</span>
+          <span class="sub">Advent 2</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+11:1-10&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 11:1-10</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+72:1-7,+18-19&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 72:1-7, 18-19</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+15:4-13&amp;version=nrsvae" target="_blank" rel="noopener">Romans 15:4-13</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+3:1-12&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 3:1-12</a></div>
+      <div class="intro">At the center of Advent stands John the Baptist — urgent, unvarnished, and unafraid to name what must change. Isaiah sees further still: a world where wolf and lamb lie down together, where no one hurts or destroys. We wait for that kingdom; we also receive a small portion of it each time we gather at the table.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Advent–Christmas–Epiphany Hymn Sing</span> </div></div><div class="desc">Today’s prelude is replaced by an Advent–Christmas–Epiphany hymn sing. All are invited to call out a favorite hymn from the Advent (239–267), Christmas (268–300), or Epiphany (301–318) sections of the ELW (cranberry red) hymnal.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=MxbOyHyj3X8" target="_blank" rel="noopener">A Voice Cries Out</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>A Voice Cries Out, <span class="quote">“Prepare the Way of the Lord”</span></em> (Lloyd Larson) sounds Isaiah’s comfort and John’s call—valleys lifted, rough places made plain—as we place our gifts on the road of repentance and hope toward Emmanuel.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=fBG_uNYVzRQ" target="_blank" rel="noopener">A Voice Cries Out</a> </div></div><div class="desc"><em>A Voice Cries Out</em> (Michael Joncas) sends us as heralds: <span class="quote">“Prepare the way!”</span>—lift up your voice, behold your God—the Shepherd who gathers lambs and leads us in the path of peace.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-12-14" data-date="2025-12-14" style="--row-bg: #e3ecf4; --row-accent: #1f3a5a;">
+      <aside class="verse-float"><div class="verse-text">The desert shall rejoice and blossom</div><cite class="verse-citation">Isaiah 35:1</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Dec 14, 2025</span>
+          <span class="sub">Advent 3</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+35:1-10&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 35:1-10</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+146:5-10&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 146:5-10</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=James+5:7-10&amp;version=nrsvae" target="_blank" rel="noopener">James 5:7-10</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+11:2-11&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 11:2-11</a></div>
+      <div class="intro">Today the desert blossoms, and John&#x27;s disciples ask the question every believer asks sooner or later: are you the one, or should we look for another? Jesus answers by pointing not to himself but to the signs of mercy all around him — the blind seeing, the poor hearing good news. Advent joy is the slow recognition of God&#x27;s kingdom already in motion.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Advent–Christmas–Epiphany Hymn Sing</span> </div></div><div class="desc">Today’s prelude is replaced by an Advent–Christmas–Epiphany hymn sing. All are invited to call out a favorite hymn from the Advent (239–267), Christmas (268–300), or Epiphany (301–318) sections of the ELW (cranberry red) hymnal.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=-DkAsWSfLVM" target="_blank" rel="noopener">Advent Hope</a> <span class="tag bells">Handbells</span></div></div><div class="desc">Our Handbell Choir offers <em>Advent Hope</em>, a shimmering song of waiting that echoes Isaiah’s promise that the desert will blossom and the lame will leap, inviting us to watch with patience and joy for the quiet signs of God’s reign as we bring our gifts.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=MwNqpb2WxEA" target="_blank" rel="noopener">Startled by a Holy Humming</a> </div></div><div class="desc">From startled to <span class="quote">“let it be,”</span> Mary's yes becomes our heartbeat. We go in Emmanuel’s joy, carrying that holy humming into a world God is turning.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-12-21" data-date="2025-12-21" style="--row-bg: #e3ecf4; --row-accent: #1f3a5a;">
+      <aside class="verse-float"><div class="verse-text">You are to name him Jesus</div><cite class="verse-citation">Matthew 1:21</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Dec 21, 2025</span>
+          <span class="sub">Advent 4</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span><span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Isaiah+7:10-16&amp;version=nrsvae" target="_blank" rel="noopener">Isaiah 7:10-16</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+80:1-7,+17-19&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 80:1-7, 17-19</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+1:1-7&amp;version=nrsvae" target="_blank" rel="noopener">Romans 1:1-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Matthew+1:18-25&amp;version=nrsvae" target="_blank" rel="noopener">Matthew 1:18-25</a></div>
+      <div class="intro">The name spoken over this child is Emmanuel — God with us. In Matthew&#x27;s telling, it is Joseph who receives the angel&#x27;s news and says yes with his life. On this last Sunday before Christmas we pray the O Antiphons&#x27; ancient petition: &quot;Come, Emmanuel, come.&quot;</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><span class="title">Advent–Christmas–Epiphany Hymn Sing</span> </div></div><div class="desc">Today’s prelude is replaced by an Advent–Christmas–Epiphany hymn sing. All are invited to call out a favorite hymn from the Advent (239–267), Christmas (268–300), or Epiphany (301–318) sections of the ELW (cranberry red) hymnal.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://giamusic.com/resource/no-wind-at-the-window-instrument-edition-print-g7480inst" target="_blank" rel="noopener">No Wind at the Window</a> <span class="tag choir">Choir</span><span class="tag violin">Violin</span></div></div><div class="desc"><em>No Wind at the Window</em> (John L. Bell, arr. Jennifer Kerr Breedlove Budziak) draws us into the quiet of the Annunciation, where Mary’s courageous yes welcomes Emmanuel as we bring our gifts.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=v0I8Yzra-4A" target="_blank" rel="noopener">O Joseph, Awaken, Let Go of Your Fear</a> </div></div><div class="desc">Our postlude, <span class="quote">“O Joseph, Awaken, Let Go of Your Fear,”</span> gives musical voice to Joseph’s dream of Emmanuel, God with us, moving from uncertainty to trust and sending us out ready to welcome Christ with courage and quiet joy. The music is by Bex Gaunt, with text by Chris Shelton.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+<div class="panel" data-panel="Time After Pentecost">
+    <section class="week" id="week-2025-09-21" data-date="2025-09-21" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">Whoever is faithful in a very little is faithful also in much</div><cite class="verse-citation">Luke 16:10</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Sep 21, 2025</span>
+          <span class="sub">Pentecost 15</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Amos+8:4-7&amp;version=nrsvae" target="_blank" rel="noopener">Amos 8:4-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+113&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 113</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Timothy+2:1-7&amp;version=nrsvae" target="_blank" rel="noopener">1 Timothy 2:1-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+16:1-13&amp;version=nrsvae" target="_blank" rel="noopener">Luke 16:1-13</a></div>
+      <div class="intro">Today&#x27;s readings pose the uncomfortable question of what we truly own. Amos names the silent shame of crooked scales; Jesus, in a parable about a shrewd steward, asks whether the same cleverness we spend on our own security might be turned toward the freedom of others. We come to the table not as proprietors but as those entrusted with gifts already given.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=k16C-ukG-KI" target="_blank" rel="noopener">All That We Have</a> <span class="tag choir">Choir</span></div></div><div class="desc">This morning's prelude echoes today's call to choose God over wealth. It reminds us that everything we have is God's gift; we bring our gifts with open hands and trust God to give what we need.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.hopepublishing.com/W2707_BREATHE/" target="_blank" rel="noopener">Breathe</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Breathe</em> (Marie Barnett, arr. Derek Hakes) invites us to receive God's life as our daily breath, allowing us to loosen our grip on hurry and worry, so we can live simply, pray widely, and give gladly.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=EarhrOSU7SA" target="_blank" rel="noopener">Take My Life, That I May Be</a> </div></div><div class="desc">Take our moments and our days, set them to your praise; we go to serve with what we've been given.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-09-28" data-date="2025-09-28" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">At his gate lay a poor man named Lazarus</div><cite class="verse-citation">Luke 16:20</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Sep 28, 2025</span>
+          <span class="sub">Pentecost 16</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Amos+6:1a,+4-7&amp;version=nrsvae" target="_blank" rel="noopener">Amos 6:1a, 4-7</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+146&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 146</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=1+Timothy+6:6-19&amp;version=nrsvae" target="_blank" rel="noopener">1 Timothy 6:6-19</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+16:19-31&amp;version=nrsvae" target="_blank" rel="noopener">Luke 16:19-31</a></div>
+      <div class="intro">Amos warns the comfortable; Jesus tells of a rich man who never quite notices the beggar at his gate. The gospel&#x27;s pointed silence is that the neighbor we overlook is already known — by name — to God. Gathered here, we pray for the eyes to see whom Christ has placed in our path.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=HuLORIyEet4" target="_blank" rel="noopener">Gather Us In</a> <span class="tag choir">Choir</span></div></div><div class="desc">Not light-years away but here and now: we're gathered, called by name, and nourished with the bread and wine of compassion.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=LTumhCFohJo" target="_blank" rel="noopener">Put Peace into Each Other&#x27;s Hands</a> <span class="tag choir">Choir</span><span class="tag assembly">Assembly</span><span class="tag violin">Violin</span></div></div><div class="desc"><em>Put Peace into Each Other's Hands</em> (Fred Kaan, arr. David W. Music), set to the Celtic tune <span class="sc">St. Columba</span> (“The King of Love My Shepherd Is"), invites us to handle peace like a candle and share it like bread—looking one another in the eye and caring for the neighbor at our gate.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=blbslHDgceY" target="_blank" rel="noopener">Give Thanks</a> </div></div><div class="desc">With thankful hearts, we go forth with open hands and embrace the neighbor at our gate.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-10-05" data-date="2025-10-05" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">Increase our faith!</div><cite class="verse-citation">Luke 17:5</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Oct 5, 2025</span>
+          <span class="sub">Pentecost 17</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag youth">Youth Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Habakkuk+1:1-4;+2:1-4&amp;version=nrsvae" target="_blank" rel="noopener">Habakkuk 1:1-4; 2:1-4</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+37:1-9&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 37:1-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Timothy+1:1-14&amp;version=nrsvae" target="_blank" rel="noopener">2 Timothy 1:1-14</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+17:5-10&amp;version=nrsvae" target="_blank" rel="noopener">Luke 17:5-10</a></div>
+      <div class="intro">Habakkuk asks the question we all ask sooner or later — how long, O Lord? Jesus answers obliquely: a mustard-seed&#x27;s worth of faith is enough. Whatever measure we bring today, it is received, nourished at font and table, and sent back out with room to grow.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=_MCsNIEuqxc" target="_blank" rel="noopener">The Day of the Lord (Psalm 37)</a> <span class="tag youth">Youth</span></div></div><div class="desc">Today's prelude, composed by Wendell Kimbrough, sings Psalm 37's counsel—be still, dwell in the land, commit your way—moving us from frustration to patient trust in the Lord.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=_BRyAhMc4KE" target="_blank" rel="noopener">One Tiny Seed</a> <span class="tag youth">Youth</span></div></div><div class="desc"><em>One Tiny Seed</em> (Angie Killian &amp; Lauren Gruwell), offered by our Youth Choir, celebrates how a mustard-seed of faith becomes a sturdy, fruit-bearing tree as we nurture one another in Christ.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=OzAFC24gsOQ" target="_blank" rel="noopener">Mustard Seed</a> </div></div><div class="desc"><em>Mustard Seed</em> (Ellie Holcomb / Rain for Roots) sends us out trusting that even faith as small as a seed can move mountains—go in courage, watching for what God will grow.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-10-12" data-date="2025-10-12" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">One of them turned back, praising God</div><cite class="verse-citation">Luke 17:15</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Oct 12, 2025</span>
+          <span class="sub">Pentecost 18</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=2+Kings+5:1-3,+7-15c&amp;version=nrsvae" target="_blank" rel="noopener">2 Kings 5:1-3, 7-15c</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+111&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 111</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Timothy+2:8-15&amp;version=nrsvae" target="_blank" rel="noopener">2 Timothy 2:8-15</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+17:11-19&amp;version=nrsvae" target="_blank" rel="noopener">Luke 17:11-19</a></div>
+      <div class="intro">Naaman dips seven times in the Jordan and is made whole. Ten lepers are cleansed on the road, and one turns back to say thank you. The waters still heal; the bread still mends; the question each Sunday is whether we, too, will turn and give thanks.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.choristersguild.org/store/cgb806-now-thank-we-all-our-god-2-or-3-octaves/2046/" target="_blank" rel="noopener">Now Thank We All Our God</a> <span class="tag bells">Handbells</span><span class="tag flute">Flute</span></div></div><div class="desc">Our Handbell Choir, joined by flutist Heather Doyle, offers <em>Now Thank We All Our God</em> (arr. Anna Laura Page) on a Sunday of healing and gratitude, it gathers us to say <span class="quote">“thank you”</span> with our whole heart.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=9jzFQzDKa14" target="_blank" rel="noopener">I Have Decided</a> <span class="tag bells">Handbells</span></div></div><div class="desc"><em>I Have Decided</em> (arr. Dennis Robert) is a gentle testimony of discipleship—returning to Jesus in grateful trust and offering our lives along with our gifts.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=bJ_gcvl2m-w" target="_blank" rel="noopener">Jesus Lifted Me</a> </div></div><div class="desc">The song <em>Jesus Lifted Me</em>, by Brooke Ligertwood and CAIN, sends us out rejoicing: <span class="quote">“Glory, hallelujah, Jesus lifted me.”</span></div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-10-19" data-date="2025-10-19" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">Will not God grant justice?</div><cite class="verse-citation">Luke 18:7</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Oct 19, 2025</span>
+          <span class="sub">Pentecost 19</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Genesis+32:22-31&amp;version=nrsvae" target="_blank" rel="noopener">Genesis 32:22-31</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+121&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 121</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Timothy+3:14—4:5&amp;version=nrsvae" target="_blank" rel="noopener">2 Timothy 3:14—4:5</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+18:1-8&amp;version=nrsvae" target="_blank" rel="noopener">Luke 18:1-8</a></div>
+      <div class="intro">Jacob wrestles through the night and limps away blessed. A widow refuses to stop knocking until justice is done. The life of prayer is not quiet resignation but this stubborn, hopeful wrestling — kept awake by the promise that our persistence is already met by God&#x27;s faithfulness.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=b8WdyJHLUgg" target="_blank" rel="noopener">Kyrie Eleison (Lord Have Mercy)</a> <span class="tag choir">Choir</span><span class="tag assembly">Guitar</span></div></div><div class="desc"><em>Kyrie</em> by Richard Cootes is a steady, sung prayer for mercy that mirrors today's call to <span class="quote">“pray always and not lose heart,”</span> entrusting our need to the Keeper of Israel (Psalm 121:4).</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=-cN5mlNxqfM" target="_blank" rel="noopener">Down to the River to Pray</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Down to the River to Pray</em> with <em>Lord, Listen to Your Children Praying</em> (arr. Mary McDonald) gathers our persistent petitions as we bring our gifts—asking the Father's love, the Spirit's power, and Jesus' grace to guide the church.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=reAlJKv7ptU" target="_blank" rel="noopener">My Lighthouse</a> </div></div><div class="desc"><em>My Lighthouse</em> (Rend Collective) sends us with courage—Christ our Light in the storm, whose promise carries us <span class="quote">“safe to shore.”</span></div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-10-26" data-date="2025-10-26" style="--row-bg: #f3e2e2; --row-accent: #8b2a2a;">
+      <aside class="verse-float"><div class="verse-text">The truth will make you free</div><cite class="verse-citation">John 8:32</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Oct 26, 2025</span>
+          <span class="sub">Reformation</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Jeremiah+31:31-34&amp;version=nrsvae" target="_blank" rel="noopener">Jeremiah 31:31-34</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+46&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 46</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Romans+3:19-28&amp;version=nrsvae" target="_blank" rel="noopener">Romans 3:19-28</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=John+8:31-36&amp;version=nrsvae" target="_blank" rel="noopener">John 8:31-36</a></div>
+      <div class="intro">Reformation Sunday is not a victory parade for any one tradition — it is a yearly reminder that the church is ever being re-made by the grace it did nothing to deserve. Jeremiah promises a covenant written on the heart; Jesus promises that the truth itself will set us free. We pray today for a church still learning to live that freedom.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=YBOJy64x6RI" target="_blank" rel="noopener">The Truth Will Make You Free</a> <span class="tag choir">Choir</span></div></div><div class="desc">On this Reformation Sunday, the choir sings <em>The Truth Will Make You Free</em> (Anne Krentz Organ), proclaiming John 8: <span class="quote">“Continue in my word… the truth will make you free.”</span></div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=e9UED7s8pyE" target="_blank" rel="noopener">On Faith Alone (Sola Fide)</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>On Faith Alone (Sola Fide)</em> (arr. Tom Fettke) confesses Romans 3: we are made new by Christ's blood, not by our works. Sola fide—<span class="quote">“faith alone”</span>—we stand, and we lay our gifts in the hands that always hold us.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=LuvfMDhTyMA" target="_blank" rel="noopener">Lord, I Need You</a> </div></div><div class="desc"><em>Lord, I Need You</em> sends us out in grace—Christ our righteousness and steady hope: <span class="quote">“every hour I need you.”</span></div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-11-02" data-date="2025-11-02" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Blessed are you who weep now</div><cite class="verse-citation">Luke 6:21</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Nov 2, 2025</span>
+          <span class="sub">All Saints</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag assembly">All</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Daniel+7:1-3,+15-18&amp;version=nrsvae" target="_blank" rel="noopener">Daniel 7:1-3, 15-18</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+149&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 149</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Ephesians+1:11-23&amp;version=nrsvae" target="_blank" rel="noopener">Ephesians 1:11-23</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+6:20-31&amp;version=nrsvae" target="_blank" rel="noopener">Luke 6:20-31</a></div>
+      <div class="intro">Today we name our dead and give thanks for them — for ordinary saints whose lives taught us something of Christ. Daniel glimpses the great assembly; Jesus names the blessed as the poor, the grieving, the hungry, the merciful. We belong with them — and so we take our place at the table, surrounded by so great a cloud of witnesses.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=-1z1bKfDT-k" target="_blank" rel="noopener">For All the Saints</a> <span class="tag bells">Handbells</span></div></div><div class="desc">This morning's prelude <em>For All the Saints</em> (arr. Anna Laura Page) is a bright procession of the communion of saints, lifting our remembrance into praise and thanksgiving.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.augsburgfortress.org/store/product/9780800632045/I-Sing-a-Song-of-the-Saints-of-God?__hstc=240847836.9d20db79cd5317c3df20cbfdc4563345.1735507072255.1757779443348.1757791952342.163&amp;__hssc=240847836.13.1757791952342&amp;__hsfp=1811316718" target="_blank" rel="noopener">I Sing a Song of the Saints of God</a> <span class="tag youth">Youth</span><span class="tag choir">Choir</span><span class="tag bells">Handbells</span><span class="tag assembly">Assembly</span></div></div><div class="desc"><em>I Sing a Song of the Saints of God</em> (Wayne L. Wold) reminds us that saints are everyday people made holy by grace; all ages are invited to join the saints' song as we bring our gifts.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=PYyyfw349FI" target="_blank" rel="noopener">I&#x27;ll Fly Away</a> </div></div><div class="desc"><em>I'll Fly Away</em> sends us out in sure hope of the life God promises, remembering those who now rest in God's light. All are welcome to join in the singing.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-11-09" data-date="2025-11-09" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">To God all of them are alive</div><cite class="verse-citation">Luke 20:38</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Nov 9, 2025</span>
+          <span class="sub">Pentecost 22</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag bells">Handbells</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Job+19:23-27a&amp;version=nrsvae" target="_blank" rel="noopener">Job 19:23-27a</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+17:1-9&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 17:1-9</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Thessalonians+2:1-5,+13-17&amp;version=nrsvae" target="_blank" rel="noopener">2 Thessalonians 2:1-5, 13-17</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+20:27-38&amp;version=nrsvae" target="_blank" rel="noopener">Luke 20:27-38</a></div>
+      <div class="intro">Out of deepest grief Job cries, &quot;I know that my Redeemer lives.&quot; Jesus, pressed by the Sadducees to logic-chop the resurrection, simply answers that God is the God of the living. Every Sunday is a small Easter for this reason — we gather in the company of the living God, and the company he keeps.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://giamusic.com/resource/prelude-on-duke-street-handbells-pdf-d8939" target="_blank" rel="noopener">Prelude on DUKE STREET</a> <span class="tag bells">Handbells</span></div></div><div class="desc">A shimmer of bells on <span class="sc">Duke Street</span> opens the door to life—Jesus shall reign, our Redeemer lives.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.jwpepper.com/i-know-that-my-redeemer-lives-10014731/p?srsltid=AfmBOop0Bw-gMocN2Lt43cqNwVAPj3Ueb8_enypTatB0NBRhqSyh5Zwc" target="_blank" rel="noopener">I Know That My Redeemer Lives</a> <span class="tag bells">Handbells</span></div></div><div class="desc">A lively alleluia on Duke Street; in hope of the resurrection we lay our gifts before the God of the living.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=x2Kft4bfsSk" target="_blank" rel="noopener">Rise Up</a> </div></div><div class="desc"><em>Rise Up</em> (Bifrost Arts) sends us out praying <span class="quote">“your kingdom come”</span>—standing with the weary and forgotten, trusting the Lord who raises life in the face of death.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-11-16" data-date="2025-11-16" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
+      <aside class="verse-float"><div class="verse-text">Not one stone will be left upon another</div><cite class="verse-citation">Luke 21:6</cite></aside>
+      <header class="week-head">
+        <div class="lhs">
+          <span class="date">Nov 16, 2025</span>
+          <span class="sub">Pentecost 23</span>
+          
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Malachi+4:1-2a&amp;version=nrsvae" target="_blank" rel="noopener">Malachi 4:1-2a</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+98&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 98</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=2+Thessalonians+3:6-13&amp;version=nrsvae" target="_blank" rel="noopener">2 Thessalonians 3:6-13</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+21:5-19&amp;version=nrsvae" target="_blank" rel="noopener">Luke 21:5-19</a></div>
+      <div class="intro">Malachi and the gospel both describe a day that will come — frightening and bright. Between the already and the not-yet, the apostle gives us the only workable instruction: do not grow weary in doing what is right. The word and the meal are given for exactly such a Sunday as this.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=vFwz155wZIw" target="_blank" rel="noopener">All the Ends of the Earth</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>All the Ends of the Earth</em> calls all creation—earth and sea—to lift their eyes to God's wonders. The Lord who made the world has come with justice, faithful to ancient promises. Let everything make music before our God!</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=0jv6vp6K7Jg" target="_blank" rel="noopener">Soon and Very Soon</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>Soon and Very Soon</em> (arr. Jack Schrader) sings patient hope in an urgent time: we bring our gifts trusting the promise—<span class="quote">“we’re going to see the King.”</span></div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=o8PZPldiEoc" target="_blank" rel="noopener">Psalm 98: All The Ends Of The Earth</a> </div></div><div class="desc"><em>Psalm 98: All the Ends of the Earth</em> sends us out in ringing praise—<span class="quote">“all the ends of the earth have seen the victory of our God”</span>—so endure, rejoice, and do what is right.</div></div>
+      </div>
+      <div class="clear"></div>
+    </section>
+
+    <section class="week" id="week-2025-11-23" data-date="2025-11-23" style="--row-bg: #faf5e7; --row-accent: #b38a20;">
+      <aside class="verse-float"><div class="verse-text">Jesus, remember me when you come into your kingdom</div><cite class="verse-citation">Luke 23:42</cite></aside>
+      <header class="week-head festival">
+        <div class="lhs">
+          <span class="date">Nov 23, 2025</span>
+          <span class="sub">Christ the King</span>
+          <span class="star" title="Festival / principal feast">★</span>
+        </div>
+        <div class="rhs">
+          <span class="group-tag choir">Choir</span>
+          
+        </div>
+      </header>
+      <div class="readings"><span class="rlabel">Readings</span><a href="https://bible.oremus.org/?passage=Jeremiah+23:1-6&amp;version=nrsvae" target="_blank" rel="noopener">Jeremiah 23:1-6</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Psalm+46&amp;version=nrsvae" target="_blank" rel="noopener">Psalm 46</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Colossians+1:11-20&amp;version=nrsvae" target="_blank" rel="noopener">Colossians 1:11-20</a><span class="sep">·</span><a href="https://bible.oremus.org/?passage=Luke+23:33-43&amp;version=nrsvae" target="_blank" rel="noopener">Luke 23:33-43</a></div>
+      <div class="intro">Jeremiah&#x27;s righteous king turns out — on this strange feast day — to be the one crucified between two thieves. The throne is a cross; the crown is thorns; and the first to enter paradise is the one who asked to be remembered. The upside-down reign of Christ is the only reign that actually sets us free.</div>
+      <div class="items">
+        <div class="item-row"><div class="label">Prelude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=4-GM9w6IA2M" target="_blank" rel="noopener">How Deep The Father&#x27;s Love For Us</a> <span class="tag choir">Choir</span></div></div><div class="desc"><em>How Deep the Father’s Love for Us</em> gathers us at the cross where Christ the King is revealed. We behold the One who carries our sin, whose wounds bring us life, and in whom we boast alone, for his love beyond all measure has paid our ransom.</div></div>
+        <div class="item-row"><div class="label">Offertory</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=pMxGSgiWhxc" target="_blank" rel="noopener">Christ Is The King</a> <span class="tag choir">Choir</span><span class="tag assembly">Assembly</span></div></div><div class="desc"><em>Christ Is the King</em> (arr. Donald Busarow) gathers our alleluias into one voice—love’s reconciling might unites us in service as we lay our gifts before the Shepherd-King.</div></div>
+        <div class="item-row"><div class="label">Postlude</div><div class="piece"><div class="title-line"><a class="title-link" href="https://www.youtube.com/watch?v=IjvCS4yjAd8" target="_blank" rel="noopener">Crown Him With Many Crowns</a> </div></div><div class="desc"><em>Crown Him with Many Crowns</em> sends us out rejoicing: Christ—firstborn of all creation and Lord of life—reigns, even from the cross. <span class="quote">“Awake, my soul, and sing!”</span></div></div>
+      </div>
+      <div class="clear"></div>
+    </section></div>
+</div>
+
+<script>
+  // Map of sunday dates to their season, built at mockup render time.
+  const DATE_SEASONS = [["2025-09-21", "Time After Pentecost"], ["2025-09-28", "Time After Pentecost"], ["2025-10-05", "Time After Pentecost"], ["2025-10-12", "Time After Pentecost"], ["2025-10-19", "Time After Pentecost"], ["2025-10-26", "Time After Pentecost"], ["2025-11-02", "Time After Pentecost"], ["2025-11-09", "Time After Pentecost"], ["2025-11-16", "Time After Pentecost"], ["2025-11-23", "Time After Pentecost"], ["2025-11-30", "Advent"], ["2025-12-07", "Advent"], ["2025-12-14", "Advent"], ["2025-12-21", "Advent"], ["2025-12-24", "Christmas"], ["2025-12-28", "Christmas"], ["2026-01-04", "Christmas"], ["2026-01-11", "Epiphany"], ["2026-01-18", "Epiphany"], ["2026-01-25", "Epiphany"], ["2026-02-01", "Epiphany"], ["2026-02-08", "Epiphany"], ["2026-02-15", "Epiphany"], ["2026-02-18", "Lent"], ["2026-02-22", "Lent"], ["2026-03-01", "Lent"], ["2026-03-08", "Lent"], ["2026-03-15", "Lent"], ["2026-03-22", "Lent"], ["2026-03-29", "Holy Week"], ["2026-04-02", "Holy Week"], ["2026-04-03", "Holy Week"], ["2026-04-05", "Easter"], ["2026-04-12", "Easter"], ["2026-04-19", "Easter"], ["2026-04-26", "Easter"], ["2026-05-03", "Easter"], ["2026-05-10", "Easter"], ["2026-05-17", "Easter"], ["2026-05-24", "Pentecost"], ["2026-05-31", "Trinity"]];
+
+  function todayIso() {
+    const t = new Date();
+    return t.getFullYear() + '-'
+      + String(t.getMonth() + 1).padStart(2, '0') + '-'
+      + String(t.getDate()).padStart(2, '0');
+  }
+
+  function upcomingSundayEntry() {
+    const iso = todayIso();
+    // Earliest Sunday that is today or later
+    for (const pair of DATE_SEASONS) {
+      if (pair[0] >= iso) return pair;
+    }
+    // All Sundays are in the past — fall back to the latest one.
+    return DATE_SEASONS.length ? DATE_SEASONS[DATE_SEASONS.length - 1] : null;
+  }
+
+  function activateTab(target) {
+    if (!target) return;
+    const tabBtn = document.querySelector(`.tab[data-tab="${target}"]`);
+    const panel  = document.querySelector(`.panel[data-panel="${target}"]`);
+    if (!tabBtn || !panel) return;
+    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b === tabBtn));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p === panel));
+  }
+
+  function highlightUpcoming() {
+    const entry = upcomingSundayEntry();
+    document.querySelectorAll('section.week.current').forEach(el => el.classList.remove('current'));
+    if (!entry) return;
+    const target = document.getElementById(`week-${entry[0]}`);
+    if (!target) return;
+    target.classList.add('current');
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scrollBy({ top: -12, behavior: 'auto' });
+  }
+
+  // Switch to the upcoming Sunday's season + spotlight it on page load.
+  const _upcoming = upcomingSundayEntry();
+  activateTab(_upcoming ? _upcoming[1] : null);
+  // scrollIntoView needs the panel to have non-zero height (i.e. be the active one)
+  requestAnimationFrame(highlightUpcoming);
+
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activateTab(btn.dataset.tab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>

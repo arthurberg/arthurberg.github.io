@@ -137,9 +137,7 @@ availability, and conflict checks.
 
 - **Professor of Biostatistics (with tenure)**, Penn State College of Medicine (2022–present)
 - **Former Director**, Penn State Biostatistics PhD Program (2011–2024)
-- **Editorial Board**, *Statistics Innovation*, *Open Journal of Statistics*,
-  and *International Chinese Language Education Communications*
-- Ph.D. Mathematics (UC San Diego, 2007); M.S. Statistics (UC San Diego, 2005)
+- **Ph.D. Mathematics**, UC San Diego (2007); **M.S. Statistics**, UC San Diego (2005); **M.A. Mathematics** and **B.S. Mathematics**, University of Southern California (2002)
 
 [Download CV (PDF)](Berg-CV.pdf){.btn .btn-primary}
 [Contact](contact.qmd){.btn .btn-outline-secondary}

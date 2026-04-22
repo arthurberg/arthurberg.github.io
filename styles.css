@@ -1053,16 +1053,25 @@ main.content ul li, main.content ol li { margin: 0.2rem 0; }
   box-shadow: var(--shadow);
   border-left-color: var(--gold-500);
 }
-.service-card h3 {
+/* Services renders each ::: {.service-card} block as <section class="level3 service-card">
+   with the ### heading as the first child. The Bootstrap/Quarto theme default
+   adds margin-top:1.5rem to h3/h4 — override explicitly so the heading sits
+   flush with the card's own padding. */
+.service-card > h3,
+.service-card > h3:first-child,
+section.service-card > h3:first-child {
   color: var(--teal-800);
   font-size: 1.1rem;
-  margin-top: 0;
+  margin-top: 0 !important;
   margin-bottom: 0.6rem;
+  padding-top: 0;
   font-family: "Inter", sans-serif;
   font-weight: 700;
   letter-spacing: 0.005em;
+  opacity: 1;
 }
-.service-card h3::before { content: none; }
+.service-card > h3::before,
+.service-card > h3:first-child::before { content: none; }
 .service-card ul { margin: 0.3rem 0 0.2rem; padding-left: 1.25rem; }
 .service-card li { margin: 0.3rem 0; line-height: 1.5; }
 .service-card p { margin-bottom: 0.5rem; }
@@ -1094,6 +1103,39 @@ main.content ul li, main.content ol li { margin: 0.2rem 0; }
   color: #f0e4c8;
 }
 [data-bs-theme="dark"] .music-card strong:first-of-type i { color: var(--teal-200); }
+
+/* ——— Worship-calendar teaser (music page → /music-calendar.html) ——— */
+.calendar-teaser {
+  background: linear-gradient(135deg, #fffaf0 0%, #f7ead0 100%);
+  border: 1px solid rgba(179, 138, 32, 0.28);
+  border-left: 4px solid var(--gold-500);
+  border-radius: var(--radius);
+  padding: 0.95rem 1.25rem 1rem;
+  margin: 1.2rem 0 1.4rem;
+  line-height: 1.55;
+}
+.calendar-teaser p:last-child { margin-bottom: 0; }
+.calendar-teaser a.calendar-teaser-cta {
+  display: inline-block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #6b1f1f;
+  margin-bottom: 0.25rem;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+.calendar-teaser a.calendar-teaser-cta:hover {
+  color: #b38a20;
+  transform: translateX(2px);
+}
+.calendar-teaser a.calendar-teaser-cta i { color: var(--gold-600, #a67c10); margin-right: 0.45rem; }
+[data-bs-theme="dark"] .calendar-teaser {
+  background: linear-gradient(135deg, #2a2214 0%, #3a2f18 100%);
+  border-color: rgba(229, 184, 69, 0.35);
+  color: #f0e4c8;
+}
+[data-bs-theme="dark"] .calendar-teaser a.calendar-teaser-cta { color: #f5d37a; }
+[data-bs-theme="dark"] .calendar-teaser a.calendar-teaser-cta:hover { color: #e9b547; }
 
 /* ——— Trial table (research page) ——— */
 .trial-table table {

@@ -24,3 +24,6 @@ __pycache__/
 /reviews/
 
 **/*.quarto_ipynb
+
+# Claude Code project metadata
+/.claude/
