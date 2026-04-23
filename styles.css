@@ -350,6 +350,63 @@ a:hover {
   background: var(--gold-600);
   color: #fff;
 }
+/* Per-type outline colors mirror the entry left-border accents */
+.pub-filter-chip[data-type-filter="publication"] {
+  color: var(--teal-800);
+  border-color: var(--teal-600);
+}
+.pub-filter-chip[data-type-filter="publication"]:hover {
+  background: rgba(4, 61, 66, 0.08);
+  border-color: var(--teal-800);
+}
+.pub-filter-chip[data-type-filter="publication"].active,
+.pub-filter-chip[data-type-filter="publication"].active:hover {
+  background: var(--teal-800);
+  color: #fff;
+  border-color: var(--teal-800);
+}
+.pub-filter-chip[data-type-filter="abstract"] {
+  color: #b45309;
+  border-color: #b45309;
+}
+.pub-filter-chip[data-type-filter="abstract"]:hover {
+  background: rgba(180, 83, 9, 0.10);
+  border-color: #92400e;
+}
+.pub-filter-chip[data-type-filter="abstract"].active,
+.pub-filter-chip[data-type-filter="abstract"].active:hover {
+  background: #b45309;
+  color: #fff;
+  border-color: #b45309;
+}
+.pub-filter-chip[data-type-filter="grant"] {
+  color: #15803d;
+  border-color: #15803d;
+}
+.pub-filter-chip[data-type-filter="grant"]:hover {
+  background: rgba(21, 128, 61, 0.10);
+  border-color: #166534;
+}
+.pub-filter-chip[data-type-filter="grant"].active,
+.pub-filter-chip[data-type-filter="grant"].active:hover {
+  background: #15803d;
+  color: #fff;
+  border-color: #15803d;
+}
+.pub-filter-chip[data-type-filter="protocol"] {
+  color: #7c3aed;
+  border-color: #7c3aed;
+}
+.pub-filter-chip[data-type-filter="protocol"]:hover {
+  background: rgba(124, 58, 237, 0.10);
+  border-color: #6d28d9;
+}
+.pub-filter-chip[data-type-filter="protocol"].active,
+.pub-filter-chip[data-type-filter="protocol"].active:hover {
+  background: #7c3aed;
+  color: #fff;
+  border-color: #7c3aed;
+}
 .pub-filter-chip {
   display: inline-block;
   background: transparent;
@@ -405,6 +462,62 @@ a:hover {
   background: var(--teal-200);
   color: var(--teal-900);
   border-color: var(--teal-200);
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="publication"] {
+  color: var(--teal-200);
+  border-color: var(--teal-400);
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="publication"]:hover {
+  background: rgba(127, 212, 217, 0.12);
+  border-color: var(--teal-200);
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="publication"].active,
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="publication"].active:hover {
+  background: var(--teal-200);
+  color: var(--teal-900);
+  border-color: var(--teal-200);
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="abstract"] {
+  color: #fbbf24;
+  border-color: #fbbf24;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="abstract"]:hover {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: #fcd34d;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="abstract"].active,
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="abstract"].active:hover {
+  background: #fbbf24;
+  color: #1a1300;
+  border-color: #fbbf24;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="grant"] {
+  color: #4ade80;
+  border-color: #4ade80;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="grant"]:hover {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: #86efac;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="grant"].active,
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="grant"].active:hover {
+  background: #4ade80;
+  color: #05200e;
+  border-color: #4ade80;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="protocol"] {
+  color: #a78bfa;
+  border-color: #a78bfa;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="protocol"]:hover {
+  background: rgba(167, 139, 250, 0.14);
+  border-color: #c4b5fd;
+}
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="protocol"].active,
+[data-bs-theme="dark"] .pub-filter-chip[data-type-filter="protocol"].active:hover {
+  background: #a78bfa;
+  color: #1e1033;
+  border-color: #a78bfa;
 }
 [data-bs-theme="dark"] .pub-filter-count { color: #9aa3a9; }
 

@@ -205,21 +205,13 @@ def main() -> int:
     body.append("")
 
     current_year = None
-    current_type = None
     for e in entries:
         y = re.sub(r"\D", "", e["year"]) or "Unknown"
-        t = e.get("ENTRYTYPE", "").lower()
         if y != current_year:
             body.append("")
             body.append(f'<h2 class="pub-year" data-year="{y}">{y}</h2>')
             body.append("")
             current_year = y
-            current_type = None
-        if t != current_type:
-            label = TYPE_LABEL.get(t, t.title())
-            body.append(f'<h3 class="pub-type">{label}</h3>')
-            body.append("")
-            current_type = t
         body.append(render_entry(e))
 
     # Body fragment (no YAML, used by include shortcode elsewhere)

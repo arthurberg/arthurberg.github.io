@@ -491,7 +491,7 @@ def pub_only_stats_block(entries: list[dict]) -> str:
 
 
 def _build_entries_section(entries: list[dict], section_id: str, data_section: str,
-                           heading: str) -> list[str]:
+                           heading: str, show_type_subheads: bool = True) -> list[str]:
     out = [
         f'<section id="{section_id}" class="research-section" data-section="{data_section}">',
         f'<h2 class="section-heading">{heading}</h2>',
@@ -505,7 +505,7 @@ def _build_entries_section(entries: list[dict], section_id: str, data_section: s
             out.append(f'<h3 class="pub-year" data-year="{y}">{y}</h3>')
             current_year = y
             current_type = None
-        if t != current_type:
+        if show_type_subheads and t != current_type:
             label = TYPE_LABEL.get(t, t.title())
             out.append(f'<h4 class="pub-type">{label}</h4>')
             current_type = t
@@ -519,10 +519,12 @@ def build_publications_section(entries: list[dict]) -> list[str]:
     abstracts = [e for e in entries if e.get("keywords") == "conference"]
     out: list[str] = []
     if pubs:
-        out.extend(_build_entries_section(pubs, "sec-publications", "publication", "Publications"))
+        out.extend(_build_entries_section(pubs, "sec-publications", "publication", "Publications",
+                                          show_type_subheads=False))
     if abstracts:
         out.extend(_build_entries_section(abstracts, "sec-abstracts", "abstract",
-                                          "Abstracts &amp; Conference Presentations"))
+                                          "Conference Abstracts",
+                                          show_type_subheads=False))
     return out
 
 

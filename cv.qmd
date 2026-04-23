@@ -79,8 +79,8 @@ Hershey, PA 17033-0855
 
 ## Awards
 
-- 2014 **Dean's Award for Excellence in Teaching** — Penn State College of Medicine
-- 2014 **Innovation in Team Science Award** — Penn State Faculty Research Recognition Awards
+- 2014 Dean's Award for Excellence in Teaching — Penn State College of Medicine
+- 2014 Innovation in Team Science Award — Penn State Faculty Research Recognition Awards
 - 2013 Society of Distinguished Educators Junior Faculty Teaching Award (Finalist)
 - 2008 University of Florida IFAS Research Innovation Award
 - 2005–2006 UCSD Mathematics Department Outstanding TA Award
@@ -168,6 +168,8 @@ See the [PDF CV](Berg-CV.pdf) for the complete list of current, pending, and com
 - Penn State Cancer Institute Scientific Review Committee (2010–2019)
 - Institutional Review Board, Board A (2010–2016)
 
+See the [PDF CV](Berg-CV.pdf) for the full list of editorial, review, and committee service.
+
 ## Selected Presentations
 
 ### 2025
@@ -221,8 +223,11 @@ See the [PDF CV](Berg-CV.pdf) for additional PhD, Master's, and directed-study a
 
 ## Other Professional Activities
 
-- **Expert Witness Services** — Biostatistical expert testimony for medical malpractice cases (written reports, depositions, court appearances).
-- **Independent Data Monitoring** — Independent biostatistician on pharmaceutical clinical trial data monitoring committees.
+- **AI-Powered Research & Workflow Consulting** — Advising researchers, professionals, and organizations on practical adoption of generative-AI tooling (cloud-based and locally-hosted LLM deployments) for literature and evidence organization, document and data-pipeline automation, statistical workflow support, and custom integrations.
+- **Expert Witness Services** — Biostatistical expert opinions and testimony in medical malpractice, pharmaceutical, and scientific causation matters: written reports, depositions, trial testimony, and Daubert/Frye admissibility analyses.
+- **Independent Data Monitoring** — Independent biostatistician on Data Safety and Monitoring Committees (DSMCs/DMCs) for investigator-initiated and industry-sponsored clinical trials, including unblinded interim analyses and statistical-monitoring plan review.
+
+See the [Services page](services.qmd) for more details.
 
 ## Music
 
@@ -233,3 +238,5 @@ See the [PDF CV](Berg-CV.pdf) for additional PhD, Master's, and directed-study a
 - 2018–2020 — Choir Director, Organist & Pianist, Trinity Lutheran Church, Steelton, PA
 - 2015–2018 — Pianist, Paxton Church of the Brethren, Harrisburg, PA
 - 1994–1998 — Pianist, Our Saviour's Lutheran Church, Long Beach, CA
+
+See the [Music page](music.qmd) for more details.

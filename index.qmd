@@ -43,7 +43,9 @@ entropy-based approach to Chinese character learning.
 
 Outside of my Penn State work, I provide [biostatistical expert-witness
 testimony](services.qmd) and serve as an [independent biostatistician on
-data monitoring committees](services.qmd). I also serve as **Director of
+data monitoring committees](services.qmd), and I consult on
+[AI-powered research and workflow tooling](services.qmd) for researchers,
+professionals, and organizations. I also serve as **Director of
 Music** at [Trinity Evangelical Lutheran Church in Lemoyne, PA](music.qmd).
 
 Raised in [Grifton, North Carolina](https://grifton.com/) — home of the
