@@ -84,7 +84,6 @@ TYPE_FILTERS = [
     ("publication", "Publications"),
     ("abstract", "Abstracts"),
     ("grant", "Grants"),
-    ("protocol", "Protocols"),
 ]
 
 
@@ -458,7 +457,7 @@ def load_protocols() -> list[dict]:
 
 # ——— Assemble output ———
 
-def research_stats_block(entries: list[dict], grants: list[dict], protocols: list[dict]) -> str:
+def research_stats_block(entries: list[dict], grants: list[dict]) -> str:
     n_abs = sum(1 for e in entries if e.get("keywords") == "conference")
     n_pub = len(entries) - n_abs
     return (
@@ -467,7 +466,6 @@ def research_stats_block(entries: list[dict], grants: list[dict], protocols: lis
         f'<div class="pub-stat"><span class="pub-stat-num">{n_pub}</span><span class="pub-stat-label">publications</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{n_abs}</span><span class="pub-stat-label">abstracts</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{len(grants)}</span><span class="pub-stat-label">grants</span></div>\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{len(protocols)}</span><span class="pub-stat-label">protocols</span></div>\n'
         ':::\n:::\n'
     )
 
@@ -575,11 +573,10 @@ def main() -> int:
 
     pubs = load_publications()
     grants = load_grants()
-    protocols = load_protocols()
 
     # Unified research-body fragment
     parts: list[str] = []
-    parts.append(research_stats_block(pubs, grants, protocols))
+    parts.append(research_stats_block(pubs, grants))
     parts.append('')
     parts.append(filter_bar_html())
     parts.append('')
@@ -587,8 +584,6 @@ def main() -> int:
     parts.extend(build_publications_section(pubs))
     if grants:
         parts.extend(build_grants_section(grants))
-    if protocols:
-        parts.extend(build_protocols_section(protocols))
 
     body_text = "\n".join(parts) + "\n"
     OUT_BODY.write_text(body_text)
@@ -616,7 +611,7 @@ def main() -> int:
     page.append("\n".join(pub_parts))
     OUT_PUB.write_text("\n".join(page))
 
-    print(f"Wrote {OUT_BODY} — {len(pubs)} publications, {len(grants)} grants, {len(protocols)} protocols")
+    print(f"Wrote {OUT_BODY} — {len(pubs)} publications, {len(grants)} grants")
     print(f"Wrote {OUT_PUB} and {OUT_PUB_BODY}")
     return 0
 
