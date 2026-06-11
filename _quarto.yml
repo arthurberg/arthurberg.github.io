@@ -7,6 +7,7 @@ website:
   description: "Professor of Biostatistics, Penn State College of Medicine. Research in Bayesian methods, clinical trials, statistical genetics, and interdisciplinary data science."
   site-url: https://arthurberg.com
   favicon: favicon.svg
+  image: photo.jpg
   page-navigation: true
   open-graph: true
   twitter-card: true
@@ -37,6 +38,18 @@ website:
       - icon: envelope
         href: mailto:berg@psu.edu
         aria-label: Email
+  page-footer:
+    left: "© 2026 Arthur Berg · Professor of Biostatistics, Penn State College of Medicine"
+    right:
+      - icon: github
+        href: https://github.com/arthurberg
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/arthurberg
+        aria-label: LinkedIn
+      - icon: envelope
+        href: mailto:berg@psu.edu
+        aria-label: Email
 format:
   html:
     theme: litera
@@ -50,9 +63,8 @@ format:
       text: |
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/brands.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     include-after-body:
       text: |
@@ -74,7 +86,6 @@ format:
           const entries = document.querySelectorAll('.pub-entry');
           const sections = document.querySelectorAll('.research-section');
           const pubYears = document.querySelectorAll('.pub-year');
-          const pubTypes = document.querySelectorAll('.pub-type');
           const statusHeads = document.querySelectorAll('.grant-status-heading');
           const countEl = document.getElementById('pub-filter-count');
 
@@ -99,7 +110,7 @@ format:
             areaChips.forEach(c => c.classList.toggle('active', c.dataset.filter === state.area));
             typeChips.forEach(c => c.classList.toggle('active', c.dataset.typeFilter === state.type));
 
-            const byType = { publication: 0, grant: 0, protocol: 0 };
+            const byType = { publication: 0, abstract: 0, grant: 0 };
             let totalVisible = 0;
 
             entries.forEach(e => {
@@ -112,11 +123,8 @@ format:
               if (match) { totalVisible++; byType[type] = (byType[type] || 0) + 1; }
             });
 
-            // Process deepest → shallowest so each scope is resolved correctly.
-            // pub-type (h4) stops at any same-or-higher heading.
-            // pub-year (h3) stops at next year or section boundary (NOT pub-type).
+            // pub-year (h3) stops at next year or section boundary.
             // grant-status-heading stops at next status or section boundary.
-            hideEmptyHeadingsIn(pubTypes, '.pub-type, .pub-year, .section-heading');
             hideEmptyHeadingsIn(pubYears, '.pub-year, .section-heading');
             hideEmptyHeadingsIn(statusHeads, '.grant-status-heading, .section-heading');
 
@@ -129,8 +137,10 @@ format:
             if (countEl) {
               const parts = [];
               if (state.type === 'all' || state.type === 'publication') parts.push(`${byType.publication} pub${byType.publication === 1 ? '' : 's'}`);
-              if (state.type === 'all' || state.type === 'grant') parts.push(`${byType.grant} grant${byType.grant === 1 ? '' : 's'}`);
-              if (state.type === 'all' || state.type === 'protocol') parts.push(`${byType.protocol} protocol${byType.protocol === 1 ? '' : 's'}`);
+              if (typeChips.length) {
+                if (state.type === 'all' || state.type === 'abstract') parts.push(`${byType.abstract} abstract${byType.abstract === 1 ? '' : 's'}`);
+                if (state.type === 'all' || state.type === 'grant') parts.push(`${byType.grant} grant${byType.grant === 1 ? '' : 's'}`);
+              }
               countEl.textContent = parts.join(' · ');
             }
 
@@ -141,12 +151,15 @@ format:
                 emptyEl = document.createElement('div');
                 emptyEl.id = 'pub-empty-state';
                 emptyEl.innerHTML = 'No items match the current filters. <button type="button" id="pub-reset-btn">Reset filters</button>';
-                const container = sections[0] && sections[0].parentNode;
-                if (container) container.insertBefore(emptyEl, sections[0]);
-                document.getElementById('pub-reset-btn').addEventListener('click', () => {
-                  state = { area: 'all', type: 'all' };
-                  render();
-                });
+                const anchor = sections[0] || entries[0];
+                const container = anchor && anchor.parentNode;
+                if (container) {
+                  container.insertBefore(emptyEl, anchor);
+                  document.getElementById('pub-reset-btn').addEventListener('click', () => {
+                    state = { area: 'all', type: 'all' };
+                    render();
+                  });
+                }
               }
               emptyEl.style.display = '';
             } else if (emptyEl) {
@@ -168,12 +181,6 @@ format:
             chip.addEventListener('click', () => { state.type = chip.dataset.typeFilter; render(); });
           });
 
-          document.querySelectorAll('.area-filter-link').forEach(a => {
-            a.addEventListener('click', (ev) => {
-              const slug = a.dataset.filter;
-              if (slug) { state.area = slug; render(); }
-            });
-          });
           document.addEventListener('click', (ev) => {
             const tag = ev.target.closest('.area-tag');
             if (tag && tag.dataset.area) {

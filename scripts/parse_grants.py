@@ -147,6 +147,22 @@ def main() -> int:
     # Deduplicate: merge by title if completed + other overlap
     all_entries = completed + other
 
+    # Normalize statuses: anything outside the three known buckets would be
+    # silently dropped by gen_research.py's status grouping. Infer pending
+    # for future-dated awards, active otherwise, and warn loudly.
+    from datetime import date
+
+    this_year = date.today().year
+    for entry in all_entries:
+        if entry.get("status") not in ("active", "pending", "completed"):
+            inferred = "pending" if (entry.get("start_year") or 0) > this_year else "active"
+            print(
+                f"  WARNING: grant {entry.get('award_number') or entry.get('title', '?')!r} "
+                f"has unrecognized status {entry.get('status')!r}; inferring {inferred!r}",
+                file=sys.stderr,
+            )
+            entry["status"] = inferred
+
     # Preserve human-maintained extension fields (e.g. `topic` for pending
     # grants) across re-runs by re-reading the existing grants.yml and
     # carrying matching values forward.

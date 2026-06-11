@@ -20,7 +20,7 @@ Foundation**, founded and led by parents, with support from **Four
 Diamonds** and other foundations. BCC joined **Penn State College of
 Medicine** in September 2023.
 
-- **Chair and Founder** — Dr. Giselle Saulnier Sholler, MD, MSc (Division
+- **Chair and Founder** — Giselle Saulnier Sholler, MD, MSc (Division
   Chief of Pediatric Hematology and Oncology, Penn State Health Children's
   Hospital)
 - **Lead Biostatistician** — Arthur Berg, Ph.D. (2024–present)
@@ -62,8 +62,7 @@ information are available on [ClinicalTrials.gov](https://clinicaltrials.gov).
 
 Trial acronyms: **NBL** = neuroblastoma · **HR-NBL** = high-risk
 neuroblastoma · **DIPG** = diffuse intrinsic pontine glioma · **CNS** =
-central nervous system · **EFS** = event-free survival · **OS** =
-overall survival · **DFMO** = eflornithine · **NEXT-NB** = non-myeloablative
+central nervous system · **DFMO** = eflornithine · **NEXT-NB** = non-myeloablative
 transplant-free high-risk neuroblastoma consolidation.
 
 For BCC-related biostatistical publications, see the

@@ -7,7 +7,7 @@ toc-depth: 2
 ::: {.cv-actions}
 [<i class="fa-solid fa-file-pdf"></i> Download full CV (PDF)](Berg-CV.pdf){.btn .btn-primary}
 [<i class="ai ai-orcid"></i> ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}
-[Penn State Pure](https://pennstate.pure.elsevier.com/en/persons/arthur-berg){.btn .btn-outline-secondary}
+[Penn State Pure](https://pure.psu.edu/en/persons/arthur-berg){.btn .btn-outline-secondary}
 [<i class="ai ai-google-scholar"></i> Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}
 :::
 
@@ -124,11 +124,11 @@ Hershey, PA 17033-0855
 
 A short list of featured papers chosen for their breadth across methodological
 biostatistics, clinical collaboration, and interdisciplinary applications of
-data science. For the full list (270+ publications), see the
-[Research page](research.qmd).
+data science. For the full, filterable list of publications and conference
+abstracts, see the [Research page](research.qmd).
 
 - **Berg, A.** (2025). [Entropy-based Sound-Character Mapping for Chinese Character Learning](https://doi.org/10.46451/ijclt.20250205). *International Journal of Chinese Language Teaching*, 6(2), 63–89.
-- Farkas, G.J., Caldera, L.J., …, **Berg, A.** (2025). Cardiometabolic Risk in Chronic Spinal Cord Injury: A Systematic Review with Meta-Analysis and Temporal and Geographical Trends. *Journal of Clinical Medicine*, 14(2872), 1–31.
+- Farkas, G.J., Caldera, L.J., et al., **Berg, A.** (2025). [Cardiometabolic Risk in Chronic Spinal Cord Injury: A Systematic Review with Meta-Analysis and Temporal and Geographical Trends](https://doi.org/10.3390/jcm14092872). *Journal of Clinical Medicine*, 14, 2872.
 - Hawila, N., **Berg, A.**, et al. (2023). [Exact-corrected confidence interval for risk difference in noninferiority binomial trials](https://doi.org/10.1111/biom.13688). *Biometrics*, 79(2), 1133–1144.
 - Hawila, N., **Berg, A.** (2021). [Assessing the impact of COVID-19 on registered interventional clinical trials](https://doi.org/10.1111/cts.13034). *Clinical and Translational Science*, 14(3), 1147–1154.
 - **Berg, A.** (2021). [Statistical analysis of the International Mathematical Olympiad](https://doi.org/10.1007/s00283-020-10015-z). *The Mathematical Intelligencer*, 43(1), 105–112.
@@ -140,15 +140,21 @@ data science. For the full list (270+ publications), see the
 
 **Current (selected)**
 
-- *Targeting Aldehyde Dehydrogenase for Cancer Prevention* — NCI R01 CA241148 (Biostatistician; PI: Robertson), $3.17M, 2020–2025
-- *Linking olfactory deficits to memory impairment and AD neurodegeneration* — NIA R01 AG070088 (Co-Investigator; PI: Karunanayaka), $3.93M, 2021–2025
+- *BCC022: Naxitamab + Tipifarnib for Relapsed/Refractory Neuroblastoma* — Cannonball Kids' Cancer Foundation & Trial Blazers for Kids (Biostatistician; PI: Saulnier Sholler), $333K, 2025–2027
+- *A Unique Small Molecule for Triple-Negative Breast Cancer* — DoD (Biostatistician; PI: A. Sharma), $1.26M, 2024–2027
+- *Identifying Novel Approaches for Melanoma Prevention* — DoD (Biostatistician; PI: Robertson), $830K, 2023–2026
+- *Combination Therapy for Childhood Acute Myeloid Leukemia* — Four Diamonds Fund (Biostatistician; PI: A. Sharma), $250K, 2023–2026
+- *Linking olfactory deficits to memory impairment and AD neurodegeneration* — NIA R01 AG070088 (Co-Investigator; PI: Karunanayaka), $3.86M, 2021–2027
+
+**Recently completed (selected)**
+
+- *Targeting Aldehyde Dehydrogenase for Cancer Prevention* — NCI R01 CA241148 (Biostatistician; PI: Robertson), $3.17M, 2020–2026
 - *Phase II Study of Abemaciclib in Advanced Biliary Tract Carcinoma* — Lilly USA (Biostatistician; PI: Yee), $383K, 2020–2025
 - *Neuro-pharmacological Properties of Repurposed Posaconazole in Glioblastoma* — NCI R03 CA255992 (Biostatistician; PI: Mansouri), 2022–2025
-- *Identifying Novel Approaches for Melanoma Prevention* — DoD (Biostatistician; PI: Robertson), $830K, 2023–2026
-- *Combination Therapy for Childhood Acute Myeloid Leukemia* — Four Diamonds Fund (Biostatistician; PI: Sharma), $250K, 2023–2025
-- *A Unique Small Molecule for Triple-Negative Breast Cancer* — DoD (Biostatistician; PI: Sharma), $1.26M, 2024–2027
 
-See the [PDF CV](Berg-CV.pdf) for the complete list of current, pending, and completed grants.
+See the [Research page](research.qmd#type=grant) for the full list of active,
+pending, and completed grants, or the [PDF CV](Berg-CV.pdf) for the complete
+extramural-support section.
 
 ## Service
 
@@ -213,6 +219,8 @@ Full list available in the [PDF CV](Berg-CV.pdf).
 
 **Selected PhD Committees**
 
+- **Avantika R. Diwadkar** (PSU Bioinformatics & Genomics, committee) — Statistical approaches to infer the genetic basis of cell–cell interaction and phenotype heterogeneity in autoimmune and neurodegenerative disease. Graduated May 2026.
+- **Shuang Gao** (PSU Biostatistics, committee) — Genetic loci in addiction and sex-differentiated effects through innovative genomic analysis. Graduated December 2024.
 - **Nour Hawila** (PSU Biostatistics, advisor) — Confidence intervals for noninferiority testing; Bayesian joint modeling of reliability; topics in biostatistical modeling and statistics education. Graduated June 2023.
 - **Chenqi (Stacey) Fu** (PSU Biostatistics, committee) — Early-phase clinical trial designs based on predictive Bayes factor and Bayesian model averaging.
 - **Daniel McGuire** (PSU Biostatistics, committee) — Replicability in GWAS and large-scale EHR datasets. Graduated 2021.

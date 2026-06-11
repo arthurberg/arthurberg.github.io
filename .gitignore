@@ -30,3 +30,6 @@ __pycache__/
 
 # Local bulletin-cover helper (uses macOS-only qlmanage paths)
 /scripts/extract_bulletin_covers.py
+
+# Unused local portrait (kept on disk, not published)
+/arthur.jpeg

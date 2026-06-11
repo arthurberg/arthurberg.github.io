@@ -4,6 +4,7 @@ subtitle: "Professor of Biostatistics · Penn State College of Medicine"
 about:
   template: trestles
   image: photo.jpg
+  image-alt: "Portrait of Arthur Berg"
   image-shape: round
   image-width: 15em
   links:
@@ -16,11 +17,14 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/arthurberg
-    - text: ORCID
+    - icon: person-badge
+      text: ORCID
       href: https://orcid.org/0000-0002-4097-7348
-    - text: Penn State Pure
-      href: https://pennstate.pure.elsevier.com/en/persons/arthur-berg
-    - text: Google Scholar
+    - icon: building
+      text: Penn State Pure
+      href: https://pure.psu.edu/en/persons/arthur-berg
+    - icon: mortarboard
+      text: Google Scholar
       href: https://scholar.google.com/citations?user=asQf9VQAAAAJ
 ---
 

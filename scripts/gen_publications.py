@@ -70,7 +70,7 @@ def format_authors(raw: str) -> str:
                 formatted.append(a)
     formatted = [clean(x) for x in formatted]
     bolded = [
-        f'<span class="pub-me">{x}</span>' if "Berg" in x else x for x in formatted
+        f'<span class="pub-me">{x}</span>' if re.search(r"\bBerg\b", x) else x for x in formatted
     ]
     if len(bolded) <= 8:
         return ", ".join(bolded)
@@ -228,7 +228,7 @@ def main() -> int:
     page.append("")
     page.append('[**Download full CV (PDF)**](Berg-CV.pdf){.btn .btn-primary}')
     page.append('[ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}')
-    page.append('[Penn State Pure](https://pennstate.pure.elsevier.com/en/persons/arthur-berg){.btn .btn-outline-secondary}')
+    page.append('[Penn State Pure](https://pure.psu.edu/en/persons/arthur-berg){.btn .btn-outline-secondary}')
     page.append('[Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}')
     page.append('')
     page.append(body_text)

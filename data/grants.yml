@@ -639,9 +639,7 @@
   budget: $50,000
   role: Co-PI
   award_number: I-104
-- title: Nanotherapeutics Target Membranes in Drug-Resistant and Metastatic Osteosarcoma
-    (mOS)
-  status: ''
+- status: pending
   award_number: '259742'
   pi: Arthur Berg
   sponsor: Brandeis University
@@ -649,3 +647,4 @@
   end_year: 2031
   period: 12/2026–11/2031
   budget: $125,123
+  topic: Nanotherapeutics for drug-resistant and metastatic osteosarcoma

@@ -121,7 +121,7 @@ def format_authors(raw: str) -> str:
                 formatted.append(a)
     formatted = [clean(x) for x in formatted]
     bolded = [
-        f'<span class="pub-me">{x}</span>' if "Berg" in x else x for x in formatted
+        f'<span class="pub-me">{x}</span>' if re.search(r"\bBerg\b", x) else x for x in formatted
     ]
     if len(bolded) <= 8:
         return ", ".join(bolded)
@@ -460,12 +460,15 @@ def load_protocols() -> list[dict]:
 def research_stats_block(entries: list[dict], grants: list[dict]) -> str:
     n_abs = sum(1 for e in entries if e.get("keywords") == "conference")
     n_pub = len(entries) - n_abs
+    # Count only grants that actually render (bucketed by status below);
+    # anything with an unknown status would otherwise inflate the stat.
+    n_grants = sum(1 for g in grants if g.get("status") in ("active", "pending", "completed"))
     return (
         '::: {.pub-summary}\n'
         '::: {.pub-stats}\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{n_pub}</span><span class="pub-stat-label">publications</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{n_abs}</span><span class="pub-stat-label">abstracts</span></div>\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{len(grants)}</span><span class="pub-stat-label">grants</span></div>\n'
+        f'<div class="pub-stat"><span class="pub-stat-num">{n_grants}</span><span class="pub-stat-label">grants</span></div>\n'
         ':::\n:::\n'
     )
 
@@ -605,7 +608,7 @@ def main() -> int:
     page.append("")
     page.append('[**Download full CV (PDF)**](Berg-CV.pdf){.btn .btn-primary}')
     page.append('[ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}')
-    page.append('[Penn State Pure](https://pennstate.pure.elsevier.com/en/persons/arthur-berg){.btn .btn-outline-secondary}')
+    page.append('[Penn State Pure](https://pure.psu.edu/en/persons/arthur-berg){.btn .btn-outline-secondary}')
     page.append('[Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}')
     page.append("")
     page.append("\n".join(pub_parts))

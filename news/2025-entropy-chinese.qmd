@@ -1,10 +1,12 @@
 ---
-title: "Entropy-based Sound–Character Mapping for Chinese Character Learning"
+title: "Entropy-based Sound-Character Mapping for Chinese Character Learning"
 subtitle: "Supplementary materials"
 date: "2025-05-21"
+aliases:
+  - /entropy
 ---
 
-Supplementary materials for the paper *"Entropy-based Sound–Character
+Supplementary materials for the paper *"Entropy-based Sound-Character
 Mapping for Chinese Character Learning,"* *International Journal of
 Chinese Language Teaching* (2025, Vol. 6, Issue 2, pp. 63–89).
 
