@@ -31,7 +31,7 @@ website:
     right:
       - icon: calendar-week
         href: music-calendar.html
-        aria-label: Weekly Music Calendar
+        aria-label: 2025–26 Music Calendar
       - icon: github
         href: https://github.com/arthurberg
         aria-label: GitHub

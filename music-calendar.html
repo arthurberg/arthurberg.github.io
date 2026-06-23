@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Weekly Music Calendar — Trinity Evangelical Lutheran Church, Lemoyne PA</title>
+<title>2025–26 Music Calendar — Trinity Evangelical Lutheran Church, Lemoyne PA</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -281,24 +281,6 @@
   }
   .sc { font-variant: small-caps; letter-spacing: 0.03em; }
 
-  /* Today's Sunday is spotlighted when the page opens */
-  section.week.current {
-    box-shadow: 0 0 0 3px var(--row-accent, #b38a20),
-                0 6px 16px rgba(0,0,0,0.08);
-    position: relative;
-  }
-  section.week.current::before {
-    content: "Upcoming Sunday";
-    position: absolute;
-    top: -0.65rem; left: 0.9rem;
-    padding: 0.1rem 0.55rem;
-    background: var(--row-accent, #b38a20);
-    color: #fff;
-    font-size: 0.68rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    border-radius: 3px;
-  }
-
   .tag.choir { background: #e7f1ed; color: #0d5a3a; }
   .tag.youth { background: #fff1d6; color: #8a5700; }
   .tag.bells { background: #f1e7f5; color: #4a1e6a; }
@@ -322,10 +304,10 @@
 </head>
 <body>
 
-<p class="back-link"><a href="./music.html">&larr; Back to arthurberg.com · Music Ministry</a></p>
+<p class="back-link"><a href="./music.html">&larr; Back to arthurberg.com · Music</a></p>
 
-<h1>Weekly Music Calendar — Trinity Lemoyne</h1>
-<p class="page-sub">Special music for each service of the lectionary year, with brief notes on how each piece connects to the theme of the day. Some titles link to reference recordings; ★ marks feasts and festivals.</p>
+<h1>2025–26 Music Calendar — Trinity Lemoyne</h1>
+<p class="page-sub">Special music offered for each service of the 2025–26 lectionary year, with brief notes on how each piece connects to the theme of the day. Some titles link to reference recordings; ★ marks feasts and festivals.</p>
 
 <aside class="join-invite" style="margin: 0.4rem auto 1.4rem; background: linear-gradient(135deg, #e9f1ec 0%, #d6e7db 100%); border-left-color: var(--teal-600);">
   <strong style="color: var(--teal-800);">🎧 Listen to the whole year.</strong> The <a href="https://music.youtube.com/playlist?list=PLIMP0jUmTAjtryIaru56lG-Di0vOOOakS" target="_blank" rel="noopener" style="color: var(--teal-600);">2025–26 Program Year Music playlist</a> on YouTube Music gathers every prelude, anthem, offertory, and postlude — in the order we offered them in worship.
@@ -1334,35 +1316,16 @@
 </div>
 
 <aside class="join-invite">
-  <strong>All are welcome to participate.</strong> New singers, ringers, and
-  instrumentalists — no audition required, just a love of sharing music in
-  worship. Rehearsals (adult choir Weds 8&thinsp;pm; handbells Weds
-  7&thinsp;pm; youth choir after Sunday School) break for the summer after
-  Trinity Sunday and resume the Wednesday after Labor Day.  Email
-  <a href="mailto:TrinityLemoyneMusic@gmail.com">TrinityLemoyneMusic@gmail.com</a>
-  anytime.
+  <strong>A complete season.</strong> This calendar is a record of the
+  special music offered at Trinity throughout the 2025&ndash;26 lectionary
+  year, from the Time After Pentecost through Trinity Sunday &mdash; with
+  gratitude to the singers, ringers, and instrumentalists who made it
+  possible.
 </aside>
 
 <script>
   // Map of sunday dates to their season, built at mockup render time.
   const DATE_SEASONS = [["2025-09-21", "Time After Pentecost"], ["2025-09-28", "Time After Pentecost"], ["2025-10-05", "Time After Pentecost"], ["2025-10-12", "Time After Pentecost"], ["2025-10-19", "Time After Pentecost"], ["2025-10-26", "Time After Pentecost"], ["2025-11-02", "Time After Pentecost"], ["2025-11-09", "Time After Pentecost"], ["2025-11-16", "Time After Pentecost"], ["2025-11-23", "Time After Pentecost"], ["2025-11-30", "Advent"], ["2025-12-07", "Advent"], ["2025-12-14", "Advent"], ["2025-12-21", "Advent"], ["2025-12-24", "Christmas"], ["2025-12-28", "Christmas"], ["2026-01-04", "Christmas"], ["2026-01-11", "Epiphany"], ["2026-01-18", "Epiphany"], ["2026-01-25", "Epiphany"], ["2026-02-01", "Epiphany"], ["2026-02-08", "Epiphany"], ["2026-02-15", "Epiphany"], ["2026-02-18", "Lent"], ["2026-02-22", "Lent"], ["2026-02-26", "Lent"], ["2026-03-01", "Lent"], ["2026-03-08", "Lent"], ["2026-03-12", "Lent"], ["2026-03-15", "Lent"], ["2026-03-22", "Lent"], ["2026-03-26", "Lent"], ["2026-03-29", "Holy Week"], ["2026-04-02", "Holy Week"], ["2026-04-03", "Holy Week"], ["2026-04-05", "Easter"], ["2026-04-12", "Easter"], ["2026-04-19", "Easter"], ["2026-04-26", "Easter"], ["2026-05-03", "Easter"], ["2026-05-10", "Easter"], ["2026-05-17", "Easter"], ["2026-05-24", "Pentecost"], ["2026-05-31", "Trinity"]];
-
-  function todayIso() {
-    const t = new Date();
-    return t.getFullYear() + '-'
-      + String(t.getMonth() + 1).padStart(2, '0') + '-'
-      + String(t.getDate()).padStart(2, '0');
-  }
-
-  function upcomingSundayEntry() {
-    const iso = todayIso();
-    // Earliest Sunday that is today or later
-    for (const pair of DATE_SEASONS) {
-      if (pair[0] >= iso) return pair;
-    }
-    // All Sundays are in the past — fall back to the latest one.
-    return DATE_SEASONS.length ? DATE_SEASONS[DATE_SEASONS.length - 1] : null;
-  }
 
   function activateTab(target) {
     if (!target) return;
@@ -1373,22 +1336,8 @@
     document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p === panel));
   }
 
-  function highlightUpcoming() {
-    const entry = upcomingSundayEntry();
-    document.querySelectorAll('section.week.current').forEach(el => el.classList.remove('current'));
-    if (!entry) return;
-    const target = document.getElementById(`week-${entry[0]}`);
-    if (!target) return;
-    target.classList.add('current');
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.scrollBy({ top: -12, behavior: 'auto' });
-  }
-
-  // Switch to the upcoming Sunday's season + spotlight it on page load.
-  const _upcoming = upcomingSundayEntry();
-  activateTab(_upcoming ? _upcoming[1] : null);
-  // scrollIntoView needs the panel to have non-zero height (i.e. be the active one)
-  requestAnimationFrame(highlightUpcoming);
+  // Archived season: open on the first season's tab. No live "upcoming Sunday" spotlight.
+  activateTab(DATE_SEASONS.length ? DATE_SEASONS[0][1] : null);
 
   document.querySelectorAll('.tab').forEach(btn => {
     btn.addEventListener('click', () => {
