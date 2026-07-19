@@ -1,5 +1,6 @@
 ---
 title: "Curriculum Vitae"
+description: "Curriculum vitae of Arthur Berg, PhD, Professor of Biostatistics at Penn State College of Medicine — education, appointments, awards, grants, teaching, and service."
 toc: true
 toc-depth: 2
 ---

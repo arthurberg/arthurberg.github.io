@@ -69,11 +69,15 @@ def format_authors(raw: str) -> str:
             else:
                 formatted.append(a)
     formatted = [clean(x) for x in formatted]
+    berg_at = next((i for i, x in enumerate(formatted) if re.search(r"\bBerg\b", x)), None)
     bolded = [
         f'<span class="pub-me">{x}</span>' if re.search(r"\bBerg\b", x) else x for x in formatted
     ]
     if len(bolded) <= 8:
         return ", ".join(bolded)
+    # Keep Berg visible on long author lists rather than truncating him away.
+    if berg_at is not None and berg_at >= 8:
+        return ", ".join(bolded[:7]) + ", … " + bolded[berg_at] + ", et al."
     return ", ".join(bolded[:8]) + ", et al."
 
 
@@ -195,21 +199,28 @@ def main() -> int:
     body.append(':::')
     body.append("")
 
-    # Filter chip bar
+    # Filter chip bar (chips must live inside a .pub-filter-row — .pub-filter
+    # itself is a column flexbox of rows, so bare chips would stack full-width)
     body.append('<div class="pub-filter" role="toolbar" aria-label="Filter publications by research area">')
+    body.append('<div class="pub-filter-row pub-filter-areas">')
+    body.append('<span class="pub-filter-label">Area:</span>')
     for slug, label in area_labels:
         cls = "pub-filter-chip" + (" active" if slug == "all" else "")
         body.append(f'<button type="button" class="{cls}" data-filter="{slug}">{label}</button>')
     body.append('<span class="pub-filter-count" id="pub-filter-count"></span>')
     body.append('</div>')
+    body.append('</div>')
     body.append("")
 
+    # Markdown year headings so Quarto wraps each year in a real level-2
+    # section: gives the page a TOC, and the search index gets one entry per
+    # year with an anchor instead of a single giant unanchored entry.
     current_year = None
     for e in entries:
         y = re.sub(r"\D", "", e["year"]) or "Unknown"
         if y != current_year:
             body.append("")
-            body.append(f'<h2 class="pub-year" data-year="{y}">{y}</h2>')
+            body.append(f'## {y} {{#pub-{y} .pub-year data-year="{y}"}}')
             body.append("")
             current_year = y
         body.append(render_entry(e))
@@ -218,12 +229,23 @@ def main() -> int:
     body_text = "\n".join(body) + "\n"
     OUT_BODY.write_text(body_text)
 
-    # Full standalone publications page
+    # Full standalone publications page.
+    # This is a legacy URL that nothing links to — the navbar points at
+    # research.html, which lists the same work plus grants. The canonical tag
+    # tells search engines which of the two is the primary version.
     page: list[str] = []
     page.append("---")
     page.append('title: "Publications"')
+    page.append(
+        'description: "Complete publication list for Arthur Berg, PhD — '
+        'peer-reviewed journal articles and conference proceedings in '
+        'biostatistics, spanning 2005 to the present."'
+    )
     page.append("toc: true")
     page.append("toc-depth: 2")
+    page.append("include-in-header:")
+    page.append("  text: |")
+    page.append('    <link rel="canonical" href="https://arthurberg.com/research.html">')
     page.append("---")
     page.append("")
     page.append('[**Download full CV (PDF)**](Berg-CV.pdf){.btn .btn-primary}')

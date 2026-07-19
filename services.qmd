@@ -1,5 +1,6 @@
 ---
 title: "Professional Services"
+description: "Professional services from Arthur Berg, PhD — AI-powered research and workflow consulting, biostatistical expert testimony, and independent data monitoring committee service."
 subtitle: "AI-powered research and workflow consulting, biostatistical expert testimony, and independent data monitoring."
 toc: true
 toc-depth: 2

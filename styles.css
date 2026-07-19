@@ -76,12 +76,24 @@ h3 { font-weight: 600; }
   }
 }
 
-/* Make tables scroll horizontally on small screens rather than overflow */
+/* Make tables scroll horizontally on small screens rather than clip.
+   `main.content table` below sets overflow:hidden (to clip the rounded
+   corners) and outranks a bare `table` selector, so this override has to
+   match that specificity or wide tables get cut off with no way to scroll. */
 @media (max-width: 768px) {
-  .table-responsive, table {
+  .table-responsive,
+  main.content table,
+  table {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+  /* Let cramped columns wrap instead of forcing the table wider */
+  .trial-table table thead th,
+  .trial-table table tbody td:first-child,
+  .trial-table table tbody td:nth-child(3),
+  .trial-table table tbody td:nth-child(4) {
+    white-space: normal;
   }
 }
 .about-entity table {
@@ -151,9 +163,12 @@ a:hover {
 }
 
 /* ——— Publications filter chip bar ——— */
+/* Row-wrap so the bar lays out sanely even if chips ever end up as direct
+   children (each .pub-filter-row spans a full line via flex-basis 100%). */
 .pub-filter {
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
+  align-items: center;
   gap: 0.5rem;
   margin: 0.25rem 0 1.25rem;
   padding: 0.75rem 0.9rem;
@@ -166,11 +181,70 @@ a:hover {
   backdrop-filter: saturate(180%) blur(6px);
 }
 .pub-filter-row {
+  flex: 1 1 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 0.5rem;
   align-items: center;
 }
+
+/* Compact mode while the bar is stuck to the top of the viewport: hide the
+   chip rows behind a slim "Filters" toggle so the bar never blankets the
+   content the reader scrolled (or searched) to. */
+.pub-filter-compact {
+  display: none;
+  flex: 1 1 100%;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+.pub-filter.is-stuck { padding: 0.4rem 0.9rem; box-shadow: var(--shadow-sm); }
+.pub-filter.is-stuck .pub-filter-compact { display: flex; }
+.pub-filter.is-stuck:not(.pub-filter-expanded) .pub-filter-row { display: none; }
+.pub-filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: var(--teal-800);
+  border: 1px solid rgba(4, 61, 66, 0.25);
+  border-radius: 999px;
+  padding: 0.24rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pub-filter-toggle:hover { background: var(--teal-50); border-color: var(--teal-600); }
+.pub-filter-toggle .fa-chevron-down { transition: transform 0.15s ease; font-size: 0.7rem; }
+.pub-filter-expanded .pub-filter-toggle .fa-chevron-down { transform: rotate(180deg); }
+.pub-filter-compact-summary {
+  font-size: 0.84rem;
+  color: var(--ink-500);
+  font-style: italic;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Small screens: many chip rows eat half the viewport, so keep the bar
+   collapsed behind the Filters toggle at all times (not just when stuck).
+   Scoped to .pub-filter-collapsible, which the JS adds when it injects the
+   toggle — without JS the full rows stay visible. */
+@media (max-width: 640px) {
+  .pub-filter-collapsible .pub-filter-compact { display: flex; }
+  .pub-filter-collapsible:not(.pub-filter-expanded) .pub-filter-row { display: none; }
+  .pub-filter-collapsible { padding: 0.45rem 0.9rem; }
+}
+
+/* Anchored landings (search hits, TOC, area links) should clear the fixed
+   navbar plus the slim stuck filter bar. */
+section.pub-year,
+h2.pub-year,
+.pub-entry { scroll-margin-top: 130px; }
+main.content mark { scroll-margin-top: 160px; }
 .pub-filter-label {
   font-size: 0.78rem;
   font-weight: 700;
@@ -374,6 +448,8 @@ h3.pub-year {
 }
 .area-tag {
   display: inline-block;
+  font-family: inherit;
+  line-height: 1.4;
   font-size: 0.7rem;
   font-weight: 500;
   padding: 0.08rem 0.5rem;
@@ -577,8 +653,13 @@ main.content table {
   margin: 1rem 0;
   box-shadow: var(--shadow-sm);
   border-radius: var(--radius-sm);
-  overflow: hidden;
   font-size: 0.95rem;
+}
+/* `overflow: hidden` clips the rounded corners, but it also makes a too-wide
+   table unscrollable — so it is confined to widths where tables actually fit.
+   Below that, the mobile rule near the top of this file scrolls them instead. */
+@media (min-width: 769px) {
+  main.content table { overflow: hidden; }
 }
 main.content table thead th {
   background: var(--teal-800);
@@ -788,10 +869,42 @@ section.service-card > h3:first-child {
 .trial-table table tbody tr:hover { background: var(--teal-50); }
 .trial-table a { font-family: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace; font-size: 0.82rem; }
 
+/* ——— Touch targets: chips/tags/badges are too small to hit reliably ——— */
+@media (max-width: 768px) {
+  .pub-filter-chip { padding: 0.5rem 0.9rem; }
+  .area-tag { padding: 0.3rem 0.65rem; font-size: 0.75rem; }
+  .area-tags { gap: 0.45rem; }
+  .pub-badge { padding: 0.3rem 0.7rem; }
+}
+
+/* ——— Respect the OS "reduce motion" setting ——— */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .pub-entry:hover, .contact-card:hover { transform: none; }
+}
+
+/* ——— Visible keyboard focus on custom controls ——— */
+.pub-filter-chip:focus-visible,
+.pub-filter-toggle:focus-visible,
+.area-tag:focus-visible,
+.pub-badge:focus-visible,
+#back-to-top:focus-visible,
+#pub-reset-btn:focus-visible {
+  outline: 3px solid var(--gold-500);
+  outline-offset: 2px;
+}
+
 /* Print (for CV page printing) */
 @media print {
   .navbar, #back-to-top, #TOC, .page-sidebar,
-  .cv-actions, .quarto-margin-sidebar { display: none !important; }
+  .cv-actions, .quarto-margin-sidebar,
+  .pub-filter, .area-tags, #pub-empty-state { display: none !important; }
   main.content { padding: 0 !important; max-width: 100% !important; }
   .contact-card, .cv-contact-card, .pub-entry {
     box-shadow: none !important; border: 1px solid #ccc !important;

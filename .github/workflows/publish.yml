@@ -21,6 +21,11 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          # Pinned so a deploy never silently changes the bundled search/JS/CSS.
+          # This is the version that built the current live site; bump it in a
+          # commit of its own after checking the rendered output.
+          version: 1.9.38
 
       - name: Render site
         run: quarto render

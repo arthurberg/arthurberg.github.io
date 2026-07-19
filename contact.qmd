@@ -1,5 +1,6 @@
 ---
 title: "Contact"
+description: "Contact Arthur Berg, PhD, Professor of Biostatistics at Penn State College of Medicine — academic, consulting, and music inquiries."
 ---
 
 The best way to reach me is by email. For collaboration, data-monitoring,

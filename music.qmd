@@ -1,5 +1,6 @@
 ---
 title: "Music"
+description: "Arthur Berg's three decades of church music — organ, choral conducting, and worship planning, concluding a directorship at Trinity Lutheran in August 2026."
 pagetitle: "Music"
 subtitle: "Three decades of music in worship"
 toc: true

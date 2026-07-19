@@ -1,5 +1,6 @@
 ---
 title: "Arthur Berg, Ph.D."
+description: "Arthur Berg, PhD — Professor of Biostatistics at Penn State College of Medicine. Bayesian methods, clinical trial design, statistical genetics, and pediatric oncology research."
 subtitle: "Professor of Biostatistics · Penn State College of Medicine"
 about:
   template: trestles
@@ -26,6 +27,38 @@ about:
     - icon: mortarboard
       text: Google Scholar
       href: https://scholar.google.com/citations?user=asQf9VQAAAAJ
+include-in-header:
+  text: |
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Arthur Berg",
+      "honorificSuffix": "PhD",
+      "jobTitle": "Professor of Biostatistics",
+      "url": "https://arthurberg.com",
+      "image": "https://arthurberg.com/photo.jpg",
+      "email": "mailto:berg@psu.edu",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Penn State College of Medicine"
+      },
+      "knowsAbout": [
+        "Biostatistics",
+        "Bayesian inference",
+        "Clinical trial design",
+        "Statistical genetics",
+        "Pediatric oncology"
+      ],
+      "sameAs": [
+        "https://orcid.org/0000-0002-4097-7348",
+        "https://scholar.google.com/citations?user=asQf9VQAAAAJ",
+        "https://pure.psu.edu/en/persons/arthur-berg",
+        "https://www.linkedin.com/in/arthurberg",
+        "https://github.com/arthurberg"
+      ]
+    }
+    </script>
 ---
 
 ## About

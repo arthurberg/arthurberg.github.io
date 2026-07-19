@@ -8,8 +8,10 @@ Reads:
 
 Produces:
     _research-body.qmd       — filterable body fragment (publications + grants + protocols)
-    publications.qmd         — standalone filterable publications page (legacy URL)
-    _publications-body.qmd   — body-only fragment (for any direct include)
+
+publications.qmd / _publications-body.qmd are owned by scripts/gen_publications.py.
+Both scripts used to write them, with different markup, so whichever ran last
+won — keep the ownership split.
 
 Research-area tagging reuses scripts/tag_publications.py:tag_entry for
 publications and a simplified rule set for grants / protocols.
@@ -18,6 +20,7 @@ Usage:  python3 scripts/gen_research.py
 """
 from __future__ import annotations
 
+import html
 import re
 import sys
 from pathlib import Path
@@ -25,6 +28,21 @@ from pathlib import Path
 import bibtexparser
 import yaml
 from bibtexparser.bparser import BibTexParser
+
+
+def html_escape(s: str) -> str:
+    """Escape for use inside a double-quoted HTML attribute."""
+    return html.escape(s or "", quote=True)
+
+
+def is_abstract(entry: dict) -> bool:
+    """True for conference abstracts.
+
+    Tests membership rather than equality: tag_publications.py appends area
+    tags to `keywords`, so the field is often "conference, bayesian, ..." and
+    an `== "conference"` test would quietly reclassify every abstract.
+    """
+    return "conference" in {t.strip() for t in (entry.get("keywords") or "").split(",")}
 
 SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPTS))
@@ -36,8 +54,6 @@ GRANTS_YML = ROOT / "data" / "grants.yml"
 PROTOCOLS_YML = ROOT / "data" / "protocols.yml"
 
 OUT_BODY = ROOT / "_research-body.qmd"
-OUT_PUB = ROOT / "publications.qmd"
-OUT_PUB_BODY = ROOT / "_publications-body.qmd"
 PDF_DIR = ROOT / "papers"
 
 SUPPLEMENTS = {
@@ -76,7 +92,12 @@ def area_tags_html(areas: list[str]) -> str:
     pills = []
     for a in areas:
         label = AREA_LABEL_LOOKUP.get(a, a)
-        pills.append(f'<span class="area-tag" data-area="{a}">{label}</span>')
+        # <button>, not <span>: these filter the page when clicked, so they
+        # have to be reachable and operable from the keyboard.
+        pills.append(
+            f'<button type="button" class="area-tag" data-area="{a}" '
+            f'aria-label="Filter by {label}">{label}</button>'
+        )
     return '<div class="area-tags">' + "".join(pills) + '</div>'
 
 TYPE_FILTERS = [
@@ -120,11 +141,16 @@ def format_authors(raw: str) -> str:
             else:
                 formatted.append(a)
     formatted = [clean(x) for x in formatted]
+    berg_at = next((i for i, x in enumerate(formatted) if re.search(r"\bBerg\b", x)), None)
     bolded = [
         f'<span class="pub-me">{x}</span>' if re.search(r"\bBerg\b", x) else x for x in formatted
     ]
     if len(bolded) <= 8:
         return ", ".join(bolded)
+    # On a long author list, keep Berg visible rather than truncating him away —
+    # this is his publication list, and he is author 9+ on a number of papers.
+    if berg_at is not None and berg_at >= 8:
+        return ", ".join(bolded[:7]) + ", … " + bolded[berg_at] + ", et al."
     return ", ".join(bolded[:8]) + ", et al."
 
 
@@ -143,6 +169,10 @@ _ANNOTE_CLEAN_RX = [
     (re.compile(r"\\href\{([^{}]*)\}\{([^{}]*)\}"), r'<a href="\1">\2</a>'),
     (re.compile(r"\\nolinkurl\{([^{}]*)\}"), r"\1"),
     (re.compile(r"\\&"), "&amp;"),
+    # LaTeX quoting is correct in the .bib (it is shared with the LaTeX CV) but
+    # renders as literal backticks in HTML — translate to real quote marks.
+    (re.compile(r"``(.+?)''"), r"“\1”"),
+    (re.compile(r"`(.+?)'"), r"‘\1’"),
 ]
 
 
@@ -182,21 +212,27 @@ def render_pub(entry: dict) -> str:
             vp += f", {pages}"
         vp += "."
 
+    # Hundreds of these badges share the text "PDF"/"DOI"; the title in the
+    # aria-label is what tells a screen-reader user which paper they lead to.
+    lbl = html_escape(title)
     links: list[str] = []
     pdf_rel = pdf_filename(bibkey)
     if (PDF_DIR / pdf_rel).exists():
-        links.append(f'<a class="pub-badge pub-pdf" href="papers/{pdf_rel}">PDF</a>')
+        links.append(f'<a class="pub-badge pub-pdf" href="papers/{pdf_rel}" aria-label="PDF: {lbl}">PDF</a>')
     if doi:
-        links.append(f'<a class="pub-badge pub-doi" href="https://doi.org/{doi}">DOI</a>')
+        links.append(f'<a class="pub-badge pub-doi" href="https://doi.org/{doi}" aria-label="DOI: {lbl}">DOI</a>')
     elif url and (url.startswith("http://") or url.startswith("https://")):
-        links.append(f'<a class="pub-badge pub-link" href="{url}">Link</a>')
+        links.append(f'<a class="pub-badge pub-link" href="{url}" aria-label="Link: {lbl}">Link</a>')
     if bibkey in SUPPLEMENTS:
-        links.append(f'<a class="pub-badge pub-supp" href="{SUPPLEMENTS[bibkey]}">Supplement</a>')
+        links.append(
+            f'<a class="pub-badge pub-supp" href="{SUPPLEMENTS[bibkey]}" '
+            f'aria-label="Supplement: {lbl}">Supplement</a>'
+        )
     link_str = (" " + " ".join(links)) if links else ""
 
     areas = tag_entry(entry)
     data_areas = " ".join(areas)
-    data_type = "abstract" if entry.get("keywords") == "conference" else "publication"
+    data_type = "abstract" if is_abstract(entry) else "publication"
 
     title_html = f'<span class="pub-title">{title}.</span>'
     venue_html = f' <span class="pub-venue">{vp}</span>' if vp else ""
@@ -212,11 +248,17 @@ def render_pub(entry: dict) -> str:
 
 # ——— Grants tagging + rendering ———
 
+# Oncology context required before the generic age words below count as
+# *pediatric oncology* — otherwise any pediatric study lands under it.
+GRANT_ONC = (r"cancer|oncolog|leukemi|lymphoma|sarcoma|tumor|glioma|carcinoma|"
+             r"malignan|chemotherap|neoplas|metasta|neuroblastoma|medulloblastoma")
+
 GRANT_TAG_RULES = [
     (r"bayesian", "bayesian"),
-    (r"neuroblastoma|pediatric|childhood|acute myeloid leukemia|osteosarcoma|ewing sarcoma|dipg|medulloblastoma", "pediatric-oncology"),
+    (r"neuroblastoma|acute myeloid leukemia|osteosarcoma|ewing sarcoma|dipg|medulloblastoma", "pediatric-oncology"),
+    (rf"(?=.*(?:pediatric|paediatric|childhood))(?=.*(?:{GRANT_ONC}))", "pediatric-oncology"),
     (r"melanoma|pancreatic|breast cancer|colorectal|cancer|tumor|chemotherap|aldehyde dehydrogenase|glioblastoma|bile|biliary|cholangio|oncology|immunotherap|lung cancer|carcinoma|persister", "adult-oncology"),
-    (r"spinal cord|\bsci\b|paraplegi|science", "spinal-cord-injury"),
+    (r"spinal cord|\bsci\b|paraplegi", "spinal-cord-injury"),
     (r"alzheimer|olfact|memory|neurodegen|brain|parkinson|dbs", "neuroscience"),
     (r"gwas|genom|heritabil|methylation|gene expression|pre-mrna|splicing", "statistical-genetics"),
     (r"primary care|family medicine|burnout|medical student|training|education", "statistics-education|clinical-research"),  # ambiguous
@@ -227,17 +269,29 @@ GRANT_TAG_RULES = [
 
 
 def tag_grant(grant: dict) -> list[str]:
-    title = (grant.get("title") or "").lower()
-    sponsor = (grant.get("sponsor") or "").lower()
+    # Pending grants carry a sanitized `topic` in place of the confidential
+    # submitted title — match on whichever describes the science.
+    subject = f'{grant.get("title") or ""} {grant.get("topic") or ""}'.lower().strip()
     pi = (grant.get("pi") or "").lower()
-    haystack = f"{title} {sponsor} {pi}"
+    # Deliberately excludes the sponsor: funder names ("Cannonball Kids' Cancer
+    # Foundation", "Melanoma Research Foundation") describe who pays, not what
+    # the work is about, and leak wrong area tags when matched.
+    haystack = subject
     tags: set[str] = set()
 
-    for pattern, tag in GRANT_TAG_RULES:
-        if re.search(pattern, haystack):
-            # handle ambiguous multi-tag directives
-            for t in tag.split("|"):
-                tags.add(t)
+    def apply_rules(text: str) -> set[str]:
+        found: set[str] = set()
+        for pattern, tag in GRANT_TAG_RULES:
+            if re.search(pattern, text):
+                # handle ambiguous multi-tag directives
+                found.update(tag.split("|"))
+        return found
+
+    tags |= apply_rules(haystack)
+    # Only when the subject says nothing usable does the sponsor get a vote —
+    # it is the weakest signal, but better than the clinical-research catchall.
+    if not tags:
+        tags |= apply_rules((grant.get("sponsor") or "").lower())
 
     # BCC trials always pediatric-oncology + clinical-trials-methods
     if "bcc" in haystack or "naxitamab" in haystack or "dfmo" in haystack:
@@ -252,10 +306,19 @@ def tag_grant(grant: dict) -> list[str]:
     if "sharma" in pi and "child" in haystack:
         tags.add("pediatric-oncology")
 
-    # Training programs aren't "statistics-education" — push to clinical-research
-    if "primary care training" in title or "area health education" in title:
+    # "Training"/"education" in a disease-area grant means clinical training,
+    # not statistics pedagogy — statistics-education is for actual stats teaching.
+    if "statistics-education" in tags and (
+        tags & {"pediatric-oncology", "adult-oncology", "spinal-cord-injury", "neuroscience"}
+        or "primary care training" in subject
+        or "area health education" in subject
+    ):
         tags.discard("statistics-education")
         tags.add("clinical-research")
+
+    # A pediatric study is not also adult oncology (mirrors tag_entry's rule)
+    if "pediatric-oncology" in tags:
+        tags.discard("adult-oncology")
 
     if not tags:
         tags.add("clinical-research")
@@ -458,7 +521,7 @@ def load_protocols() -> list[dict]:
 # ——— Assemble output ———
 
 def research_stats_block(entries: list[dict], grants: list[dict]) -> str:
-    n_abs = sum(1 for e in entries if e.get("keywords") == "conference")
+    n_abs = sum(1 for e in entries if is_abstract(e))
     n_pub = len(entries) - n_abs
     # Count only grants that actually render (bucketed by status below);
     # anything with an unknown status would otherwise inflate the stat.
@@ -469,24 +532,6 @@ def research_stats_block(entries: list[dict], grants: list[dict]) -> str:
         f'<div class="pub-stat"><span class="pub-stat-num">{n_pub}</span><span class="pub-stat-label">publications</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{n_abs}</span><span class="pub-stat-label">abstracts</span></div>\n'
         f'<div class="pub-stat"><span class="pub-stat-num">{n_grants}</span><span class="pub-stat-label">grants</span></div>\n'
-        ':::\n:::\n'
-    )
-
-
-def pub_only_stats_block(entries: list[dict]) -> str:
-    n_abs = sum(1 for e in entries if e.get("keywords") == "conference")
-    n_pub = len(entries) - n_abs
-    years = sorted({re.sub(r"\D", "", e["year"]) for e in entries if e.get("year")})
-    year_range = f"{years[0]}–{years[-1]}" if years else ""
-    n_pdf = sum(1 for e in entries if (PDF_DIR / pdf_filename(e.get("ID", ""))).exists())
-
-    return (
-        '::: {.pub-summary}\n'
-        '::: {.pub-stats}\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{n_pub}</span><span class="pub-stat-label">publications</span></div>\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{n_abs}</span><span class="pub-stat-label">abstracts</span></div>\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{n_pdf}</span><span class="pub-stat-label">with PDFs</span></div>\n'
-        f'<div class="pub-stat"><span class="pub-stat-num">{year_range}</span><span class="pub-stat-label">years</span></div>\n'
         ':::\n:::\n'
     )
 
@@ -516,8 +561,8 @@ def _build_entries_section(entries: list[dict], section_id: str, data_section: s
 
 
 def build_publications_section(entries: list[dict]) -> list[str]:
-    pubs = [e for e in entries if e.get("keywords") != "conference"]
-    abstracts = [e for e in entries if e.get("keywords") == "conference"]
+    pubs = [e for e in entries if not is_abstract(e)]
+    abstracts = [e for e in entries if is_abstract(e)]
     out: list[str] = []
     if pubs:
         out.extend(_build_entries_section(pubs, "sec-publications", "publication", "Publications",
@@ -591,31 +636,7 @@ def main() -> int:
     body_text = "\n".join(parts) + "\n"
     OUT_BODY.write_text(body_text)
 
-    # Publications-only body fragment (legacy URL)
-    pub_parts: list[str] = [pub_only_stats_block(pubs), ""]
-    pub_parts.append(filter_bar_html())
-    pub_parts.append("")
-    pub_parts.extend(build_publications_section(pubs))
-    OUT_PUB_BODY.write_text("\n".join(pub_parts) + "\n")
-
-    # Standalone publications page (still reachable at /publications.html)
-    page: list[str] = []
-    page.append("---")
-    page.append('title: "Publications"')
-    page.append("toc: true")
-    page.append("toc-depth: 2")
-    page.append("---")
-    page.append("")
-    page.append('[**Download full CV (PDF)**](Berg-CV.pdf){.btn .btn-primary}')
-    page.append('[ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}')
-    page.append('[Penn State Pure](https://pure.psu.edu/en/persons/arthur-berg){.btn .btn-outline-secondary}')
-    page.append('[Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}')
-    page.append("")
-    page.append("\n".join(pub_parts))
-    OUT_PUB.write_text("\n".join(page))
-
     print(f"Wrote {OUT_BODY} — {len(pubs)} publications, {len(grants)} grants")
-    print(f"Wrote {OUT_PUB} and {OUT_PUB_BODY}")
     return 0
 
 

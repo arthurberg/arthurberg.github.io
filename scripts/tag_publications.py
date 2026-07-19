@@ -25,9 +25,12 @@ from bibtexparser.bwriter import BibTexWriter
 ROOT = Path(__file__).resolve().parents[1]
 BIB = ROOT / "publications.bib"
 
-# Existing authorship/status tags that should not be clobbered
+# Existing authorship/status tags that should not be clobbered.
+# "conference" is what marks an entry as a conference abstract — gen_research.py
+# reads it to split abstracts from publications, so dropping it here on --write
+# would silently reclassify every abstract as a publication.
 STATUS_TAGS = {"primary", "secondary", "abstract", "submitted",
-               "correction", "revision", "arxiv"}
+               "correction", "revision", "arxiv", "conference"}
 
 # Area tags vocabulary
 AREA_TAGS = [
@@ -98,8 +101,18 @@ def tag_entry(entry: dict) -> list[str]:
         is_method = True
 
     # ——— Applied areas ———
-    # Pediatric oncology: BCC trials, childhood cancer, DIPG, pediatric leukemia
-    if re.search(r"pediatric|childhood|children|paediatric|neuroblastoma|medulloblastoma|\bdipg\b|ewing sarcoma|pediatric leukemia|acute myeloid leukemia.*child|naxitamab|dfmo|ch14[:\.]18|gd2|umbilical cord blood|total body irradiation", title):
+    # Pediatric oncology: BCC trials, childhood cancer, DIPG, pediatric leukemia.
+    # Childhood-cancer-specific terms tag on their own; the generic age words
+    # ("children", "pediatric") only do so alongside an oncology term, or every
+    # pediatrics paper — child maltreatment, autism — lands under oncology.
+    _PEDI_AGE = r"pediatric|paediatric|childhood|children"
+    _ONC = (r"cancer|oncolog|leukemi|leukaemi|lymphoma|sarcoma|tumor|tumour|glioma|"
+            r"carcinoma|malignan|chemotherap|neoplas|myelodysplas|metasta")
+    if re.search(r"neuroblastoma|medulloblastoma|\bdipg\b|ewing sarcoma|pediatric leukemia|"
+                 r"acute myeloid leukemia.*child|naxitamab|dfmo|ch14[:\.]18|gd2|"
+                 r"umbilical cord blood|total body irradiation", title):
+        tags.add("pediatric-oncology")
+    elif re.search(_PEDI_AGE, title) and re.search(_ONC, f"{title} {journal}"):
         tags.add("pediatric-oncology")
     elif any(a in authors for a in PEDI_AUTHORS) and "cancer" in (title + " " + journal):
         tags.add("pediatric-oncology")

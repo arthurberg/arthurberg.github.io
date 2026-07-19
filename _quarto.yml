@@ -75,7 +75,8 @@ format:
           if (btn) {
             const toggle = () => btn.classList.toggle('visible', window.scrollY > 400);
             window.addEventListener('scroll', toggle, { passive: true });
-            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }));
             toggle();
           }
 
@@ -85,11 +86,24 @@ format:
           const typeChips = document.querySelectorAll('.pub-filter-chip[data-type-filter]');
           const entries = document.querySelectorAll('.pub-entry');
           const sections = document.querySelectorAll('.research-section');
-          const pubYears = document.querySelectorAll('.pub-year');
+          // Research page: year headings are bare h3s walked as siblings.
+          // Publications page: each year is a real level-2 <section> (id pub-YYYY).
+          const pubYearHeads = document.querySelectorAll('h3.pub-year');
+          const yearSections = document.querySelectorAll('section.pub-year, section.level2[id^="pub-"]');
           const statusHeads = document.querySelectorAll('.grant-status-heading');
           const countEl = document.getElementById('pub-filter-count');
 
           let state = { area: 'all', type: 'all' };
+
+          const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const scrollBehavior = motionOK ? 'smooth' : 'auto';
+
+          // Announce filter results to screen readers, which otherwise get no
+          // signal that the page content changed under them.
+          if (countEl) {
+            countEl.setAttribute('role', 'status');
+            countEl.setAttribute('aria-live', 'polite');
+          }
 
           const hideEmptyHeadingsIn = (nodeList, stopSelector) => {
             nodeList.forEach((h) => {
@@ -107,8 +121,16 @@ format:
           };
 
           const render = () => {
-            areaChips.forEach(c => c.classList.toggle('active', c.dataset.filter === state.area));
-            typeChips.forEach(c => c.classList.toggle('active', c.dataset.typeFilter === state.type));
+            areaChips.forEach(c => {
+              const on = c.dataset.filter === state.area;
+              c.classList.toggle('active', on);
+              c.setAttribute('aria-pressed', String(on));
+            });
+            typeChips.forEach(c => {
+              const on = c.dataset.typeFilter === state.type;
+              c.classList.toggle('active', on);
+              c.setAttribute('aria-pressed', String(on));
+            });
 
             const byType = { publication: 0, abstract: 0, grant: 0 };
             let totalVisible = 0;
@@ -125,8 +147,13 @@ format:
 
             // pub-year (h3) stops at next year or section boundary.
             // grant-status-heading stops at next status or section boundary.
-            hideEmptyHeadingsIn(pubYears, '.pub-year, .section-heading');
+            hideEmptyHeadingsIn(pubYearHeads, '.pub-year, .section-heading');
             hideEmptyHeadingsIn(statusHeads, '.grant-status-heading, .section-heading');
+
+            // Publications page: hide a year section when none of its entries match.
+            yearSections.forEach(sec => {
+              sec.classList.toggle('is-hidden', !sec.querySelector('.pub-entry:not(.is-hidden)'));
+            });
 
             // Hide entire sections that have zero visible entries (after filtering)
             sections.forEach(sec => {
@@ -144,6 +171,18 @@ format:
               countEl.textContent = parts.join(' · ');
             }
 
+            // Summary line shown in the collapsed (stuck) filter bar
+            const summaryEl = document.getElementById('pub-filter-compact-summary');
+            if (summaryEl) {
+              const activeArea = [...areaChips].find(c => c.classList.contains('active'));
+              const activeType = [...typeChips].find(c => c.classList.contains('active'));
+              const bits = [];
+              if (activeType && activeType.dataset.typeFilter !== 'all') bits.push(activeType.textContent.trim());
+              if (activeArea && activeArea.dataset.filter !== 'all') bits.push(activeArea.textContent.trim());
+              summaryEl.textContent = (bits.length ? bits.join(' · ') : 'All')
+                + (countEl && countEl.textContent ? ' — ' + countEl.textContent : '');
+            }
+
             // Show empty-state card if no results
             let emptyEl = document.getElementById('pub-empty-state');
             if (totalVisible === 0) {
@@ -151,7 +190,9 @@ format:
                 emptyEl = document.createElement('div');
                 emptyEl.id = 'pub-empty-state';
                 emptyEl.innerHTML = 'No items match the current filters. <button type="button" id="pub-reset-btn">Reset filters</button>';
-                const anchor = sections[0] || entries[0];
+                // Anchor before the first (possibly hidden) section so the
+                // message is never inserted inside a display:none container.
+                const anchor = sections[0] || yearSections[0] || entries[0];
                 const container = anchor && anchor.parentNode;
                 if (container) {
                   container.insertBefore(emptyEl, anchor);
@@ -166,12 +207,17 @@ format:
               emptyEl.style.display = 'none';
             }
 
-            // Reflect in URL hash
+            // Reflect in URL hash — but never clobber a plain anchor hash
+            // (e.g. #pub-2009 from a search landing) while filters are at
+            // their defaults, or the browser's scroll-to-anchor is cancelled.
             const hashParts = [];
             if (state.area !== 'all') hashParts.push('area=' + state.area);
             if (state.type !== 'all') hashParts.push('type=' + state.type);
-            const hash = hashParts.length ? '#' + hashParts.join('&') : '';
-            if (history.replaceState) history.replaceState(null, '', location.pathname + location.search + hash);
+            const newHash = hashParts.length ? '#' + hashParts.join('&') : '';
+            const curIsFilterHash = /^#(area|type)=/.test(location.hash);
+            if (history.replaceState && (hashParts.length || curIsFilterHash)) {
+              history.replaceState(null, '', location.pathname + location.search + newHash);
+            }
           };
 
           areaChips.forEach(chip => {
@@ -187,9 +233,65 @@ format:
               state.area = tag.dataset.area;
               render();
               const filterBar = document.querySelector('.pub-filter');
-              if (filterBar) filterBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              if (filterBar) filterBar.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
             }
           });
+
+          // ——— Collapse the sticky filter bar while it is stuck ———
+          // Full chip rows blanket the content when pinned mid-page (worst on
+          // mobile and after a search landing); shrink to a slim summary row
+          // with a Filters toggle whenever the bar is in its stuck state.
+          const filterBar = document.querySelector('.pub-filter');
+          if (filterBar && 'IntersectionObserver' in window) {
+            const compact = document.createElement('div');
+            compact.className = 'pub-filter-compact';
+            compact.innerHTML = '<button type="button" class="pub-filter-toggle" aria-expanded="false">'
+              + '<i class="fa-solid fa-filter"></i> Filters <i class="fa-solid fa-chevron-down"></i></button>'
+              + '<span class="pub-filter-compact-summary" id="pub-filter-compact-summary"></span>';
+            filterBar.prepend(compact);
+            filterBar.classList.add('pub-filter-collapsible');
+            const toggleBtn = compact.querySelector('.pub-filter-toggle');
+            toggleBtn.addEventListener('click', () => {
+              const expanded = filterBar.classList.toggle('pub-filter-expanded');
+              toggleBtn.setAttribute('aria-expanded', String(expanded));
+            });
+            // Choosing a chip collapses the bar again (no-op in states where
+            // the expanded class has no visual effect).
+            filterBar.addEventListener('click', (ev) => {
+              if (ev.target.closest('.pub-filter-chip')) {
+                filterBar.classList.remove('pub-filter-expanded');
+                toggleBtn.setAttribute('aria-expanded', 'false');
+              }
+            });
+            const sentinel = document.createElement('div');
+            filterBar.parentNode.insertBefore(sentinel, filterBar);
+            new IntersectionObserver((obsEntries) => {
+              // Stuck only when the sentinel scrolled off the TOP (a sentinel
+              // still below the fold is also "not intersecting").
+              const e = obsEntries[0];
+              const stuck = !e.isIntersecting && e.boundingClientRect.top <= 80;
+              filterBar.classList.toggle('is-stuck', stuck);
+              if (!stuck) {
+                filterBar.classList.remove('pub-filter-expanded');
+                toggleBtn.setAttribute('aria-expanded', 'false');
+              }
+            }, { rootMargin: '-80px 0px 0px 0px' }).observe(sentinel);
+
+            // Anchor landings (e.g. search results → #pub-2009): after load,
+            // the stick-collapse reflow and the theme's own offset logic can
+            // leave the target tucked under the navbar + slim bar — nudge it
+            // to sit just below the pinned chrome.
+            const settleAnchor = () => {
+              const id = decodeURIComponent(location.hash.replace(/^#/, ''));
+              if (!id || id.includes('=')) return;
+              const t = document.getElementById(id);
+              if (!t) return;
+              const top = t.getBoundingClientRect().top;
+              if (top < 100 || top > 240) window.scrollBy(0, top - 140);
+            };
+            if (document.readyState === 'complete') setTimeout(settleAnchor, 150);
+            else window.addEventListener('load', () => setTimeout(settleAnchor, 150));
+          }
 
           // Parse URL hash for initial state
           const hash = location.hash.replace(/^#/, '');

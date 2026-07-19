@@ -1,5 +1,6 @@
 ---
 title: "Entropy-based Sound-Character Mapping for Chinese Character Learning"
+description: "Supplementary materials for an information-theoretic method that prioritizes high-entropy sound-character mappings to accelerate Chinese character learning."
 subtitle: "Supplementary materials"
 date: "2025-05-21"
 aliases:

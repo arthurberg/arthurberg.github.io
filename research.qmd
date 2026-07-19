@@ -1,5 +1,6 @@
 ---
 title: "Research"
+description: "Research portfolio of Arthur Berg, PhD — publications, conference abstracts, and grants spanning Bayesian methods, clinical trials, statistical genetics, and oncology collaborations."
 subtitle: "Publications, abstracts, and grants across methodological biostatistics and applied collaborations — use the filter bar to browse by type and research area."
 toc: true
 toc-depth: 3

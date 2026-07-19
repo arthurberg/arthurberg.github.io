@@ -1,0 +1,21 @@
+---
+title: "Page Not Found"
+description: "That page doesn't exist on arthurberg.com — here are the main sections of the site."
+toc: false
+---
+
+The page you're looking for doesn't exist, or it may have moved.
+
+If you followed a link to a specific paper, try the search icon in the
+navigation bar above — the full publication list is indexed by title, author,
+and journal.
+
+## Where to go instead
+
+- [Home](index.qmd) — biography and current appointments
+- [Curriculum Vitae](cv.qmd) — education, appointments, awards, and service
+- [Research](research.qmd) — publications, conference abstracts, and grants
+- [Beat Childhood Cancer](bcc.qmd) — pediatric oncology consortium work
+- [Professional Services](services.qmd) — consulting, expert testimony, and DMC service
+- [Music](music.qmd) — church music and worship
+- [Contact](contact.qmd) — how to reach me

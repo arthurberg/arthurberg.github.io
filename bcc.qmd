@@ -1,5 +1,6 @@
 ---
 title: "Beat Childhood Cancer"
+description: "Arthur Berg serves as Lead Biostatistician for the Beat Childhood Cancer Research Consortium, supporting multicenter pediatric trials in neuroblastoma, brain tumors, and sarcomas."
 subtitle: "Lead Biostatistician for the Beat Childhood Cancer Research Consortium — multicenter pediatric oncology trials for neuroblastoma, brain tumors, sarcomas, and rare cancers."
 toc: true
 toc-depth: 2
