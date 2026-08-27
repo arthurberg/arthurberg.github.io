@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2025–26 Music Calendar — Trinity Evangelical Lutheran Church, Lemoyne PA</title>
+<meta name="description" content="Special music offered at every service of the 2025–26 lectionary year at Trinity Evangelical Lutheran Church, Lemoyne PA — preludes, anthems, offertories, and postludes, with notes on each piece.">
+<meta name="author" content="Arthur Berg">
+<link rel="canonical" href="https://arthurberg.com/music-calendar.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Arthur Berg, Ph.D.">
+<meta property="og:url" content="https://arthurberg.com/music-calendar.html">
+<meta property="og:title" content="2025–26 Music Calendar — Trinity Evangelical Lutheran Church">
+<meta property="og:description" content="Special music offered at every service of the 2025–26 lectionary year at Trinity Evangelical Lutheran Church, Lemoyne PA — preludes, anthems, offertories, and postludes, with notes on each piece.">
+<meta property="og:image" content="https://arthurberg.com/photo.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2025–26 Music Calendar — Trinity Evangelical Lutheran Church">
+<meta name="twitter:description" content="Special music offered at every service of the 2025–26 lectionary year at Trinity Evangelical Lutheran Church, Lemoyne PA — preludes, anthems, offertories, and postludes, with notes on each piece.">
+<meta name="twitter:image" content="https://arthurberg.com/photo.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,10 +24,12 @@
 <style>
   :root {
     --teal-800: #043D42;
-    --teal-600: #0c7680;
+    --teal-600: #0a5f68;   /* 5.9:1 on the lightest week tint; #0c7680 was 4.28 */
     --gold-500: #b38a20;
+    --gold-text: #7f6000;   /* AA-contrast companion for gold TEXT */
+    --ink-300: #9aa3a9;
     --ink-700: #32404b;
-    --ink-500: #6b7684;
+    --ink-500: #586472;
   }
   body {
     font-family: Inter, system-ui, sans-serif;
@@ -71,15 +86,15 @@
   }
   .tab:hover { color: var(--teal-800); background: #eef2f3; }
   .tab.active {
-    background: var(--tab-accent);
+    background: color-mix(in srgb, var(--tab-accent) 72%, #000);
     color: #fff;
     font-weight: 600;
-    border-color: var(--tab-accent);
+    border-color: color-mix(in srgb, var(--tab-accent) 72%, #000);
   }
   .tab .count {
     display: inline-block;
     font-size: 0.75rem;
-    background: rgba(255,255,255,0.22);
+    background: rgba(0,0,0,0.18);
     padding: 0 0.35rem;
     border-radius: 999px;
     margin-left: 0.3rem;
@@ -106,8 +121,9 @@
   .week-head .lhs { display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
   .week-head .rhs { display: flex; align-items: baseline; gap: 0.3rem; flex-wrap: wrap; }
   .week-head .date { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; color: var(--teal-800); font-size: 1.05rem; }
+  .week-head h2.date { margin: 0; font-size: 1.05rem; font-weight: 700; }
   .week-head .sub { font-size: 0.85rem; color: var(--ink-500); }
-  .star { color: #b38a20; font-size: 0.95rem; }
+  .star { color: var(--gold-text); font-size: 0.95rem; }
 
   /* Feasts + festivals: lift the subtitle so the day name (e.g.
      "Christmas Eve", "Easter Day") carries visual weight */
@@ -116,11 +132,10 @@
     font-size: 1.05rem;
     font-weight: 600;
     font-style: italic;
-    color: var(--row-accent, #b38a20);
+    color: color-mix(in srgb, var(--row-accent, #b38a20) 72%, #000);
     letter-spacing: 0.01em;
   }
   .week-head.festival .star { font-size: 1.1rem; }
-  .note-tag { font-size: 0.78rem; color: var(--gold-500); font-style: italic; }
 
   .group-tag {
     display: inline-block;
@@ -212,7 +227,7 @@
     text-decoration: none;
     border-bottom: 1px dotted rgba(12, 118, 128, 0.4);
   }
-  .readings a:hover { color: var(--gold-500); border-bottom-color: var(--gold-500); }
+  .readings a:hover { color: var(--gold-text); border-bottom-color: var(--gold-500); }
   .readings .sep { color: var(--ink-300); margin: 0 0.4em; }
 
   .intro {
@@ -269,7 +284,7 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--row-accent, #b38a20);
+    color: color-mix(in srgb, var(--row-accent, #b38a20) 72%, #000);
   }
   .clear { clear: both; }
 
@@ -304,24 +319,25 @@
 </head>
 <body>
 
+<main>
 <p class="back-link"><a href="./music.html">&larr; Back to arthurberg.com · Music</a></p>
 
 <h1>2025–26 Music Calendar — Trinity Lemoyne</h1>
 <p class="page-sub">Special music offered for each service of the 2025–26 lectionary year, with brief notes on how each piece connects to the theme of the day. Some titles link to reference recordings; ★ marks feasts and festivals.</p>
 
-<aside class="join-invite" style="margin: 0.4rem auto 1.4rem; background: linear-gradient(135deg, #e9f1ec 0%, #d6e7db 100%); border-left-color: var(--teal-600);">
+<aside class="join-invite" aria-label="Season playlist" style="margin: 0.4rem auto 1.4rem; background: linear-gradient(135deg, #e9f1ec 0%, #d6e7db 100%); border-left-color: var(--teal-600);">
   <strong style="color: var(--teal-800);">🎧 Listen to the whole year.</strong> The <a href="https://music.youtube.com/playlist?list=PLIMP0jUmTAjtryIaru56lG-Di0vOOOakS" target="_blank" rel="noopener" style="color: var(--teal-600);">2025–26 Program Year Music playlist</a> on YouTube Music gathers every prelude, anthem, offertory, and postlude — in the order we offered them in worship.
 </aside>
 
-<div class="tabs" role="tablist"><button class="tab" data-tab="Time After Pentecost" style="--tab-accent: #5d8d6e;">Time After Pentecost <span class="count">10</span></button><button class="tab" data-tab="Advent" style="--tab-accent: #6b3a8b;">Advent <span class="count">4</span></button><button class="tab" data-tab="Christmas" style="--tab-accent: #b38a20;">Christmas <span class="count">3</span></button><button class="tab" data-tab="Epiphany" style="--tab-accent: #5d8d6e;">Epiphany <span class="count">6</span></button><button class="tab" data-tab="Lent" style="--tab-accent: #6b3a8b;">Lent <span class="count">9</span></button><button class="tab" data-tab="Holy Week" style="--tab-accent: #8b2a2a;">Holy Week <span class="count">3</span></button><button class="tab active" data-tab="Easter" style="--tab-accent: #b38a20;">Easter <span class="count">7</span></button><button class="tab" data-tab="Pentecost" style="--tab-accent: #8b2a2a;">Pentecost <span class="count">1</span></button><button class="tab" data-tab="Trinity" style="--tab-accent: #b38a20;">Trinity <span class="count">1</span></button></div>
+<div class="tabs" role="group" aria-label="Choose a liturgical season"><button class="tab active" data-tab="Time After Pentecost" style="--tab-accent: #5d8d6e;" aria-pressed="false">Time After Pentecost <span class="count">10</span></button><button class="tab" data-tab="Advent" style="--tab-accent: #6b3a8b;" aria-pressed="false">Advent <span class="count">4</span></button><button class="tab" data-tab="Christmas" style="--tab-accent: #b38a20;" aria-pressed="false">Christmas <span class="count">3</span></button><button class="tab" data-tab="Epiphany" style="--tab-accent: #5d8d6e;" aria-pressed="false">Epiphany <span class="count">6</span></button><button class="tab" data-tab="Lent" style="--tab-accent: #6b3a8b;" aria-pressed="false">Lent <span class="count">9</span></button><button class="tab" data-tab="Holy Week" style="--tab-accent: #8b2a2a;" aria-pressed="false">Holy Week <span class="count">3</span></button><button class="tab" data-tab="Easter" style="--tab-accent: #b38a20;" aria-pressed="false">Easter <span class="count">7</span></button><button class="tab" data-tab="Pentecost" style="--tab-accent: #8b2a2a;" aria-pressed="false">Pentecost <span class="count">1</span></button><button class="tab" data-tab="Trinity" style="--tab-accent: #b38a20;" aria-pressed="false">Trinity <span class="count">1</span></button></div>
 
 <div class="panels">
-<div class="panel" data-panel="Time After Pentecost">
+<div class="panel active" data-panel="Time After Pentecost">
     <section class="week" id="week-2025-09-21" data-date="2025-09-21" style="--row-bg: #e8f1ea; --row-accent: #5d8d6e;">
       <aside class="verse-float"><div class="verse-text">Whoever is faithful in a very little is faithful also in much</div><cite class="verse-citation">Luke 16:10</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Sep 21, 2025</span>
+          <h2 class="date">Sep 21, 2025</h2>
           <span class="sub">Pentecost 15</span>
           
         </div>
@@ -344,7 +360,7 @@
       <aside class="verse-float"><div class="verse-text">At his gate lay a poor man named Lazarus</div><cite class="verse-citation">Luke 16:20</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Sep 28, 2025</span>
+          <h2 class="date">Sep 28, 2025</h2>
           <span class="sub">Pentecost 16</span>
           
         </div>
@@ -367,7 +383,7 @@
       <aside class="verse-float"><div class="verse-text">Increase our faith!</div><cite class="verse-citation">Luke 17:5</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Oct 5, 2025</span>
+          <h2 class="date">Oct 5, 2025</h2>
           <span class="sub">Pentecost 17</span>
           
         </div>
@@ -390,7 +406,7 @@
       <aside class="verse-float"><div class="verse-text">One of them turned back, praising God</div><cite class="verse-citation">Luke 17:15</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Oct 12, 2025</span>
+          <h2 class="date">Oct 12, 2025</h2>
           <span class="sub">Pentecost 18</span>
           
         </div>
@@ -413,7 +429,7 @@
       <aside class="verse-float"><div class="verse-text">Will not God grant justice?</div><cite class="verse-citation">Luke 18:7</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Oct 19, 2025</span>
+          <h2 class="date">Oct 19, 2025</h2>
           <span class="sub">Pentecost 19</span>
           
         </div>
@@ -436,7 +452,7 @@
       <aside class="verse-float"><div class="verse-text">The truth will make you free</div><cite class="verse-citation">John 8:32</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Oct 26, 2025</span>
+          <h2 class="date">Oct 26, 2025</h2>
           <span class="sub">Reformation</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -459,7 +475,7 @@
       <aside class="verse-float"><div class="verse-text">Blessed are you who weep now</div><cite class="verse-citation">Luke 6:21</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Nov 2, 2025</span>
+          <h2 class="date">Nov 2, 2025</h2>
           <span class="sub">All Saints</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -482,7 +498,7 @@
       <aside class="verse-float"><div class="verse-text">To God all of them are alive</div><cite class="verse-citation">Luke 20:38</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Nov 9, 2025</span>
+          <h2 class="date">Nov 9, 2025</h2>
           <span class="sub">Pentecost 22</span>
           
         </div>
@@ -505,7 +521,7 @@
       <aside class="verse-float"><div class="verse-text">Not one stone will be left upon another</div><cite class="verse-citation">Luke 21:6</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Nov 16, 2025</span>
+          <h2 class="date">Nov 16, 2025</h2>
           <span class="sub">Pentecost 23</span>
           
         </div>
@@ -528,7 +544,7 @@
       <aside class="verse-float"><div class="verse-text">Jesus, remember me when you come into your kingdom</div><cite class="verse-citation">Luke 23:42</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Nov 23, 2025</span>
+          <h2 class="date">Nov 23, 2025</h2>
           <span class="sub">Christ the King</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -551,7 +567,7 @@
       <aside class="verse-float"><div class="verse-text">About that day and hour no one knows</div><cite class="verse-citation">Matthew 24:36</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Nov 30, 2025</span>
+          <h2 class="date">Nov 30, 2025</h2>
           <span class="sub">Advent 1</span>
           
         </div>
@@ -574,7 +590,7 @@
       <aside class="verse-float"><div class="verse-text">A little child shall lead them</div><cite class="verse-citation">Isaiah 11:6</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Dec 7, 2025</span>
+          <h2 class="date">Dec 7, 2025</h2>
           <span class="sub">Advent 2</span>
           
         </div>
@@ -597,7 +613,7 @@
       <aside class="verse-float"><div class="verse-text">The desert shall rejoice and blossom</div><cite class="verse-citation">Isaiah 35:1</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Dec 14, 2025</span>
+          <h2 class="date">Dec 14, 2025</h2>
           <span class="sub">Advent 3</span>
           
         </div>
@@ -620,7 +636,7 @@
       <aside class="verse-float"><div class="verse-text">You are to name him Jesus</div><cite class="verse-citation">Matthew 1:21</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Dec 21, 2025</span>
+          <h2 class="date">Dec 21, 2025</h2>
           <span class="sub">Advent 4</span>
           
         </div>
@@ -643,7 +659,7 @@
       <aside class="verse-float"><div class="verse-text">I am bringing you good news of great joy</div><cite class="verse-citation">Luke 2:10</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Dec 24, 2025</span>
+          <h2 class="date">Dec 24, 2025</h2>
           <span class="sub">Christmas Eve</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -668,7 +684,7 @@
       <aside class="verse-float"><div class="verse-text">Take the child and his mother, and flee</div><cite class="verse-citation">Matthew 2:13</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Dec 28, 2025</span>
+          <h2 class="date">Dec 28, 2025</h2>
           <span class="sub">Christmas 1</span>
           
         </div>
@@ -690,7 +706,7 @@
       <aside class="verse-float"><div class="verse-text">The Word became flesh and lived among us</div><cite class="verse-citation">John 1:14</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Jan 4, 2026</span>
+          <h2 class="date">Jan 4, 2026</h2>
           <span class="sub">Christmas 2</span>
           
         </div>
@@ -713,7 +729,7 @@
       <aside class="verse-float"><div class="verse-text">This is my Son, the Beloved</div><cite class="verse-citation">Matthew 3:17</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Jan 11, 2026</span>
+          <h2 class="date">Jan 11, 2026</h2>
           <span class="sub">Baptism of Christ</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -736,7 +752,7 @@
       <aside class="verse-float"><div class="verse-text">Here is the Lamb of God</div><cite class="verse-citation">John 1:29</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Jan 18, 2026</span>
+          <h2 class="date">Jan 18, 2026</h2>
           <span class="sub">Epiphany 2</span>
           
         </div>
@@ -758,7 +774,7 @@
       <aside class="verse-float"><div class="verse-text">Follow me, and I will make you fishers of people</div><cite class="verse-citation">Matthew 4:19</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Jan 25, 2026</span>
+          <h2 class="date">Jan 25, 2026</h2>
           <span class="sub">Epiphany 3</span>
           
         </div>
@@ -781,7 +797,7 @@
       <aside class="verse-float"><div class="verse-text">Blessed are the peacemakers</div><cite class="verse-citation">Matthew 5:9</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Feb 1, 2026</span>
+          <h2 class="date">Feb 1, 2026</h2>
           <span class="sub">Epiphany 4</span>
           
         </div>
@@ -804,7 +820,7 @@
       <aside class="verse-float"><div class="verse-text">A city built on a hill cannot be hid</div><cite class="verse-citation">Matthew 5:14</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Feb 8, 2026</span>
+          <h2 class="date">Feb 8, 2026</h2>
           <span class="sub">Epiphany 5</span>
           
         </div>
@@ -827,7 +843,7 @@
       <aside class="verse-float"><div class="verse-text">Jesus was transfigured before them</div><cite class="verse-citation">Matthew 17:2</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Feb 15, 2026</span>
+          <h2 class="date">Feb 15, 2026</h2>
           <span class="sub">Transfiguration</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -850,7 +866,7 @@
       <aside class="verse-float"><div class="verse-text">Renew a right spirit within me</div><cite class="verse-citation">Psalm 51:10</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Feb 18, 2026</span>
+          <h2 class="date">Feb 18, 2026</h2>
           <span class="sub">Ash Wednesday</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -871,7 +887,7 @@
       <aside class="verse-float"><div class="verse-text">Worship the Lord your God</div><cite class="verse-citation">Matthew 4:10</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Feb 22, 2026</span>
+          <h2 class="date">Feb 22, 2026</h2>
           <span class="sub">Lent 1</span>
           
         </div>
@@ -894,7 +910,7 @@
       <aside class="verse-float"><div class="verse-text">She has washed my feet with her tears</div><cite class="verse-citation">Luke 7:44</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Feb 26, 2026</span>
+          <h2 class="date">Feb 26, 2026</h2>
           <span class="sub">Midweek Lent — Feet of Christ</span>
         </div>
         <div class="rhs">
@@ -912,7 +928,7 @@
       <aside class="verse-float"><div class="verse-text">Nicodemus came to Jesus by night</div><cite class="verse-citation">John 3:2</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Mar 1, 2026</span>
+          <h2 class="date">Mar 1, 2026</h2>
           <span class="sub">Lent 2</span>
           
         </div>
@@ -935,7 +951,7 @@
       <aside class="verse-float"><div class="verse-text">Where do you get that living water?</div><cite class="verse-citation">John 4:11</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Mar 8, 2026</span>
+          <h2 class="date">Mar 8, 2026</h2>
           <span class="sub">Lent 3</span>
           
         </div>
@@ -958,7 +974,7 @@
       <aside class="verse-float"><div class="verse-text">One does not live by bread alone</div><cite class="verse-citation">Luke 4:4</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Mar 12, 2026</span>
+          <h2 class="date">Mar 12, 2026</h2>
           <span class="sub">Midweek Lent — Mouth of Christ</span>
         </div>
         <div class="rhs">
@@ -976,7 +992,7 @@
       <aside class="verse-float"><div class="verse-text">Lord, I believe</div><cite class="verse-citation">John 9:38</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Mar 15, 2026</span>
+          <h2 class="date">Mar 15, 2026</h2>
           <span class="sub">Lent 4</span>
           
         </div>
@@ -999,7 +1015,7 @@
       <aside class="verse-float"><div class="verse-text">Unbind him, and let him go</div><cite class="verse-citation">John 11:44</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Mar 22, 2026</span>
+          <h2 class="date">Mar 22, 2026</h2>
           <span class="sub">Lent 5</span>
           
         </div>
@@ -1021,7 +1037,7 @@
       <aside class="verse-float"><div class="verse-text">Though I was blind, now I see</div><cite class="verse-citation">John 9:25</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Mar 26, 2026</span>
+          <h2 class="date">Mar 26, 2026</h2>
           <span class="sub">Midweek Lent — Eyes of Christ</span>
         </div>
         <div class="rhs">
@@ -1040,7 +1056,7 @@
       <aside class="verse-float"><div class="verse-text">Hosanna to the Son of David</div><cite class="verse-citation">Matthew 21:9</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Mar 29, 2026</span>
+          <h2 class="date">Mar 29, 2026</h2>
           <span class="sub">Passion/Palm</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -1063,7 +1079,7 @@
       <aside class="verse-float"><div class="verse-text">This is my body that is for you</div><cite class="verse-citation">1 Corinthians 11:24</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Apr 2, 2026</span>
+          <h2 class="date">Apr 2, 2026</h2>
           <span class="sub">Maundy Thursday</span>
           
         </div>
@@ -1085,7 +1101,7 @@
       <aside class="verse-float"><div class="verse-text">It is finished</div><cite class="verse-citation">John 19:30</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Apr 3, 2026</span>
+          <h2 class="date">Apr 3, 2026</h2>
           <span class="sub">Good Friday - Tenebrae</span>
           
         </div>
@@ -1101,12 +1117,12 @@
       </div>
       <div class="clear"></div>
     </section></div>
-<div class="panel active" data-panel="Easter">
+<div class="panel" data-panel="Easter">
     <section class="week" id="week-2026-04-05" data-date="2026-04-05" style="--row-bg: #faebc7; --row-accent: #b38a20;">
       <aside class="verse-float"><div class="verse-text">Alleluia! Christ is risen!</div></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">Apr 5, 2026</span>
+          <h2 class="date">Apr 5, 2026</h2>
           <span class="sub">Easter Day</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -1130,7 +1146,7 @@
       <aside class="verse-float"><div class="verse-text">Do not doubt but believe</div><cite class="verse-citation">John 20:27</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Apr 12, 2026</span>
+          <h2 class="date">Apr 12, 2026</h2>
           <span class="sub">Easter 2</span>
           
         </div>
@@ -1153,7 +1169,7 @@
       <aside class="verse-float"><div class="verse-text">Were not our hearts burning within us?</div><cite class="verse-citation">Luke 24:32</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Apr 19, 2026</span>
+          <h2 class="date">Apr 19, 2026</h2>
           <span class="sub">Easter 3</span>
           
         </div>
@@ -1176,7 +1192,7 @@
       <aside class="verse-float"><div class="verse-text">I came that they may have life and have it abundantly</div><cite class="verse-citation">John 10:10</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">Apr 26, 2026</span>
+          <h2 class="date">Apr 26, 2026</h2>
           <span class="sub">Easter 4</span>
           
         </div>
@@ -1199,7 +1215,7 @@
       <aside class="verse-float"><div class="verse-text">In my Father&#x27;s house there are many dwelling places</div><cite class="verse-citation">John 14:2</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">May 3, 2026</span>
+          <h2 class="date">May 3, 2026</h2>
           <span class="sub">Easter 5</span>
           
         </div>
@@ -1222,7 +1238,7 @@
       <aside class="verse-float"><div class="verse-text">Because I live, you also will live</div><cite class="verse-citation">John 14:19</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">May 10, 2026</span>
+          <h2 class="date">May 10, 2026</h2>
           <span class="sub">Easter 6</span>
           
         </div>
@@ -1245,7 +1261,7 @@
       <aside class="verse-float"><div class="verse-text">May they be one, as we are one</div><cite class="verse-citation">John 17:11</cite></aside>
       <header class="week-head">
         <div class="lhs">
-          <span class="date">May 17, 2026</span>
+          <h2 class="date">May 17, 2026</h2>
           <span class="sub">Easter 7 · Music Sunday</span>
           
         </div>
@@ -1271,7 +1287,7 @@
       <aside class="verse-float"><div class="verse-text">Receive the Holy Spirit</div><cite class="verse-citation">John 20:22</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">May 24, 2026</span>
+          <h2 class="date">May 24, 2026</h2>
           <span class="sub">Pentecost</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -1295,7 +1311,7 @@
       <aside class="verse-float"><div class="verse-text">I am with you always</div><cite class="verse-citation">Matthew 28:20</cite></aside>
       <header class="week-head festival">
         <div class="lhs">
-          <span class="date">May 31, 2026</span>
+          <h2 class="date">May 31, 2026</h2>
           <span class="sub">Trinity</span>
           <span class="star" title="Festival / principal feast">★</span>
         </div>
@@ -1315,13 +1331,14 @@
     </section></div>
 </div>
 
-<aside class="join-invite">
+<aside class="join-invite" aria-label="About this calendar">
   <strong>A complete season.</strong> This calendar is a record of the
   special music offered at Trinity throughout the 2025&ndash;26 lectionary
   year, from the Time After Pentecost through Trinity Sunday &mdash; with
   gratitude to the singers, ringers, and instrumentalists who made it
   possible.
 </aside>
+</main>
 
 <script>
   // Map of sunday dates to their season, built at mockup render time.
@@ -1332,7 +1349,11 @@
     const tabBtn = document.querySelector(`.tab[data-tab="${target}"]`);
     const panel  = document.querySelector(`.panel[data-panel="${target}"]`);
     if (!tabBtn || !panel) return;
-    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b === tabBtn));
+    document.querySelectorAll('.tab').forEach(b => {
+      const on = b === tabBtn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
     document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p === panel));
   }
 
@@ -1342,7 +1363,7 @@
   document.querySelectorAll('.tab').forEach(btn => {
     btn.addEventListener('click', () => {
       activateTab(btn.dataset.tab);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     });
   });
 </script>

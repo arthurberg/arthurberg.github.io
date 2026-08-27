@@ -29,6 +29,7 @@ about:
       href: https://scholar.google.com/citations?user=asQf9VQAAAAJ
 include-in-header:
   text: |
+    <meta name="author" content="Arthur Berg">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

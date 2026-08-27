@@ -17,7 +17,7 @@ import bibtexparser
 from bibtexparser.bparser import BibTexParser
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from tag_publications import tag_entry, AREA_TAGS  # noqa: E402
+from tag_publications import tag_entry  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 BIB = ROOT / "publications.bib"
@@ -31,11 +31,6 @@ SUPPLEMENTS = {
 }
 
 TYPE_ORDER = {"article": 0, "inproceedings": 1, "misc": 2}
-TYPE_LABEL = {
-    "article": "Journal Articles",
-    "inproceedings": "Conference Proceedings",
-    "misc": "Other",
-}
 
 
 def clean(s: str) -> str:
@@ -201,14 +196,19 @@ def main() -> int:
 
     # Filter chip bar (chips must live inside a .pub-filter-row — .pub-filter
     # itself is a column flexbox of rows, so bare chips would stack full-width)
-    body.append('<div class="pub-filter" role="toolbar" aria-label="Filter publications by research area">')
-    body.append('<div class="pub-filter-row pub-filter-areas">')
+    body.append('<div class="pub-filter" role="group" aria-label="Filter publications by research area">')
+    body.append('<div class="pub-filter-row pub-filter-areas" role="group" aria-label="Research area">')
     body.append('<span class="pub-filter-label">Area:</span>')
     for slug, label in area_labels:
         cls = "pub-filter-chip" + (" active" if slug == "all" else "")
         body.append(f'<button type="button" class="{cls}" data-filter="{slug}">{label}</button>')
-    body.append('<span class="pub-filter-count" id="pub-filter-count"></span>')
     body.append('</div>')
+
+    # Result count sits on its own row, not inside the "Research area" group:
+    # it is a status message about the whole filter, and .pub-filter is a
+    # column flexbox, so this also stops it trailing the last area chip.
+    body.append('<span class="pub-filter-count" id="pub-filter-count"></span>')
+
     body.append('</div>')
     body.append("")
 

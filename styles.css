@@ -76,15 +76,15 @@ h3 { font-weight: 600; }
   }
 }
 
-/* Make tables scroll horizontally on small screens rather than clip.
-   `main.content table` below sets overflow:hidden (to clip the rounded
-   corners) and outranks a bare `table` selector, so this override has to
-   match that specificity or wide tables get cut off with no way to scroll. */
+/* Make wide tables scroll horizontally on small screens rather than clip.
+   Scroll the WRAPPER, never the <table> itself: `display: block` on a table
+   strips its table/row/cell roles from the accessibility tree in Chrome,
+   Safari, and Firefox, so screen readers lose row/column announcement and
+   table-navigation commands. Every wide table is wrapped in .table-scroll or
+   .trial-table in the source .qmd. */
 @media (max-width: 768px) {
-  .table-responsive,
-  main.content table,
-  table {
-    display: block;
+  .table-scroll,
+  .trial-table {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -96,12 +96,15 @@ h3 { font-weight: 600; }
     white-space: normal;
   }
 }
-.about-entity table {
-  display: table;
-  overflow-x: visible;
+/* A scrollable region must be keyboard-reachable (WCAG 2.1.1); the .qmd
+   wrappers carry tabindex="0", so give the focus ring somewhere to land. */
+.table-scroll:focus-visible,
+.trial-table:focus-visible {
+  outline: 2px solid var(--teal-600);
+  outline-offset: 2px;
 }
 
-/* Links: color only by default, underline on hover */
+/* Links: chrome and UI links are color-only; prose links are underlined. */
 a {
   color: var(--teal-800);
   text-decoration: none;
@@ -111,6 +114,31 @@ a:hover {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
+}
+/* Prose links carry a persistent underline. Color alone will not do it:
+   --teal-800 against the body ink is 1.33:1, far under the 3:1 that WCAG 1.4.1
+   requires before color may be the only cue distinguishing a link from text. */
+main.content :is(p, li, dd, blockquote, figcaption, td, th) a,
+main.content .pub-annote a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(4, 61, 66, 0.4);
+}
+main.content :is(p, li, dd, blockquote, figcaption, td, th) a:hover,
+main.content .pub-annote a:hover {
+  text-decoration-color: currentColor;
+}
+/* UI affordances carry their own shape, so they stay unadorned. */
+main.content .btn,
+main.content .pub-badge,
+main.content .area-tag,
+main.content .pub-filter-chip,
+main.content .calendar-teaser-cta,
+main.content .contact-card a,
+main.content .cv-contact-block a,
+main.content .cv-actions a {
+  text-decoration: none;
 }
 /* Keep existing non-underlined UI bits non-underlined on hover too */
 .btn:hover, .nav-link:hover, .pub-badge:hover,
@@ -259,8 +287,9 @@ main.content mark { scroll-margin-top: 160px; }
   border-color: var(--gold-500);
 }
 .pub-filter-types .pub-filter-chip.active:hover {
+  /* No `color: #fff` — white on --gold-600 is 3.19:1. Inheriting the resting
+     rule's --teal-900 gives 4.56:1 and keeps the darken-on-hover affordance. */
   background: var(--gold-600);
-  color: #fff;
 }
 /* Per-type outline colors mirror the entry left-border accents */
 .pub-filter-chip[data-type-filter="publication"] {
@@ -681,20 +710,16 @@ main.content table tbody td {
   border-bottom: 1px solid #e2e8f0;
 }
 
-/* ——— Page footer ——— */
-.nav-footer {
-  border-top: 1px solid var(--teal-50);
-  background: var(--paper-tinted);
-  color: var(--ink-500);
-  font-size: 0.85rem;
+/* Result count: its own row under the chips (see the generators — it is no
+   longer a child of the Area row, so it must not inherit that row's inline
+   baseline alignment). */
+.pub-filter > .pub-filter-count {
+  display: block;
+  width: 100%;
+  margin: 0.15rem 0 0;
+  padding-left: 0.1rem;
 }
-.nav-footer a {
-  color: var(--teal-600);
-}
-.nav-footer .nav-footer-right a {
-  font-size: 1.05rem;
-  margin-left: 0.6rem;
-}
+
 
 /* ——— Scroll-to-top button ——— */
 #back-to-top {
@@ -747,6 +772,16 @@ main.content table tbody td {
 #TOC a.active, #quarto-margin-sidebar a.active {
   color: var(--teal-800);
   border-left-color: var(--gold-500) !important;
+}
+/* The theme sets `color: #4582ec !important` here (3.71:1 on white — fails AA
+   at the TOC's 14.9px), so this has to match its selector and its !important. */
+.sidebar nav[role="doc-toc"] ul > li > a.active,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > a.active {
+  color: var(--teal-800) !important;
+}
+.sidebar nav[role="doc-toc"] ul > li > a:hover,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > a:hover {
+  color: var(--teal-600) !important;
 }
 
 /* ——— Navbar color ——— */
@@ -816,6 +851,29 @@ section.service-card > h3:first-child {
 .music-card ul { margin: 0.6rem 0 0.2rem; padding-left: 1.25rem; }
 .music-card li { margin: 0.25rem 0; }
 
+/* ——— Captioned photo figure (music page farewell photo) ——— */
+.photo-figure { margin: 1.4rem 0 1.6rem; }
+.photo-figure .quarto-figure { margin: 0; }
+.photo-figure figure { margin: 0; }
+.photo-figure figure > p { margin: 0; }
+.photo-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid rgba(4, 61, 66, 0.12);
+  box-shadow: var(--shadow);
+}
+.photo-figure figcaption,
+.photo-figure .figure-caption {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-500);
+  text-align: center;
+  font-style: italic;
+}
+
 /* ——— Worship-calendar teaser (music page → /music-calendar.html) ——— */
 .calendar-teaser {
   background: linear-gradient(135deg, #fffaf0 0%, #f7ead0 100%);
@@ -837,7 +895,7 @@ section.service-card > h3:first-child {
   transition: color 0.15s ease, transform 0.15s ease;
 }
 .calendar-teaser a.calendar-teaser-cta:hover {
-  color: #b38a20;
+  color: #7f6000;  /* 5.65:1 on the teaser's cream gradient; #b38a20 was 3.07:1 */
   transform: translateX(2px);
 }
 .calendar-teaser a.calendar-teaser-cta i { color: var(--gold-600, #a67c10); margin-right: 0.45rem; }
@@ -913,3 +971,25 @@ section.service-card > h3:first-child {
   a { color: #000 !important; text-decoration: none !important; }
   h1, h2, h3 { color: #000 !important; border-color: #666 !important; }
 }
+
+/* ——— Skip link (bypass the repeated navbar) ———
+   Injected at the top of <body> by the include-after-body script in
+   _quarto.yml; tab order follows DOM order, so it lands ahead of the nav. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 2000;
+  background: var(--teal-800);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 600;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0;
+  color: #fff;
+  text-decoration: none;
+}
+#quarto-document-content:focus { outline: none; }

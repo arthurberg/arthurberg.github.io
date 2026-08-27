@@ -6,17 +6,17 @@ toc-depth: 2
 ---
 
 ::: {.cv-actions}
-[<i class="fa-solid fa-file-pdf"></i> Download full CV (PDF)](Berg-CV.pdf){.btn .btn-primary}
-[<i class="ai ai-orcid"></i> ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}
+[<i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Download full CV (PDF)](Berg-CV.pdf){.btn .btn-primary}
+[<i class="ai ai-orcid" aria-hidden="true"></i> ORCID](https://orcid.org/0000-0002-4097-7348){.btn .btn-outline-secondary}
 [Penn State Pure](https://pure.psu.edu/en/persons/arthur-berg){.btn .btn-outline-secondary}
-[<i class="ai ai-google-scholar"></i> Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}
+[<i class="ai ai-google-scholar" aria-hidden="true"></i> Google Scholar](https://scholar.google.com/citations?user=asQf9VQAAAAJ){.btn .btn-outline-secondary}
 :::
 
 ## Contact
 
 ::: {.cv-contact-card}
 ::: {.cv-contact-block}
-**<i class="fa-solid fa-building"></i> Address**
+**<i class="fa-solid fa-building" aria-hidden="true"></i> Address**
 
 Arthur Berg, Ph.D.<br>
 Department of Public Health Sciences, A210<br>
@@ -26,11 +26,11 @@ Hershey, PA 17033-0855
 :::
 
 ::: {.cv-contact-block}
-**<i class="fa-solid fa-envelope"></i> Email**
+**<i class="fa-solid fa-envelope" aria-hidden="true"></i> Email**
 
 [berg@psu.edu](mailto:berg@psu.edu)
 
-**<i class="fa-solid fa-phone"></i> Cell**
+**<i class="fa-solid fa-phone" aria-hidden="true"></i> Cell**
 
 [717-982-7828](tel:+17179827828)
 :::
@@ -38,12 +38,14 @@ Hershey, PA 17033-0855
 
 ## Education
 
+::: {.table-scroll role="region" aria-label="Education"}
 | Years | Degree | Institution |
 |-------|--------|-------------|
 | 2002–2007 | Ph.D., Mathematics | University of California, San Diego |
 | 2002–2005 | M.S., Statistics | University of California, San Diego |
 | 1998–2002 | M.A., Mathematics | University of Southern California |
 | 1998–2002 | B.S., Mathematics | University of Southern California |
+:::
 
 ## Current Appointments & Leadership
 
@@ -60,6 +62,7 @@ Hershey, PA 17033-0855
 
 ## Past Academic Appointments
 
+::: {.table-scroll role="region" aria-label="Past academic appointments"}
 | Years | Role | Institution |
 |-------|------|-------------|
 | 2024–2025 | Member, Cancer Institute Data Safety and Monitoring Committee | Penn State College of Medicine |
@@ -77,6 +80,7 @@ Hershey, PA 17033-0855
 | 2002–2007 | Teaching Assistant | UC San Diego, Department of Mathematics |
 | 1999–2002 | Teaching Assistant | University of Southern California |
 | Summers 2001–2003 | Counselor | Program in Mathematics for Young Scientists, Boston University |
+:::
 
 ## Awards
 
@@ -144,11 +148,11 @@ abstracts, see the [Research page](research.qmd).
 - *BCC022: Naxitamab + Tipifarnib for Relapsed/Refractory Neuroblastoma* — Cannonball Kids' Cancer Foundation & Trial Blazers for Kids (Biostatistician; PI: Saulnier Sholler), $333K, 2025–2027
 - *A Unique Small Molecule for Triple-Negative Breast Cancer* — DoD (Biostatistician; PI: A. Sharma), $1.26M, 2024–2027
 - *Identifying Novel Approaches for Melanoma Prevention* — DoD (Biostatistician; PI: Robertson), $830K, 2023–2026
-- *Combination Therapy for Childhood Acute Myeloid Leukemia* — Four Diamonds Fund (Biostatistician; PI: A. Sharma), $250K, 2023–2026
 - *Linking olfactory deficits to memory impairment and AD neurodegeneration* — NIA R01 AG070088 (Co-Investigator; PI: Karunanayaka), $3.86M, 2021–2027
 
 **Recently completed (selected)**
 
+- *Combination Therapy for Childhood Acute Myeloid Leukemia* — Four Diamonds Fund (Biostatistician; PI: A. Sharma), $250K, 2023–2026
 - *Targeting Aldehyde Dehydrogenase for Cancer Prevention* — NCI R01 CA241148 (Biostatistician; PI: Robertson), $3.17M, 2020–2026
 - *Phase II Study of Abemaciclib in Advanced Biliary Tract Carcinoma* — Lilly USA (Biostatistician; PI: Yee), $383K, 2020–2025
 - *Neuro-pharmacological Properties of Repurposed Posaconazole in Glioblastoma* — NCI R03 CA255992 (Biostatistician; PI: Mansouri), 2022–2025
@@ -223,7 +227,7 @@ Full list available in the [PDF CV](Berg-CV.pdf).
 - **Avantika R. Diwadkar** (PSU Bioinformatics & Genomics, committee) — Statistical approaches to infer the genetic basis of cell–cell interaction and phenotype heterogeneity in autoimmune and neurodegenerative disease. Graduated May 2026.
 - **Shuang Gao** (PSU Biostatistics, committee) — Genetic loci in addiction and sex-differentiated effects through innovative genomic analysis. Graduated December 2024.
 - **Nour Hawila** (PSU Biostatistics, advisor) — Confidence intervals for noninferiority testing; Bayesian joint modeling of reliability; topics in biostatistical modeling and statistics education. Graduated June 2023.
-- **Chenqi (Stacey) Fu** (PSU Biostatistics, committee) — Early-phase clinical trial designs based on predictive Bayes factor and Bayesian model averaging.
+- **Chenqi (Stacey) Fu** (PSU Biostatistics, committee) — Early-phase clinical trial designs based on predictive Bayes factor and Bayesian model averaging. Graduated November 2022.
 - **Daniel McGuire** (PSU Biostatistics, committee) — Replicability in GWAS and large-scale EHR datasets. Graduated 2021.
 - **Renan Sauteraud** (PSU Biostatistics, committee) — Functional genomic analysis of the X chromosome. Graduated 2021.
 - **Vishal Midya** (PSU Biostatistics, co-advisor with Jason Liao) — Frequentist and Bayesian hypothesis testing with meaningful effect sizes. Graduated 2020.

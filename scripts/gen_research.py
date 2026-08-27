@@ -4,17 +4,23 @@
 Reads:
     publications.bib   — journal / proceedings entries
     data/grants.yml    — extramural support (parsed from myResearch portal)
-    data/protocols.yml — IRB/IACUC/IBC protocols
 
 Produces:
-    _research-body.qmd       — filterable body fragment (publications + grants + protocols)
+    _research-body.qmd       — filterable body fragment (publications + grants)
 
 publications.qmd / _publications-body.qmd are owned by scripts/gen_publications.py.
 Both scripts used to write them, with different markup, so whichever ran last
 won — keep the ownership split.
 
 Research-area tagging reuses scripts/tag_publications.py:tag_entry for
-publications and a simplified rule set for grants / protocols.
+publications and a simplified rule set for grants.
+
+Protocols were dropped from the rendered Research page in Apr 2026 (commit
+ca207c5). PROTOCOLS_YML, tag_protocol/render_protocol, load_protocols, and
+build_protocols_section are kept ON PURPOSE as dead code so the section can be
+revived, and data/protocols.yml is kept in step with them. Reviving it needs
+both a build_protocols_section() call in main() AND a ("protocol", "Protocols")
+entry in TYPE_FILTERS.
 
 Usage:  python3 scripts/gen_research.py
 """
@@ -61,11 +67,6 @@ SUPPLEMENTS = {
 }
 
 TYPE_ORDER = {"article": 0, "inproceedings": 1, "misc": 2}
-TYPE_LABEL = {
-    "article": "Journal Articles",
-    "inproceedings": "Conference Proceedings",
-    "misc": "Other",
-}
 
 AREA_LABELS = [
     ("all", "All"),
@@ -465,22 +466,26 @@ def render_protocol(p: dict) -> str:
 
 def filter_bar_html() -> str:
     lines = []
-    lines.append('<div class="pub-filter" role="toolbar" aria-label="Filter by type and research area">')
+    lines.append('<div class="pub-filter" role="group" aria-label="Filter by type and research area">')
 
-    lines.append('<div class="pub-filter-row pub-filter-types">')
+    lines.append('<div class="pub-filter-row pub-filter-types" role="group" aria-label="Type">')
     lines.append('<span class="pub-filter-label">Type:</span>')
     for slug, label in TYPE_FILTERS:
         cls = "pub-filter-chip pub-filter-type" + (" active" if slug == "all" else "")
         lines.append(f'<button type="button" class="{cls}" data-type-filter="{slug}">{label}</button>')
     lines.append('</div>')
 
-    lines.append('<div class="pub-filter-row pub-filter-areas">')
+    lines.append('<div class="pub-filter-row pub-filter-areas" role="group" aria-label="Research area">')
     lines.append('<span class="pub-filter-label">Area:</span>')
     for slug, label in AREA_LABELS:
         cls = "pub-filter-chip" + (" active" if slug == "all" else "")
         lines.append(f'<button type="button" class="{cls}" data-filter="{slug}">{label}</button>')
-    lines.append('<span class="pub-filter-count" id="pub-filter-count"></span>')
     lines.append('</div>')
+
+    # Result count sits on its own row, not inside the "Research area" group:
+    # it is a status message about the whole filter, and .pub-filter is a
+    # column flexbox, so this also stops it trailing the last area chip.
+    lines.append('<span class="pub-filter-count" id="pub-filter-count"></span>')
 
     lines.append('</div>')
     return "\n".join(lines)
@@ -537,24 +542,17 @@ def research_stats_block(entries: list[dict], grants: list[dict]) -> str:
 
 
 def _build_entries_section(entries: list[dict], section_id: str, data_section: str,
-                           heading: str, show_type_subheads: bool = True) -> list[str]:
+                           heading: str) -> list[str]:
     out = [
         f'<section id="{section_id}" class="research-section" data-section="{data_section}">',
         f'<h2 class="section-heading">{heading}</h2>',
     ]
     current_year = None
-    current_type = None
     for e in entries:
         y = re.sub(r"\D", "", e["year"]) or "Unknown"
-        t = e.get("ENTRYTYPE", "").lower()
         if y != current_year:
             out.append(f'<h3 class="pub-year" data-year="{y}">{y}</h3>')
             current_year = y
-            current_type = None
-        if show_type_subheads and t != current_type:
-            label = TYPE_LABEL.get(t, t.title())
-            out.append(f'<h4 class="pub-type">{label}</h4>')
-            current_type = t
         out.append(render_pub(e))
     out.append('</section>')
     return out
@@ -565,12 +563,10 @@ def build_publications_section(entries: list[dict]) -> list[str]:
     abstracts = [e for e in entries if is_abstract(e)]
     out: list[str] = []
     if pubs:
-        out.extend(_build_entries_section(pubs, "sec-publications", "publication", "Publications",
-                                          show_type_subheads=False))
+        out.extend(_build_entries_section(pubs, "sec-publications", "publication", "Publications"))
     if abstracts:
         out.extend(_build_entries_section(abstracts, "sec-abstracts", "abstract",
-                                          "Conference Abstracts",
-                                          show_type_subheads=False))
+                                          "Conference Abstracts"))
     return out
 
 

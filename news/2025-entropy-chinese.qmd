@@ -27,8 +27,9 @@ characters with irregular or high-variance pinyin mappings.
 
 ## Supplementary Materials
 
-The [supplementary site](https://www.arthurberg.com/entropy) provides
-the following downloadable resources:
+This page is the supplementary site for the paper (also reachable at the
+short URL `arthurberg.com/entropy`). It provides the following downloadable
+resources:
 
 - [Presentation slides (演示文稿)](https://drive.google.com/file/d/1hhQZTBdi1s_497VR5eisNZKq_xAbqREV/view?usp=share_link)
 - [Character dictation worksheet (汉字听写练习)](https://drive.google.com/file/d/1G8rN1f16IhWE6gk06LyHwCNY_43X1-of/view?usp=share_link)

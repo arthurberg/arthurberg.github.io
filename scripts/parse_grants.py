@@ -166,7 +166,7 @@ def main() -> int:
     # Preserve human-maintained extension fields (e.g. `topic` for pending
     # grants) across re-runs by re-reading the existing grants.yml and
     # carrying matching values forward.
-    preserved_fields = ("topic",)
+    preserved_fields = ("topic", "status_override")
     existing: dict[str, dict] = {}
     if OUT.exists():
         with OUT.open() as f:
@@ -181,6 +181,22 @@ def main() -> int:
             for field in preserved_fields:
                 if field in prev and field not in entry:
                     entry[field] = prev[field]
+
+    # A hand-set `status_override` beats the machine-derived status. Use it
+    # only when the portal export lags reality — e.g. an award whose period has
+    # ended but which myResearch still lists under Active Other Support. Delete
+    # the override once a fresh export reflects the change.
+    for entry in all_entries:
+        override = entry.get("status_override")
+        if override:
+            if override not in ("active", "pending", "completed"):
+                print(
+                    f"  WARNING: grant {entry.get('award_number') or entry.get('title', '?')!r} "
+                    f"has unrecognized status_override {override!r}; ignoring",
+                    file=sys.stderr,
+                )
+                continue
+            entry["status"] = override
 
     # Sort by status (active → pending → completed), then start_year desc
     status_order = {"active": 0, "pending": 1, "completed": 2}
@@ -206,6 +222,9 @@ def main() -> int:
         f.write("# exports and will be overwritten on re-run. The `topic` field\n")
         f.write("# (optional, used on pending grants to hide the submitted title)\n")
         f.write("# is preserved across re-runs and may be edited by hand.\n")
+        f.write("# `status_override` is also preserved and, when present, wins\n")
+        f.write("# over the machine-derived `status` — use it only while a\n")
+        f.write("# myResearch export lags reality, and delete it once it agrees.\n")
         f.write("# For any pending grant with a `topic`, the submitted `title`\n")
         f.write("# is intentionally stripped before this file is written.\n")
         yaml.safe_dump(all_entries, f, sort_keys=False, default_flow_style=False, allow_unicode=True)

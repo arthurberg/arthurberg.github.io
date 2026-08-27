@@ -1,6 +1,6 @@
 ---
 title: "Music"
-description: "Arthur Berg's three decades of church music — organ, choral conducting, and worship planning, concluding a directorship at Trinity Lutheran in August 2026."
+description: "Arthur Berg's three decades of church music — organ, choral conducting, and worship planning, through a directorship at Trinity Lutheran that concluded in August 2026."
 pagetitle: "Music"
 subtitle: "Three decades of music in worship"
 toc: true
@@ -14,12 +14,13 @@ director, and music director — most recently as **Director of Music** at
 Pennsylvania](https://www.trinitylemoyne.org), where I planned and led the
 music for weekly worship, selected hymns and service music aligned with
 the lectionary, directed the choir and handbells, and accompanied
-congregational song from the organ and piano.
+congregational song from the organ and piano. That tenure concluded on
+**August 23, 2026**.
 
-## Most Recent Role
+## Most Recent Position
 
 ::: {.music-card}
-**<i class="fa-solid fa-church"></i> Director of Music**<br>
+**<i class="fa-solid fa-church" aria-hidden="true"></i> Director of Music**<br>
 **Trinity Evangelical Lutheran Church** · Lemoyne, PA<br>
 September 2025 – August 2026
 
@@ -29,15 +30,27 @@ September 2025 – August 2026
 - Preparation of service bulletins, calendars, music listings, and custom score engravings in [MuseScore](https://musescore.org/)
 :::
 
-I am concluding my tenure at Trinity in August 2026 to step into a musical
-sabbatical — making room for research travel and other pursuits while
-keeping the keyboard close at hand. It has been a joy to make music with
-this congregation week by week, and I am deeply grateful for the season.
+I stepped down at the end of August 2026 to begin a musical sabbatical —
+making room for research travel and other pursuits while keeping the
+keyboard close at hand. It was a joy to make music with this congregation
+week by week, and I am deeply grateful for the season.
+
+::: {.photo-figure}
+<figure>
+<img src="images/trinity-lemoyne-farewell-2026-08-23.jpg"
+     srcset="images/trinity-lemoyne-farewell-2026-08-23.jpg 950w,
+             images/trinity-lemoyne-farewell-2026-08-23-2x.jpg 1638w"
+     sizes="(max-width: 1000px) 100vw, 950px"
+     width="950" height="371" loading="lazy" decoding="async"
+     alt="Members of the Trinity Evangelical Lutheran congregation, adults and children, standing together behind a reception table set with a decorated cake, fruit skewers, and sandwich trays.">
+<figcaption>The congregation gathered for a farewell reception after my final service at Trinity, August 23, 2026.</figcaption>
+</figure>
+:::
 
 ## The 2025–26 Music Calendar
 
 ::: {.calendar-teaser}
-[<i class="fa-solid fa-calendar-days"></i> **Open the 2025–26 Music Calendar** →](./music-calendar.html){.calendar-teaser-cta}
+[<i class="fa-solid fa-calendar-days" aria-hidden="true"></i> **Open the 2025–26 Music Calendar** →](./music-calendar.html){.calendar-teaser-cta}
 
 A complete record of the special music offered for each service of the
 2025–26 lectionary year at Trinity, with brief notes on how each piece
@@ -59,6 +72,7 @@ at the congregations listed below.
 
 ## Positions Held
 
+::: {.table-scroll role="region" aria-label="Positions held"}
 | Years | Role | Congregation |
 |-------|------|--------------|
 | 2025/09 – 2026/08 | Director of Music | Trinity Evangelical Lutheran, Lemoyne, PA |
@@ -68,3 +82,4 @@ at the congregations listed below.
 | 2018 – 2020 | Choir Director, Organist & Pianist | Trinity Lutheran, Steelton, PA |
 | 2015 – 2018 | Pianist | Paxton Church of the Brethren, Harrisburg, PA |
 | 1994 – 1998 | Pianist | Our Saviour's Lutheran, Long Beach, CA |
+:::

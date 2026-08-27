@@ -8,8 +8,8 @@
 :::
 :::
 
-<div class="pub-filter" role="toolbar" aria-label="Filter publications by research area">
-<div class="pub-filter-row pub-filter-areas">
+<div class="pub-filter" role="group" aria-label="Filter publications by research area">
+<div class="pub-filter-row pub-filter-areas" role="group" aria-label="Research area">
 <span class="pub-filter-label">Area:</span>
 <button type="button" class="pub-filter-chip active" data-filter="all">All</button>
 <button type="button" class="pub-filter-chip" data-filter="methodology">Methodology</button>
@@ -24,8 +24,8 @@
 <button type="button" class="pub-filter-chip" data-filter="spinal-cord-injury">Spinal Cord Injury</button>
 <button type="button" class="pub-filter-chip" data-filter="neuroscience">Neuroscience</button>
 <button type="button" class="pub-filter-chip" data-filter="clinical-research">Clinical Research</button>
-<span class="pub-filter-count" id="pub-filter-count"></span>
 </div>
+<span class="pub-filter-count" id="pub-filter-count"></span>
 </div>
 
 

@@ -7,7 +7,6 @@
 *.aux
 *.log
 *.zip
-/papers/README.md
 
 # Python
 __pycache__/
@@ -33,3 +32,9 @@ __pycache__/
 
 # Unused local portrait (kept on disk, not published)
 /arthur.jpeg
+
+# Local scratch inbox (files get renamed and refiled out of here)
+/downloads/
+
+# Un-retouched photo originals (kept on disk, not published)
+/images/originals/

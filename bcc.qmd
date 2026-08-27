@@ -28,6 +28,20 @@ Medicine** in September 2023.
 - **Enrollment inquiries** — [BCCEnroll@pennstatehealth.psu.edu](mailto:BCCEnroll@pennstatehealth.psu.edu)
 - **Consortium website** — [research.beatcc.org](https://research.beatcc.org)
 
+::: {.photo-figure}
+<figure>
+<img src="images/bcc-consortium-2025-03.jpg"
+     srcset="images/bcc-consortium-2025-03.jpg 950w,
+             images/bcc-consortium-2025-03-2x.jpg 1900w"
+     sizes="(max-width: 1000px) 100vw, 950px"
+     width="950" height="373" loading="lazy" decoding="async"
+     alt="About thirty Beat Childhood Cancer Research Consortium physicians and principal investigators at a consortium meeting — one row seated, one row standing behind, all wearing name badges on lanyards.">
+<figcaption>Physicians and principal investigators of the Beat Childhood Cancer
+Research Consortium. Photo courtesy of the consortium
+(<a href="https://www.instagram.com/p/DHwLrOXpzNI/">@beatchildhoodcancerresearch</a>, March 2025).</figcaption>
+</figure>
+:::
+
 ## My Role
 
 As Lead Biostatistician I provide statistical leadership across the
@@ -44,7 +58,7 @@ The following trials are open, active, or in development through the
 BCC network. Full entry criteria, sites, and investigator-contact
 information are available on [ClinicalTrials.gov](https://clinicaltrials.gov).
 
-::: {.trial-table}
+::: {.trial-table role="region" aria-label="Trial portfolio"}
 | Trial | Title | Phase | Status | NCT |
 |-------|-------|:-----:|--------|-----|
 | **BCC015** | DFMO + Etoposide for Relapsed/Refractory Neuroblastoma | II | Active | — |

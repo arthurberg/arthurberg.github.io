@@ -1,13 +1,21 @@
 project:
   type: website
   output-dir: _site
+  # Quarto discovers resources from src= but NOT from srcset=, so the 2x
+  # farewell photo would never be copied. Name the published files explicitly:
+  # declaring `images/` would also drag in images/originals/, which is a private
+  # archive of un-retouched masters that must never reach the site.
+  resources:
+    - images/*.jpg
+  post-render:
+    - python3 scripts/fix_sitemap.py
 
 website:
   title: "Arthur Berg, Ph.D."
   description: "Professor of Biostatistics, Penn State College of Medicine. Research in Bayesian methods, clinical trials, statistical genetics, and interdisciplinary data science."
   site-url: https://arthurberg.com
   favicon: favicon.svg
-  image: photo.jpg
+  image: https://arthurberg.com/photo.jpg
   page-navigation: true
   open-graph: true
   twitter-card: true
@@ -38,18 +46,6 @@ website:
       - icon: envelope
         href: mailto:berg@psu.edu
         aria-label: Email
-  page-footer:
-    left: "© 2026 Arthur Berg · Professor of Biostatistics, Penn State College of Medicine"
-    right:
-      - icon: github
-        href: https://github.com/arthurberg
-        aria-label: GitHub
-      - icon: linkedin
-        href: https://www.linkedin.com/in/arthurberg
-        aria-label: LinkedIn
-      - icon: envelope
-        href: mailto:berg@psu.edu
-        aria-label: Email
 format:
   html:
     theme: litera
@@ -61,6 +57,7 @@ format:
     smooth-scroll: true
     include-in-header:
       text: |
+        <meta name="author" content="Arthur Berg">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -68,8 +65,99 @@ format:
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     include-after-body:
       text: |
-        <button id="back-to-top" aria-label="Back to top" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+        <button id="back-to-top" aria-label="Back to top" title="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
         <script>
+        // ——— Skip link (bypass the repeated navbar) ———
+        // Its own IIFE: the main one below early-returns on every page that has
+        // no research filter, which is every page but Research.
+        (function(){
+          const main = document.getElementById('quarto-document-content');
+          if (!main) return;
+          // Without tabindex, Chrome/Safari scroll to the target but leave
+          // keyboard focus stranded in the navbar.
+          main.setAttribute('tabindex', '-1');
+          const sl = document.createElement('a');
+          // `no-external` keeps Quarto's external-link adorner from stamping
+          // target="_blank" on it when the preview host isn't arthurberg.com.
+          sl.href = '#quarto-document-content';
+          sl.className = 'skip-link no-external';
+          sl.textContent = 'Skip to main content';
+          // Handle the jump directly: quarto-nav.js rewrites bare fragment
+          // hrefs to absolute URLs, which would turn the skip into a page load.
+          sl.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            main.focus({ preventScroll: true });
+            main.scrollIntoView({
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+              block: 'start',
+            });
+          });
+          document.body.insertBefore(sl, document.body.firstChild);
+        })();
+
+        // ——— Landmark naming ———
+        // The site nav and the table of contents are both unnamed `navigation`
+        // landmarks (role="doc-toc" inherits from navigation), so a screen
+        // reader announces two identical "navigation" regions. Name them.
+        // On the about/trestles template the title block sits OUTSIDE <main>,
+        // which makes it a second `banner` and leaves the portrait and profile
+        // links in no landmark at all — demote it to a named region there.
+        (function(){
+          const nav = document.querySelector('header#quarto-header nav.navbar');
+          if (nav && !nav.getAttribute('aria-label')) nav.setAttribute('aria-label', 'Site');
+          const toc = document.getElementById('TOC');
+          if (toc && !toc.getAttribute('aria-label')) toc.setAttribute('aria-label', 'On this page');
+          // On the about/trestles template Quarto emits the title block as a
+          // SIBLING of <main>, so it becomes a second `banner` landmark and the
+          // portrait and profile links end up in no landmark at all. Every other
+          // page nests it inside <main>; move it there so this one matches.
+          const titleBlock = document.getElementById('title-block-header');
+          const main = document.getElementById('quarto-document-content');
+          if (titleBlock && main && !main.contains(titleBlock)) {
+            main.insertBefore(titleBlock, main.firstChild);
+          }
+          // The portrait and profile-link column is laid out as a flex sibling
+          // of <main>, so it cannot be moved without breaking the two-column
+          // layout — name it as a landmark where it stands instead.
+          const aboutEntity = document.querySelector('.quarto-about-trestles > .about-entity');
+          if (aboutEntity && !aboutEntity.getAttribute('role')) {
+            aboutEntity.setAttribute('role', 'complementary');
+            aboutEntity.setAttribute('aria-label', 'Profile');
+          }
+        })();
+
+        // ——— Empty navbar brand logo ———
+        // Quarto emits <a class="navbar-brand navbar-brand-logo"> even with no
+        // logo configured, leaving an unnamed 0px-wide link in the a11y tree.
+        (function(){
+          const brand = document.querySelector('.navbar-brand-logo');
+          if (!brand) return;
+          if (brand.querySelector('img, svg, picture')) return;
+          if (brand.textContent.trim()) return;
+          brand.style.display = 'none';
+          brand.setAttribute('aria-hidden', 'true');
+          brand.setAttribute('tabindex', '-1');
+        })();
+
+        // ——— Scrollable table regions ———
+        // A region that scrolls must be keyboard-reachable (WCAG 2.1.1), but a
+        // tab stop on one that fits is just noise — so set tabindex from the
+        // actual overflow, and recheck when the viewport changes.
+        (function(){
+          const wraps = document.querySelectorAll('.table-scroll, .trial-table');
+          if (!wraps.length) return;
+          const sync = () => wraps.forEach((w) => {
+            if (w.scrollWidth > w.clientWidth + 1) w.setAttribute('tabindex', '0');
+            else w.removeAttribute('tabindex');
+          });
+          sync();
+          let t;
+          window.addEventListener('resize', () => {
+            clearTimeout(t);
+            t = setTimeout(sync, 150);
+          }, { passive: true });
+        })();
+
         (function(){
           const btn = document.getElementById('back-to-top');
           if (btn) {
@@ -246,7 +334,7 @@ format:
             const compact = document.createElement('div');
             compact.className = 'pub-filter-compact';
             compact.innerHTML = '<button type="button" class="pub-filter-toggle" aria-expanded="false">'
-              + '<i class="fa-solid fa-filter"></i> Filters <i class="fa-solid fa-chevron-down"></i></button>'
+              + '<i class="fa-solid fa-filter" aria-hidden="true"></i> Filters <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'
               + '<span class="pub-filter-compact-summary" id="pub-filter-compact-summary"></span>';
             filterBar.prepend(compact);
             filterBar.classList.add('pub-filter-collapsible');
@@ -258,10 +346,16 @@ format:
             // Choosing a chip collapses the bar again (no-op in states where
             // the expanded class has no visual effect).
             filterBar.addEventListener('click', (ev) => {
-              if (ev.target.closest('.pub-filter-chip')) {
-                filterBar.classList.remove('pub-filter-expanded');
-                toggleBtn.setAttribute('aria-expanded', 'false');
-              }
+              if (!ev.target.closest('.pub-filter-chip')) return;
+              // Capture BEFORE the class change: collapsing hides the very row
+              // holding the chip just activated, so a keyboard user's focus
+              // would drop to <body> and Tab would restart at the top of the
+              // document. Park focus on the toggle that reopens the bar.
+              const restoreFocus = filterBar.classList.contains('pub-filter-expanded')
+                && filterBar.contains(document.activeElement);
+              filterBar.classList.remove('pub-filter-expanded');
+              toggleBtn.setAttribute('aria-expanded', 'false');
+              if (restoreFocus) toggleBtn.focus({ preventScroll: true });
             });
             const sentinel = document.createElement('div');
             filterBar.parentNode.insertBefore(sentinel, filterBar);

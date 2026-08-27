@@ -3,6 +3,9 @@
 # exports and will be overwritten on re-run. The `topic` field
 # (optional, used on pending grants to hide the submitted title)
 # is preserved across re-runs and may be edited by hand.
+# `status_override` is also preserved and, when present, wins
+# over the machine-derived `status` — use it only while a
+# myResearch export lags reality, and delete it once it agrees.
 # For any pending grant with a `topic`, the submitted `title`
 # is intentionally stripped before this file is written.
 - title: 'Cannonball Kid''s Sponsor Cost BCC022: Phase II Trial of Naxitamab and Tipifarnib
@@ -34,15 +37,6 @@
   end_year: 2027
   period: 07/2024–06/2027
   budget: $1,255,505
-- title: Combination Therapy for Childhood Acute Myeloid Leukemia
-  status: active
-  award_number: 4D21_2024_1002-EXT
-  pi: Arati Sharma
-  sponsor: Four Diamonds Fund Research Program
-  start_year: 2023
-  end_year: 2026
-  period: 07/2023–06/2026
-  budget: $250,000
 - title: Identifying novel approaches for melanoma prevention using mouse models with
     humanized telomeres
   status: active
@@ -260,6 +254,16 @@
   period: 09/2025–08/2028
   budget: $77,249
   topic: Dietary response and obesity in pediatric disease
+- title: Combination Therapy for Childhood Acute Myeloid Leukemia
+  status: completed
+  status_override: completed
+  award_number: 4D21_2024_1002-EXT
+  pi: Arati Sharma
+  sponsor: Four Diamonds Fund Research Program
+  start_year: 2023
+  end_year: 2026
+  period: 07/2023–06/2026
+  budget: $250,000
 - title: Characterization of passive and active whole-body heat stress responses in
     obese and non-obese adults
   status: completed
