@@ -48,7 +48,15 @@ website:
         aria-label: Email
 format:
   html:
-    theme: litera
+    # Automatic dark mode: the first paint follows the OS/browser
+    # `prefers-color-scheme` (respect-user-color-scheme), and the navbar
+    # toggle lets a reader override it (persisted in localStorage as
+    # `quarto-color-scheme`; music-calendar.html reads the same key so the
+    # standalone calendar stays in sync with the choice made here).
+    respect-user-color-scheme: true
+    theme:
+      light: [litera, theme-light.scss]
+      dark: [litera, theme-dark.scss]
     css: styles.css
     toc: true
     toc-expand: true
@@ -58,6 +66,8 @@ format:
     include-in-header:
       text: |
         <meta name="author" content="Arthur Berg">
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#0e1719" media="(prefers-color-scheme: dark)">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">

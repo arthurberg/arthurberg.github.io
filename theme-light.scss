@@ -1,0 +1,17 @@
+/*-- scss:defaults --*/
+// Light theme: litera plus the site's teal/gold brand.
+// Most component styling lives in styles.css; this layer only redirects the
+// Bootstrap variables that litera would otherwise fill with its default blue
+// (#4582ec) — focus rings, form accents, search highlights, etc.
+
+$primary: #043d42;
+$link-color: #043d42;
+$link-hover-color: #0a6b72;
+
+// Search-landing highlight (<mark>) — warm gold instead of Bootstrap yellow.
+$mark-bg: #fff1cc;
+
+// Quarto navbar variables (litera's own navbar is white with gray text).
+$navbar-bg: #ffffff;
+$navbar-fg: rgba(26, 35, 39, 0.75);
+$navbar-hl: #043d42;

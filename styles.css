@@ -1,6 +1,12 @@
-/* Arthur Berg — site styles */
+/* Arthur Berg — site styles
+   Theming: every color routes through the semantic tokens below. Light values
+   live on :root; body.quarto-dark (set by Quarto's color-scheme machinery,
+   which follows the OS via respect-user-color-scheme and the navbar toggle)
+   redefines the same tokens. New rules should use tokens, not literals, or
+   they will not adapt. All dark text/background pairs were checked against
+   WCAG AA (≥ 4.5:1; most ≥ 7:1). */
 
-/* ——— Color palette ——— */
+/* ——— Brand palette ——— */
 :root {
   --teal-900: #032e32;
   --teal-800: #043D42;
@@ -23,9 +29,163 @@
   --radius:    10px;
   --radius-lg: 14px;
 
+  /* ——— Semantic tokens (light) ——— */
+  --bg: #ffffff;
+  --bg-wash: rgba(10, 107, 114, 0.06);   /* faint teal wash at the page top */
+  --surface: #fafbfc;                    /* cards, filter bar */
+  --surface-2: #f4f7f8;                  /* table stripes */
+  --surface-raised: #ffffff;             /* contact cards */
+  --text: var(--ink-900);
+  --text-2: var(--ink-700);
+  --muted: var(--ink-500);
+  --heading: var(--teal-800);
+  --heading-2: var(--teal-600);
+  --link: var(--teal-800);
+  --link-hover: var(--teal-600);
+  --underline: rgba(4, 61, 66, 0.4);
+  --line: #e2e8f0;                       /* neutral hairlines */
+  --line-2: #eceff1;                     /* pub-entry border */
+  --line-brand: rgba(4, 61, 66, 0.12);   /* teal-tinted hairlines */
+  --chip-fg: var(--teal-800);
+  --chip-border: rgba(4, 61, 66, 0.20);
+  --tint: rgba(4, 61, 66, 0.035);        /* annotation background */
+  --tint-strong: rgba(4, 61, 66, 0.07);  /* area-tag background */
+  --tint-hover: var(--teal-50);          /* chip/tag/row hover fill */
+  --tint-border: rgba(4, 61, 66, 0.25);
+  --pub-tint: rgba(4, 61, 66, 0.025);
+  --abstract: #b45309;
+  --abstract-strong: #92400e;
+  --abstract-tint: rgba(180, 83, 9, 0.045);
+  --abstract-hover: rgba(180, 83, 9, 0.10);
+  --grant: #15803d;
+  --grant-strong: #166534;
+  --grant-tint: rgba(21, 128, 61, 0.045);
+  --grant-hover: rgba(21, 128, 61, 0.10);
+  --pending: #a16207;
+  --completed-fg: var(--ink-500);
+  --completed-bar: var(--ink-300);
+  --gold-text: #7f6000;                  /* AA companion for gold on cream */
+  --maroon: #6b1f1f;
+  --cta-bg: var(--teal-800);
+  --cta-fg: #ffffff;
+  --cta-hover: var(--teal-600);
+  --thead-from: #043d42;
+  --thead-to: #0a6b72;
+  --thead-fg: #ffffff;
+  --hero-from: #043d42;                  /* pub-summary gradient */
+  --hero-to: #0a6b72;
+  --hero-border: transparent;
+  --nav-bg: rgba(255, 255, 255, 0.86);
+  --nav-border: rgba(4, 61, 66, 0.10);
+  --nav-link: rgba(10, 20, 22, 0.72);
+  --nav-link-strong: rgba(10, 20, 22, 0.95);
+  --nav-active: var(--teal-800);
+  --portrait-ring: rgba(4, 61, 66, 0.08);
+  --portrait-edge: #ffffff;
+  --music-from: #fff8e7;                 /* music-ministry card gradient */
+  --music-to: #fff1cc;
+  --music-border: rgba(179, 138, 32, 0.25);
+  --teaser-from: #fffaf0;                /* calendar-teaser gradient */
+  --teaser-to: #f7ead0;
+  --teaser-border: rgba(179, 138, 32, 0.28);
+  --cvcard-from: #f7fafb;                /* CV contact-card gradient */
+  --cvcard-to: var(--teal-50);
+  --toc-fg: var(--ink-500);
+  --toc-active: var(--teal-800);
+  --toc-hover: var(--teal-600);
+  --focus: var(--gold-500);
+  --mark-bg: var(--gold-100);
+  --mark-fg: var(--ink-900);
+
   --shadow-sm: 0 1px 2px rgba(4, 61, 66, 0.06);
   --shadow:    0 3px 10px rgba(4, 61, 66, 0.10);
   --shadow-lg: 0 10px 30px rgba(4, 61, 66, 0.16);
+}
+
+/* ——— Semantic tokens (dark) ———
+   body.quarto-dark is applied by Quarto's theme machinery; custom properties
+   set on <body> cascade to everything, including body itself. */
+body.quarto-dark {
+  --bg: #0e1719;
+  --bg-wash: rgba(127, 212, 217, 0.05);
+  --surface: #152124;
+  --surface-2: #1a282c;
+  --surface-raised: #17262a;
+  --text: #d7e0e2;
+  --text-2: #c2ced1;
+  --muted: #a7b6ba;
+  --heading: #8fd7dc;
+  --heading-2: #6fc7ce;
+  --link: #7fd4d9;
+  --link-hover: #a9e4e8;
+  --underline: rgba(143, 215, 220, 0.45);
+  --line: #24343a;
+  --line-2: #223236;
+  --line-brand: rgba(127, 212, 217, 0.16);
+  --chip-fg: #9fdbe0;
+  --chip-border: rgba(127, 212, 217, 0.30);
+  --tint: rgba(127, 212, 217, 0.06);
+  --tint-strong: rgba(127, 212, 217, 0.10);
+  --tint-hover: rgba(127, 212, 217, 0.10);
+  --tint-border: rgba(127, 212, 217, 0.30);
+  --pub-tint: rgba(127, 212, 217, 0.04);
+  --abstract: #eba25e;
+  --abstract-strong: #f0b57e;
+  --abstract-tint: rgba(224, 142, 69, 0.08);
+  --abstract-hover: rgba(224, 142, 69, 0.14);
+  --grant: #6ecf94;
+  --grant-strong: #8edcab;
+  --grant-tint: rgba(110, 207, 148, 0.07);
+  --grant-hover: rgba(110, 207, 148, 0.13);
+  --pending: #d9a93c;
+  --completed-fg: var(--muted);
+  --completed-bar: #46565c;
+  --gold-text: #f2cf6f;
+  --maroon: #e5a9a1;
+  --cta-bg: var(--teal-200);
+  --cta-fg: #052a2e;
+  --cta-hover: #a9e4e8;
+  --thead-from: #0d3339;
+  --thead-to: #10525a;
+  --thead-fg: #e3edee;
+  --hero-from: #0a2f34;
+  --hero-to: #0d525a;
+  --hero-border: rgba(127, 212, 217, 0.18);
+  --nav-bg: rgba(14, 23, 25, 0.85);
+  --nav-border: rgba(127, 212, 217, 0.12);
+  --nav-link: rgba(215, 224, 226, 0.78);
+  --nav-link-strong: rgba(233, 240, 241, 0.97);
+  --nav-active: #8fd7dc;
+  --portrait-ring: rgba(127, 212, 217, 0.15);
+  --portrait-edge: #1d2f34;
+  --music-from: #221c0d;
+  --music-to: #2a2210;
+  --music-border: rgba(229, 184, 69, 0.28);
+  --teaser-from: #211c10;
+  --teaser-to: #292013;
+  --teaser-border: rgba(229, 184, 69, 0.26);
+  --cvcard-from: #142023;
+  --cvcard-to: #17282c;
+  --toc-fg: var(--muted);
+  --toc-active: #8fd7dc;
+  --toc-hover: #a9e4e8;
+  --focus: var(--gold-500);
+  --mark-bg: #57470f;
+  --mark-fg: #f4e9c3;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow:    0 3px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  /* Native scrollbars, form controls, etc. */
+  color-scheme: dark;
+}
+body.quarto-light { color-scheme: light; }
+
+/* Photographs read too bright against a dark page; icons are exempt. */
+body.quarto-dark .photo-figure img,
+body.quarto-dark .about-entity img {
+  filter: brightness(0.9) contrast(1.02);
 }
 
 /* ——— Typography ——— */
@@ -34,7 +194,13 @@ body, .quarto-title-block {
   font-feature-settings: "cv11", "ss01";
   font-size: 16.5px;
   line-height: 1.65;
-  color: var(--ink-900);
+  color: var(--text);
+}
+body {
+  background-color: var(--bg);
+  /* Gentle wash below the navbar gives the page a quiet sense of depth. */
+  background-image: linear-gradient(180deg, var(--bg-wash), rgba(0, 0, 0, 0) 420px);
+  background-repeat: no-repeat;
 }
 h1, h2, h3, h4, h5, h6, .quarto-title {
   font-family: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
@@ -45,26 +211,87 @@ h1, .quarto-title h1 { font-weight: 700; }
 h2 { font-weight: 700; }
 h3 { font-weight: 600; }
 
+/* Page titles: a touch larger, with a short gold→teal accent bar that echoes
+   the gold rules under the h2 headings. */
+#title-block-header .quarto-title h1.title {
+  font-size: clamp(1.95rem, 1.55rem + 1.3vw, 2.5rem);
+}
+#title-block-header .quarto-title h1.title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin-top: 0.55rem;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold-500), var(--teal-400));
+}
+
+/* Text selection in the brand gold. */
+::selection { background: var(--gold-500); color: var(--teal-900); }
+
+/* Highlights (search-result matches, search-landing marks). Bootstrap's own
+   mark rule pins black text, unreadable on the dark highlight — retint both
+   pieces from the tokens. */
+mark, .mark {
+  background-color: var(--mark-bg);
+  color: var(--mark-fg);
+}
+/* Quarto's search dropdown derives its own unselected-match chip (black in
+   the dark compile, cyan in the light one) — match both of its selector
+   prefixes and retint from the tokens. */
+#quarto-search-results li.aa-Item[aria-selected="false"] .search-item mark.search-match,
+#quarto-search-results li.aa-Item[aria-selected="false"] .search-item .search-match.mark,
+.aa-DetachedOverlay li.aa-Item[aria-selected="false"] .search-item mark.search-match,
+.aa-DetachedOverlay li.aa-Item[aria-selected="false"] .search-item .search-match.mark {
+  color: var(--mark-fg);
+  background-color: var(--mark-bg);
+}
+
 /* Navbar tightening */
 .navbar-brand { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; letter-spacing: -0.01em; }
 .navbar .nav-link {
   font-weight: 500;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--nav-link);
 }
 .navbar .nav-link:hover,
 .navbar .nav-link:focus {
-  color: rgba(0, 0, 0, 0.95);
+  color: var(--nav-link-strong);
 }
 .navbar .nav-link.active {
-  color: var(--teal-800);
+  color: var(--nav-active);
   font-weight: 600;
 }
-.navbar .navbar-brand { color: rgba(0, 0, 0, 0.9); }
-.navbar .navbar-brand:hover { color: var(--teal-800); }
+.navbar .navbar-brand { color: var(--nav-link-strong); }
+.navbar .navbar-brand:hover { color: var(--nav-active); }
 @media (min-width: 992px) and (max-width: 1280px) {
   .navbar .nav-link { font-size: 0.95rem; padding-left: 0.55rem; padding-right: 0.55rem; }
+}
+
+/* Frosted-glass navbar (overrides litera's opaque white + gray border). */
+.navbar {
+  background-color: var(--nav-bg);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  backdrop-filter: blur(10px) saturate(160%);
+  border: none;
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--shadow-sm);
+}
+/* Gold→teal underline marks the current page (desktop layout only — in the
+   collapsed mobile menu a partial-width bar looks stray). */
+@media (min-width: 992px) {
+  .navbar .navbar-nav .nav-item { position: relative; }
+  .navbar .navbar-nav .nav-item .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0.7rem;
+    right: 0.7rem;
+    bottom: -2px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--gold-500), var(--teal-400));
+  }
 }
 
 /* ——— Fully fluid content width ——— */
@@ -100,30 +327,30 @@ h3 { font-weight: 600; }
    wrappers carry tabindex="0", so give the focus ring somewhere to land. */
 .table-scroll:focus-visible,
 .trial-table:focus-visible {
-  outline: 2px solid var(--teal-600);
+  outline: 2px solid var(--heading-2);
   outline-offset: 2px;
 }
 
 /* Links: chrome and UI links are color-only; prose links are underlined. */
 a {
-  color: var(--teal-800);
+  color: var(--link);
   text-decoration: none;
 }
 a:hover {
-  color: var(--teal-600);
+  color: var(--link-hover);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 /* Prose links carry a persistent underline. Color alone will not do it:
-   --teal-800 against the body ink is 1.33:1, far under the 3:1 that WCAG 1.4.1
+   the link teal against the body ink is well under the 3:1 that WCAG 1.4.1
    requires before color may be the only cue distinguishing a link from text. */
 main.content :is(p, li, dd, blockquote, figcaption, td, th) a,
 main.content .pub-annote a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
-  text-decoration-color: rgba(4, 61, 66, 0.4);
+  text-decoration-color: var(--underline);
 }
 main.content :is(p, li, dd, blockquote, figcaption, td, th) a:hover,
 main.content .pub-annote a:hover {
@@ -149,38 +376,74 @@ main.content .cv-actions a {
 
 /* Buttons */
 .btn-primary {
-  background-color: var(--teal-800);
-  border-color: var(--teal-800);
+  background-color: var(--cta-bg);
+  border-color: var(--cta-bg);
+  color: var(--cta-fg);
   font-weight: 500;
 }
 .btn-primary:hover, .btn-primary:focus {
-  background-color: var(--teal-600);
-  border-color: var(--teal-600);
+  background-color: var(--cta-hover);
+  border-color: var(--cta-hover);
+  color: var(--cta-fg);
 }
 .btn-outline-secondary {
-  color: var(--teal-800);
-  border-color: var(--teal-800);
+  color: var(--chip-fg);
+  border-color: var(--chip-fg);
+  background-color: transparent;
   font-weight: 500;
 }
 .btn-outline-secondary:hover, .btn-outline-secondary:focus {
-  background-color: var(--teal-800);
-  border-color: var(--teal-800);
-  color: #fff;
+  background-color: var(--cta-bg);
+  border-color: var(--cta-bg);
+  color: var(--cta-fg);
 }
 .btn { border-radius: 8px; padding: 0.45rem 0.95rem; }
 .btn + .btn { margin-left: 0.35rem; }
 
 /* ——— About-page hero (trestles template) ——— */
 .about-entity img.round {
-  box-shadow: 0 0 0 6px rgba(4, 61, 66, 0.08), 0 10px 30px rgba(4, 61, 66, 0.20);
-  border: 3px solid #fff;
+  box-shadow: 0 0 0 6px var(--portrait-ring), 0 10px 30px rgba(4, 61, 66, 0.20);
+  border: 3px solid var(--portrait-edge);
+}
+body.quarto-dark .about-entity img.round {
+  box-shadow: 0 0 0 6px var(--portrait-ring), 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 .quarto-title .subtitle {
-  color: var(--teal-600);
+  color: var(--heading-2);
   font-family: "Source Serif 4", Georgia, serif;
   font-weight: 400;
   font-style: italic;
 }
+/* Profile links under the portrait, restyled as pill chips. */
+.about-entity .about-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  padding-top: 0.4rem;
+}
+.about-entity .about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.34rem 0.85rem !important;
+  border: 1px solid var(--chip-border) !important;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--chip-fg) !important;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+}
+.about-entity .about-link:hover {
+  background: var(--tint-hover);
+  border-color: var(--heading-2) !important;
+  color: var(--chip-fg) !important;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.about-entity .about-link i { color: var(--gold-600); }
+body.quarto-dark .about-entity .about-link i { color: var(--gold-500); }
 
 /* ——— CV action buttons ——— */
 .cv-actions {
@@ -200,8 +463,8 @@ main.content .cv-actions a {
   gap: 0.5rem;
   margin: 0.25rem 0 1.25rem;
   padding: 0.75rem 0.9rem;
-  background: var(--paper-tinted);
-  border: 1px solid rgba(4, 61, 66, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--line-brand);
   border-radius: var(--radius);
   position: sticky;
   top: 72px;
@@ -234,8 +497,8 @@ main.content .cv-actions a {
   align-items: center;
   gap: 0.4rem;
   background: transparent;
-  color: var(--teal-800);
-  border: 1px solid rgba(4, 61, 66, 0.25);
+  color: var(--chip-fg);
+  border: 1px solid var(--tint-border);
   border-radius: 999px;
   padding: 0.24rem 0.7rem;
   font-size: 0.82rem;
@@ -244,12 +507,12 @@ main.content .cv-actions a {
   cursor: pointer;
   white-space: nowrap;
 }
-.pub-filter-toggle:hover { background: var(--teal-50); border-color: var(--teal-600); }
+.pub-filter-toggle:hover { background: var(--tint-hover); border-color: var(--heading-2); }
 .pub-filter-toggle .fa-chevron-down { transition: transform 0.15s ease; font-size: 0.7rem; }
 .pub-filter-expanded .pub-filter-toggle .fa-chevron-down { transform: rotate(180deg); }
 .pub-filter-compact-summary {
   font-size: 0.84rem;
-  color: var(--ink-500);
+  color: var(--muted);
   font-style: italic;
   min-width: 0;
   overflow: hidden;
@@ -276,7 +539,7 @@ main.content mark { scroll-margin-top: 160px; }
 .pub-filter-label {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--ink-500);
+  color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-right: 0.25rem;
@@ -293,12 +556,12 @@ main.content mark { scroll-margin-top: 160px; }
 }
 /* Per-type outline colors mirror the entry left-border accents */
 .pub-filter-chip[data-type-filter="publication"] {
-  color: var(--teal-800);
-  border-color: var(--teal-600);
+  color: var(--chip-fg);
+  border-color: var(--heading-2);
 }
 .pub-filter-chip[data-type-filter="publication"]:hover {
-  background: rgba(4, 61, 66, 0.08);
-  border-color: var(--teal-800);
+  background: var(--tint-strong);
+  border-color: var(--chip-fg);
 }
 .pub-filter-chip[data-type-filter="publication"].active,
 .pub-filter-chip[data-type-filter="publication"].active:hover {
@@ -307,12 +570,12 @@ main.content mark { scroll-margin-top: 160px; }
   border-color: var(--teal-800);
 }
 .pub-filter-chip[data-type-filter="abstract"] {
-  color: #b45309;
-  border-color: #b45309;
+  color: var(--abstract);
+  border-color: var(--abstract);
 }
 .pub-filter-chip[data-type-filter="abstract"]:hover {
-  background: rgba(180, 83, 9, 0.10);
-  border-color: #92400e;
+  background: var(--abstract-hover);
+  border-color: var(--abstract-strong);
 }
 .pub-filter-chip[data-type-filter="abstract"].active,
 .pub-filter-chip[data-type-filter="abstract"].active:hover {
@@ -321,12 +584,12 @@ main.content mark { scroll-margin-top: 160px; }
   border-color: #b45309;
 }
 .pub-filter-chip[data-type-filter="grant"] {
-  color: #15803d;
-  border-color: #15803d;
+  color: var(--grant);
+  border-color: var(--grant);
 }
 .pub-filter-chip[data-type-filter="grant"]:hover {
-  background: rgba(21, 128, 61, 0.10);
-  border-color: #166534;
+  background: var(--grant-hover);
+  border-color: var(--grant-strong);
 }
 .pub-filter-chip[data-type-filter="grant"].active,
 .pub-filter-chip[data-type-filter="grant"].active:hover {
@@ -337,8 +600,8 @@ main.content mark { scroll-margin-top: 160px; }
 .pub-filter-chip {
   display: inline-block;
   background: transparent;
-  color: var(--teal-800);
-  border: 1px solid rgba(4, 61, 66, 0.20);
+  color: var(--chip-fg);
+  border: 1px solid var(--chip-border);
   border-radius: 999px;
   padding: 0.28rem 0.75rem;
   font-size: 0.84rem;
@@ -348,8 +611,8 @@ main.content mark { scroll-margin-top: 160px; }
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
 .pub-filter-chip:hover {
-  background: var(--teal-50);
-  border-color: var(--teal-600);
+  background: var(--tint-hover);
+  border-color: var(--heading-2);
 }
 .pub-filter-chip.active {
   background: var(--teal-800);
@@ -360,6 +623,12 @@ main.content mark { scroll-margin-top: 160px; }
   background: var(--teal-600);
   border-color: var(--teal-600);
 }
+/* Solid teal-800 chips keep their light-mode look in dark mode too (white on
+   teal-800 is 10.6:1), but need a visible edge against the dark filter bar. */
+body.quarto-dark .pub-filter-chip.active,
+body.quarto-dark .pub-filter-chip[data-type-filter="publication"].active {
+  border-color: rgba(127, 212, 217, 0.55);
+}
 .pub-filter-chip[data-filter="methodology"].active {
   background: var(--gold-500);
   color: var(--teal-900);
@@ -369,7 +638,7 @@ main.content mark { scroll-margin-top: 160px; }
   margin-left: auto;
   align-self: center;
   font-size: 0.82rem;
-  color: var(--ink-500);
+  color: var(--muted);
   font-style: italic;
   white-space: nowrap;
 }
@@ -386,14 +655,14 @@ main.content mark { scroll-margin-top: 160px; }
   scroll-margin-top: 200px;
 }
 .section-heading {
-  color: var(--teal-800) !important;
+  color: var(--heading) !important;
   border-bottom: 3px solid var(--gold-500) !important;
   padding-bottom: 0.3rem;
   margin-top: 2.2rem;
   margin-bottom: 0.4rem;
 }
 .section-intro {
-  color: var(--ink-500);
+  color: var(--muted);
   font-size: 0.95rem;
   margin-bottom: 1rem;
   font-style: italic;
@@ -401,7 +670,7 @@ main.content mark { scroll-margin-top: 160px; }
 
 /* Year/type subheadings inside publications section */
 h3.pub-year {
-  color: var(--teal-800);
+  color: var(--heading);
   border-bottom: 2px solid var(--gold-500);
   padding-bottom: 0.2rem;
   margin-top: 1.6rem;
@@ -410,7 +679,7 @@ h3.pub-year {
 
 /* Grant status sub-headings */
 .grant-status-heading {
-  color: var(--teal-600);
+  color: var(--heading-2);
   font-family: "Inter", sans-serif;
   font-size: 0.88rem;
   text-transform: uppercase;
@@ -419,26 +688,26 @@ h3.pub-year {
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
   padding-left: 0.55rem;
-  border-left: 3px solid var(--teal-600);
+  border-left: 3px solid var(--heading-2);
 }
-.grant-status-heading[data-status="active"] { color: #15803d; border-left-color: #15803d; }
-.grant-status-heading[data-status="pending"] { color: #a16207; border-left-color: #a16207; }
-.grant-status-heading[data-status="completed"] { color: var(--ink-500); border-left-color: var(--ink-300); }
+.grant-status-heading[data-status="active"] { color: var(--grant); border-left-color: var(--grant); }
+.grant-status-heading[data-status="pending"] { color: var(--pending); border-left-color: var(--pending); }
+.grant-status-heading[data-status="completed"] { color: var(--completed-fg); border-left-color: var(--completed-bar); }
 
 /* Per-type accent: left border color + a very subtle background tint
    distinguish publications, abstracts, grants, and protocols at a glance.
    Hover rolls each border to the gold highlight. */
 .pub-entry[data-type="publication"] {
-  border-left-color: var(--teal-600);
-  background: rgba(4, 61, 66, 0.025);
+  border-left-color: var(--heading-2);
+  background: var(--pub-tint);
 }
 .pub-entry[data-type="abstract"] {
-  border-left-color: #b45309;
-  background: rgba(180, 83, 9, 0.045);
+  border-left-color: var(--abstract);
+  background: var(--abstract-tint);
 }
 .pub-entry.grant-entry {
-  border-left-color: #15803d;
-  background: rgba(21, 128, 61, 0.045);
+  border-left-color: var(--grant);
+  background: var(--grant-tint);
 }
 .pub-entry:hover,
 .grant-entry:hover { border-left-color: var(--gold-500); }
@@ -447,18 +716,18 @@ h3.pub-year {
 #pub-empty-state {
   margin: 1.5rem 0;
   padding: 1.25rem 1.5rem;
-  background: var(--paper-tinted);
-  border: 1px dashed rgba(4, 61, 66, 0.25);
+  background: var(--surface);
+  border: 1px dashed var(--tint-border);
   border-radius: var(--radius);
-  color: var(--ink-500);
+  color: var(--muted);
   font-style: italic;
   text-align: center;
 }
 #pub-reset-btn {
   margin-left: 0.5rem;
   padding: 0.25rem 0.8rem;
-  background: var(--teal-800);
-  color: #fff;
+  background: var(--cta-bg);
+  color: var(--cta-fg);
   border: none;
   border-radius: 6px;
   font-family: inherit;
@@ -466,7 +735,7 @@ h3.pub-year {
   font-style: normal;
   cursor: pointer;
 }
-#pub-reset-btn:hover { background: var(--teal-600); }
+#pub-reset-btn:hover { background: var(--cta-hover); }
 
 /* ——— Area tag pills (shown on each pub/grant/protocol) ——— */
 .area-tags {
@@ -483,9 +752,9 @@ h3.pub-year {
   font-weight: 500;
   padding: 0.08rem 0.5rem;
   border-radius: 999px;
-  background: rgba(4, 61, 66, 0.07);
-  color: var(--teal-800);
-  border: 1px solid rgba(4, 61, 66, 0.15);
+  background: var(--tint-strong);
+  color: var(--chip-fg);
+  border: 1px solid var(--line-brand);
   cursor: pointer;
   transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
@@ -493,6 +762,10 @@ h3.pub-year {
   background: var(--gold-100);
   color: var(--teal-900);
   border-color: var(--gold-500);
+}
+body.quarto-dark .area-tag:hover {
+  background: rgba(229, 184, 69, 0.16);
+  color: var(--gold-500);
 }
 
 /* Status badges */
@@ -509,13 +782,14 @@ h3.pub-year {
 }
 .status-active    { background: #15803d; color: #fff; }
 .status-pending   { background: #a16207; color: #fff; }
-.status-completed { background: var(--ink-500); color: #fff; }
+.status-completed { background: #5a6770; color: #fff; }
 
 /* ——— Publications styling ——— */
 .pub-summary {
-  background: linear-gradient(135deg, var(--teal-800) 0%, var(--teal-600) 100%);
+  background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
   color: #fff;
   padding: 1.5rem 1.75rem;
+  border: 1px solid var(--hero-border);
   border-radius: var(--radius);
   margin: 1rem 0 2rem;
   box-shadow: var(--shadow);
@@ -551,9 +825,9 @@ h3.pub-year {
 }
 
 .pub-entry {
-  background: var(--paper-tinted);
-  border: 1px solid #eceff1;
-  border-left: 3px solid var(--teal-600);
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--heading-2);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   padding: 0.75rem 1rem;
   margin: 0.6rem 0;
@@ -566,16 +840,16 @@ h3.pub-year {
 }
 .pub-meta {
   font-size: 0.92rem;
-  color: var(--ink-500);
+  color: var(--muted);
   margin-bottom: 0.25rem;
 }
 .pub-me {
   font-weight: 700;
-  color: var(--teal-800);
+  color: var(--chip-fg);
 }
 .pub-title { font-weight: 500; }
-.pub-venue { font-style: normal; color: var(--ink-700); }
-.pub-venue em { color: var(--teal-600); font-weight: 500; }
+.pub-venue { font-style: normal; color: var(--text-2); }
+.pub-venue em { color: var(--heading-2); font-weight: 500; }
 
 .pub-badge {
   display: inline-block;
@@ -604,9 +878,9 @@ h3.pub-year {
   max-width: 960px;
 }
 .contact-card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-top: 4px solid var(--teal-800);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--heading);
   border-radius: var(--radius);
   padding: 1.2rem 1.4rem;
   box-shadow: var(--shadow-sm);
@@ -619,7 +893,7 @@ h3.pub-year {
 }
 #quarto-document-content .contact-card h2,
 .contact-card h3 {
-  color: var(--teal-800);
+  color: var(--heading);
   font-family: "Inter", sans-serif;
   font-size: 1.05rem;
   margin: 0 0 0.5rem 0;
@@ -643,34 +917,35 @@ h3.pub-year {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
-  background: linear-gradient(135deg, #f7fafb 0%, var(--teal-50) 100%);
-  border: 1px solid rgba(4, 61, 66, 0.08);
-  border-left: 4px solid var(--teal-800);
+  background: linear-gradient(135deg, var(--cvcard-from) 0%, var(--cvcard-to) 100%);
+  border: 1px solid var(--line-brand);
+  border-left: 4px solid var(--heading);
   border-radius: var(--radius);
   padding: 1.25rem 1.5rem;
   margin: 1rem 0 1.5rem;
 }
 .cv-contact-block p { margin: 0 0 0.75rem 0; line-height: 1.55; }
 .cv-contact-block strong {
-  color: var(--teal-800);
+  color: var(--heading);
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 700;
 }
 .cv-contact-block strong i { color: var(--gold-500); margin-right: 0.4rem; }
+body.quarto-light .cv-contact-block strong i { color: var(--gold-600); }
 .cv-contact-block a { font-weight: 500; }
 
 /* ——— CV + generic page section styling ——— */
 #quarto-document-content h2,
 main.content h2 {
-  color: var(--teal-800);
+  color: var(--heading);
   border-bottom: 3px solid var(--gold-500);
   padding-bottom: 0.3rem;
   margin-top: 2.6rem;
 }
 main.content h3 {
-  color: var(--teal-600);
+  color: var(--heading-2);
   font-size: 1.15rem;
   margin-top: 1.5rem;
 }
@@ -690,9 +965,14 @@ main.content table {
 @media (min-width: 769px) {
   main.content table { overflow: hidden; }
 }
+/* Gradient runs across the whole header row (on thead, so it doesn't restart
+   per cell); th backgrounds stay transparent to let it show. */
+main.content table thead {
+  background: linear-gradient(110deg, var(--thead-from) 0%, var(--thead-to) 100%);
+}
 main.content table thead th {
-  background: var(--teal-800);
-  color: #fff;
+  background: transparent;
+  color: var(--thead-fg);
   padding: 0.7rem 0.9rem;
   text-align: left;
   border: none;
@@ -700,14 +980,14 @@ main.content table thead th {
   letter-spacing: 0.01em;
 }
 main.content table tbody tr:nth-child(even) {
-  background: var(--paper-tinted-2);
+  background: var(--surface-2);
 }
 main.content table tbody tr:hover {
-  background: var(--teal-50);
+  background: var(--tint-hover);
 }
 main.content table tbody td {
   padding: 0.55rem 0.9rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--line);
 }
 
 /* Result count: its own row under the chips (see the generators — it is no
@@ -729,9 +1009,9 @@ main.content table tbody td {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: none;
-  background: var(--teal-800);
-  color: #fff;
+  border: 1px solid transparent;
+  background: var(--cta-bg);
+  color: var(--cta-fg);
   font-size: 1rem;
   box-shadow: var(--shadow);
   cursor: pointer;
@@ -757,9 +1037,9 @@ main.content table tbody td {
   padding: 0.45rem 0.75rem;
   font-size: 0.92rem;
   line-height: 1.5;
-  color: var(--ink-500);
-  background: rgba(4, 61, 66, 0.035);
-  border-left: 2px solid rgba(4, 61, 66, 0.25);
+  color: var(--muted);
+  background: var(--tint);
+  border-left: 2px solid var(--tint-border);
   border-radius: 0 4px 4px 0;
 }
 .pub-annote a { word-break: break-word; }
@@ -768,25 +1048,20 @@ main.content table tbody td {
 /* Keep the flat top-level TOC visible — we always want it expanded regardless of
    Bootstrap's default .collapse behavior. */
 #TOC > ul.collapse { display: block; }
-#TOC a, #quarto-margin-sidebar a { color: var(--ink-500); }
+#TOC a, #quarto-margin-sidebar a { color: var(--toc-fg); }
 #TOC a.active, #quarto-margin-sidebar a.active {
-  color: var(--teal-800);
+  color: var(--toc-active);
   border-left-color: var(--gold-500) !important;
 }
 /* The theme sets `color: #4582ec !important` here (3.71:1 on white — fails AA
    at the TOC's 14.9px), so this has to match its selector and its !important. */
 .sidebar nav[role="doc-toc"] ul > li > a.active,
 .sidebar nav[role="doc-toc"] ul > li > ul > li > a.active {
-  color: var(--teal-800) !important;
+  color: var(--toc-active) !important;
 }
 .sidebar nav[role="doc-toc"] ul > li > a:hover,
 .sidebar nav[role="doc-toc"] ul > li > ul > li > a:hover {
-  color: var(--teal-600) !important;
-}
-
-/* ——— Navbar color ——— */
-.navbar {
-  box-shadow: var(--shadow-sm);
+  color: var(--toc-hover) !important;
 }
 
 /* Slightly tighter paragraph spacing in dense lists */
@@ -801,9 +1076,9 @@ main.content ul li, main.content ol li { margin: 0.2rem 0; }
 
 /* ——— Services page cards ——— */
 .service-card {
-  background: var(--paper-tinted);
-  border: 1px solid rgba(4, 61, 66, 0.09);
-  border-left: 4px solid var(--teal-800);
+  background: var(--surface);
+  border: 1px solid var(--line-brand);
+  border-left: 4px solid var(--heading);
   border-radius: var(--radius);
   padding: 1.15rem 1.4rem;
   margin: 0.85rem 0;
@@ -820,7 +1095,7 @@ main.content ul li, main.content ol li { margin: 0.2rem 0; }
 .service-card > h3,
 .service-card > h3:first-child,
 section.service-card > h3:first-child {
-  color: var(--teal-800);
+  color: var(--heading);
   font-size: 1.1rem;
   margin-top: 0 !important;
   margin-bottom: 0.6rem;
@@ -839,15 +1114,15 @@ section.service-card > h3:first-child {
 
 /* ——— Music ministry card ——— */
 .music-card {
-  background: linear-gradient(135deg, #fff8e7 0%, var(--gold-100) 100%);
-  border: 1px solid rgba(179, 138, 32, 0.25);
+  background: linear-gradient(135deg, var(--music-from) 0%, var(--music-to) 100%);
+  border: 1px solid var(--music-border);
   border-left: 4px solid var(--gold-500);
   border-radius: var(--radius);
   padding: 1.15rem 1.4rem;
   margin: 0.85rem 0 1.25rem;
   line-height: 1.65;
 }
-.music-card strong:first-of-type i { color: var(--teal-800); margin-right: 0.4rem; }
+.music-card strong:first-of-type i { color: var(--chip-fg); margin-right: 0.4rem; }
 .music-card ul { margin: 0.6rem 0 0.2rem; padding-left: 1.25rem; }
 .music-card li { margin: 0.25rem 0; }
 
@@ -861,7 +1136,7 @@ section.service-card > h3:first-child {
   width: 100%;
   height: auto;
   border-radius: var(--radius);
-  border: 1px solid rgba(4, 61, 66, 0.12);
+  border: 1px solid var(--line-brand);
   box-shadow: var(--shadow);
 }
 .photo-figure figcaption,
@@ -869,15 +1144,15 @@ section.service-card > h3:first-child {
   margin-top: 0.6rem;
   font-size: 0.88rem;
   line-height: 1.5;
-  color: var(--ink-500);
+  color: var(--muted);
   text-align: center;
   font-style: italic;
 }
 
 /* ——— Worship-calendar teaser (music page → /music-calendar.html) ——— */
 .calendar-teaser {
-  background: linear-gradient(135deg, #fffaf0 0%, #f7ead0 100%);
-  border: 1px solid rgba(179, 138, 32, 0.28);
+  background: linear-gradient(135deg, var(--teaser-from) 0%, var(--teaser-to) 100%);
+  border: 1px solid var(--teaser-border);
   border-left: 4px solid var(--gold-500);
   border-radius: var(--radius);
   padding: 0.95rem 1.25rem 1rem;
@@ -890,23 +1165,27 @@ section.service-card > h3:first-child {
   font-size: 1.05rem;
   font-weight: 600;
   text-decoration: none;
-  color: #6b1f1f;
+  color: var(--maroon);
   margin-bottom: 0.25rem;
   transition: color 0.15s ease, transform 0.15s ease;
 }
 .calendar-teaser a.calendar-teaser-cta:hover {
-  color: #7f6000;  /* 5.65:1 on the teaser's cream gradient; #b38a20 was 3.07:1 */
+  color: var(--gold-text);  /* 5.65:1 on the light teaser cream; #b38a20 was 3.07:1 */
   transform: translateX(2px);
 }
 .calendar-teaser a.calendar-teaser-cta i { color: var(--gold-600, #a67c10); margin-right: 0.45rem; }
+body.quarto-dark .calendar-teaser a.calendar-teaser-cta i { color: var(--gold-500); }
 
 /* ——— Trial table (research page) ——— */
 .trial-table table {
   font-size: 0.9rem;
 }
+.trial-table table thead {
+  background: linear-gradient(110deg, var(--thead-from) 0%, var(--thead-to) 100%);
+}
 .trial-table table thead th {
-  background: var(--teal-800);
-  color: #fff;
+  background: transparent;
+  color: var(--thead-fg);
   padding: 0.55rem 0.75rem;
   font-weight: 600;
   white-space: nowrap;
@@ -917,14 +1196,14 @@ section.service-card > h3:first-child {
 }
 .trial-table table tbody td:first-child {
   white-space: nowrap;
-  color: var(--teal-800);
+  color: var(--heading);
   font-weight: 600;
 }
 .trial-table table tbody td:nth-child(3),
 .trial-table table tbody td:nth-child(4) {
   white-space: nowrap;
 }
-.trial-table table tbody tr:hover { background: var(--teal-50); }
+.trial-table table tbody tr:hover { background: var(--tint-hover); }
 .trial-table a { font-family: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace; font-size: 0.82rem; }
 
 /* ——— Touch targets: chips/tags/badges are too small to hit reliably ——— */
@@ -954,22 +1233,30 @@ section.service-card > h3:first-child {
 .pub-badge:focus-visible,
 #back-to-top:focus-visible,
 #pub-reset-btn:focus-visible {
-  outline: 3px solid var(--gold-500);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
-/* Print (for CV page printing) */
+/* Print (for CV page printing) — always print light, even from dark mode. */
 @media print {
+  body {
+    background: #fff !important;
+    background-image: none !important;
+    color: #000 !important;
+  }
   .navbar, #back-to-top, #TOC, .page-sidebar,
   .cv-actions, .quarto-margin-sidebar,
   .pub-filter, .area-tags, #pub-empty-state { display: none !important; }
   main.content { padding: 0 !important; max-width: 100% !important; }
   .contact-card, .cv-contact-card, .pub-entry {
     box-shadow: none !important; border: 1px solid #ccc !important;
-    break-inside: avoid;
+    background: #fff !important;
   }
+  .contact-card, .cv-contact-card, .pub-entry { break-inside: avoid; }
   a { color: #000 !important; text-decoration: none !important; }
   h1, h2, h3 { color: #000 !important; border-color: #666 !important; }
+  main.content table thead { background: #eee !important; }
+  main.content table thead th { color: #000 !important; }
 }
 
 /* ——— Skip link (bypass the repeated navbar) ———
@@ -980,8 +1267,8 @@ section.service-card > h3:first-child {
   left: -9999px;
   top: 0;
   z-index: 2000;
-  background: var(--teal-800);
-  color: #fff;
+  background: var(--cta-bg);
+  color: var(--cta-fg);
   padding: 0.6rem 1rem;
   border-radius: 0 0 var(--radius-sm) 0;
   font-weight: 600;
@@ -989,7 +1276,7 @@ section.service-card > h3:first-child {
 .skip-link:focus,
 .skip-link:focus-visible {
   left: 0;
-  color: #fff;
+  color: var(--cta-fg);
   text-decoration: none;
 }
 #quarto-document-content:focus { outline: none; }

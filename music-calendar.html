@@ -18,22 +18,47 @@
 <meta name="twitter:description" content="Special music offered at every service of the 2025–26 lectionary year at Trinity Evangelical Lutheran Church, Lemoyne PA — preludes, anthems, offertories, and postludes, with notes on each piece.">
 <meta name="twitter:image" content="https://arthurberg.com/photo.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1719" media="(prefers-color-scheme: dark)">
+<script>
+/* Follow the theme chosen on the main site: Quarto's navbar toggle stores its
+   override in localStorage ("default" = light, "alternate" = dark). With no
+   stored choice, the page follows the OS via color-scheme + light-dark(). */
+(function () {
+  try {
+    var v = localStorage.getItem("quarto-color-scheme");
+    if (v === "alternate") document.documentElement.setAttribute("data-theme", "dark");
+    else if (v === "default") document.documentElement.setAttribute("data-theme", "light");
+  } catch (e) {}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+  /* Theming: colors are declared with light-dark(), driven by color-scheme.
+     Default follows the OS; html[data-theme] (set by the head script from the
+     main site's stored toggle choice) forces one scheme. Dark pairs checked
+     against WCAG AA. Browsers without light-dark() get the light fallbacks. */
+  :root { color-scheme: light dark; }
+  html[data-theme="light"] { color-scheme: light; }
+  html[data-theme="dark"]  { color-scheme: dark; }
   :root {
-    --teal-800: #043D42;
-    --teal-600: #0a5f68;   /* 5.9:1 on the lightest week tint; #0c7680 was 4.28 */
-    --gold-500: #b38a20;
-    --gold-text: #7f6000;   /* AA-contrast companion for gold TEXT */
-    --ink-300: #9aa3a9;
-    --ink-700: #32404b;
-    --ink-500: #586472;
+    --teal-800: light-dark(#043D42, #8fd7dc);
+    --teal-600: light-dark(#0a5f68, #6fc7ce);   /* light: 5.9:1 on the lightest week tint */
+    --gold-500: light-dark(#b38a20, #d9ab3c);
+    --gold-text: light-dark(#7f6000, #f2cf6f);   /* AA-contrast companion for gold TEXT */
+    --ink-300: light-dark(#9aa3a9, #6f8187);
+    --ink-700: light-dark(#32404b, #c6d1d4);
+    --ink-500: light-dark(#586472, #a7b6ba);
+    --page-bg: light-dark(#fafafa, #0e1719);
   }
   body {
     font-family: Inter, system-ui, sans-serif;
-    background: #fafafa;
+    background: #fafafa;               /* fallback for pre-light-dark() browsers */
+    background: var(--page-bg);
+    color: #32404b;                    /* fallback */
     color: var(--ink-700);
     margin: 0;
     padding: 1.5rem 1rem;
@@ -52,16 +77,26 @@
     margin: 2rem auto 0.5rem;
     max-width: 900px;
     padding: 0.9rem 1.2rem;
-    background: linear-gradient(135deg, #fffaf0 0%, #f7ead0 100%);
-    border: 1px solid rgba(179, 138, 32, 0.28);
+    background: linear-gradient(135deg,
+      light-dark(#fffaf0, #211c10) 0%,
+      light-dark(#f7ead0, #292013) 100%);
+    border: 1px solid light-dark(rgba(179, 138, 32, 0.28), rgba(217, 171, 60, 0.30));
     border-left: 4px solid var(--gold-500);
     border-radius: 6px;
     font-size: 0.92rem;
     line-height: 1.55;
     color: var(--ink-700);
   }
-  .join-invite strong { color: #6b1f1f; }
-  .join-invite a { color: #6b1f1f; font-weight: 600; }
+  .join-invite strong { color: light-dark(#6b1f1f, #e8b1a8); }
+  .join-invite a { color: light-dark(#6b1f1f, #e8b1a8); font-weight: 600; }
+  /* Playlist invite at the head of the calendar (teal-green variant) */
+  .join-invite--listen {
+    margin: 0.4rem auto 1.4rem;
+    background: linear-gradient(135deg,
+      light-dark(#e9f1ec, #14211d) 0%,
+      light-dark(#d6e7db, #182a22) 100%);
+    border-left-color: var(--teal-600);
+  }
 
   .tabs {
     display: flex;
@@ -84,12 +119,16 @@
     font-family: "Source Serif 4", Georgia, serif;
     transition: background 0.12s ease, color 0.12s ease;
   }
-  .tab:hover { color: var(--teal-800); background: #eef2f3; }
+  .tab:hover { color: var(--teal-800); background: light-dark(#eef2f3, #1b2a2e); }
   .tab.active {
-    background: color-mix(in srgb, var(--tab-accent) 72%, #000);
+    background: light-dark(
+      color-mix(in srgb, var(--tab-accent) 72%, #000),
+      color-mix(in srgb, var(--tab-accent) 62%, #10181b));
     color: #fff;
     font-weight: 600;
-    border-color: color-mix(in srgb, var(--tab-accent) 72%, #000);
+    border-color: light-dark(
+      color-mix(in srgb, var(--tab-accent) 72%, #000),
+      color-mix(in srgb, var(--tab-accent) 75%, #e8eff0));
   }
   .tab .count {
     display: inline-block;
@@ -100,14 +139,17 @@
     margin-left: 0.3rem;
     vertical-align: 0.1em;
   }
-  .tab:not(.active) .count { background: #eef2f3; color: var(--ink-500); }
+  .tab:not(.active) .count { background: light-dark(#eef2f3, #223236); color: var(--ink-500); }
 
   .panel { display: none; }
   .panel.active { display: block; }
 
   .week {
-    background: var(--row-bg);
-    border: 1px solid rgba(0,0,0,0.06);
+    /* Light: the season's pastel (inline --row-bg). Dark: the same season
+       hue mixed into the dark ground so each season keeps its identity. */
+    background: var(--row-bg);       /* fallback for pre-light-dark() browsers */
+    background: light-dark(var(--row-bg), color-mix(in srgb, var(--row-accent, #888) 16%, #131d20));
+    border: 1px solid light-dark(rgba(0,0,0,0.06), rgba(255,255,255,0.07));
     border-left: 4px solid var(--row-accent);
     border-radius: 8px;
     margin: 0.7rem 0;
@@ -132,7 +174,9 @@
     font-size: 1.05rem;
     font-weight: 600;
     font-style: italic;
-    color: color-mix(in srgb, var(--row-accent, #b38a20) 72%, #000);
+    color: light-dark(
+      color-mix(in srgb, var(--row-accent, #b38a20) 72%, #000),
+      color-mix(in srgb, var(--row-accent, #b38a20) 45%, #e8eff0));
     letter-spacing: 0.01em;
   }
   .week-head.festival .star { font-size: 1.1rem; }
@@ -156,7 +200,7 @@
   .group-tag.vocalist { background: #6a3a0c; color: #fff; }
   .group-tag.assembly { background: #4b5563; color: #fff; }
 
-  .items { border-top: 1px dashed rgba(0,0,0,0.07); padding-top: 0.4rem; }
+  .items { border-top: 1px dashed light-dark(rgba(0,0,0,0.07), rgba(255,255,255,0.12)); padding-top: 0.4rem; }
   .item-row {
     display: grid;
     grid-template-columns: 6rem 1fr;
@@ -185,25 +229,25 @@
     grid-column: 2;
     margin: 0.2rem 0 0.3rem;
     padding: 0.1rem 0 0.1rem 0.85rem;
-    border-left: 2px solid rgba(179, 138, 32, 0.35);
+    border-left: 2px solid light-dark(rgba(179, 138, 32, 0.35), rgba(217, 171, 60, 0.45));
     font-family: "Source Serif 4", Georgia, serif;
     font-size: 0.85rem;
     line-height: 1.5;
-    color: #545b66;
+    color: light-dark(#545b66, #aab7bb);
   }
   .item-row .desc em { font-style: italic; color: var(--teal-800); font-weight: 500; }
   /* Quoted lyric / scripture phrases: deep burgundy italic with a bolder
      first-letter (the smart-quote mark) so the quotation reads as a
      small pull-quote. Stands cleanly against the gold card background. */
   .item-row .desc .quote {
-    color: #6b1f1f;
+    color: light-dark(#6b1f1f, #e8b1a8);
     font-weight: 500;
     font-style: italic;
   }
   .item-row .desc .quote::first-letter {
     font-size: 1.15em;
     font-weight: 600;
-    color: #b38a20;
+    color: light-dark(#b38a20, #e5b845);
   }
 
   /* Readings meta line + Intro-to-the-Day (surfaced from bulletin PDF) */
@@ -225,7 +269,7 @@
   .readings a {
     color: var(--teal-600);
     text-decoration: none;
-    border-bottom: 1px dotted rgba(12, 118, 128, 0.4);
+    border-bottom: 1px dotted light-dark(rgba(12, 118, 128, 0.4), rgba(111, 199, 206, 0.5));
   }
   .readings a:hover { color: var(--gold-text); border-bottom-color: var(--gold-500); }
   .readings .sep { color: var(--ink-300); margin: 0 0.4em; }
@@ -237,7 +281,7 @@
     color: var(--ink-700);
     font-family: "Source Serif 4", Georgia, serif;
     font-style: italic;
-    border-bottom: 1px dashed rgba(179, 138, 32, 0.4);
+    border-bottom: 1px dashed light-dark(rgba(179, 138, 32, 0.4), rgba(217, 171, 60, 0.45));
     margin-bottom: 0.6rem;
   }
 
@@ -255,6 +299,12 @@
     border-radius: 4px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
+  /* Bulletin covers are white pages — dim them a little on a dark ground.
+     (filter is not a color, so light-dark() cannot express this.) */
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) .cover-float img { filter: brightness(0.85); }
+  }
+  html[data-theme="dark"] .cover-float img { filter: brightness(0.85); }
   /* Verse pull-quote (used in place of cover image) */
   .verse-float {
     float: right;
@@ -262,7 +312,10 @@
     margin: 0 0 0 1.2rem;
     padding: 0.2rem 0.8rem 0.2rem;
     border-left: 3px solid var(--row-accent, #b38a20);
-    background: color-mix(in srgb, var(--row-bg, #faf5e7) 70%, white);
+    background: color-mix(in srgb, var(--row-bg, #faf5e7) 70%, white);  /* fallback */
+    background: light-dark(
+      color-mix(in srgb, var(--row-bg, #faf5e7) 70%, white),
+      color-mix(in srgb, var(--row-accent, #b38a20) 24%, #10181b));
     border-radius: 2px 6px 6px 2px;
     shape-outside: margin-box;
   }
@@ -271,7 +324,7 @@
     font-size: 0.98rem;
     line-height: 1.25;
     font-style: italic;
-    color: #3a2a18;
+    color: light-dark(#3a2a18, #ead9b8);
     quotes: "\201C" "\201D";
   }
   .verse-float .verse-text::before { content: open-quote; color: var(--row-accent, #b38a20); margin-right: 0.1em; }
@@ -284,7 +337,9 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--row-accent, #b38a20) 72%, #000);
+    color: light-dark(
+      color-mix(in srgb, var(--row-accent, #b38a20) 72%, #000),
+      color-mix(in srgb, var(--row-accent, #b38a20) 45%, #e8eff0));
   }
   .clear { clear: both; }
 
@@ -296,15 +351,15 @@
   }
   .sc { font-variant: small-caps; letter-spacing: 0.03em; }
 
-  .tag.choir { background: #e7f1ed; color: #0d5a3a; }
-  .tag.youth { background: #fff1d6; color: #8a5700; }
-  .tag.bells { background: #f1e7f5; color: #4a1e6a; }
-  .tag.organ { background: #e7eef5; color: #1f3a5a; }
-  .tag.piano { background: #e5e0ec; color: #3a2a6a; }
-  .tag.flute { background: #d7eeea; color: #0a5c58; }
-  .tag.violin { background: #f5e7e7; color: #6a1e1e; }
-  .tag.vocalist { background: #f5ebe0; color: #6a3a0c; }
-  .tag.assembly { background: #e5e7eb; color: #374151; }
+  .tag.choir { background: light-dark(#e7f1ed, #143028); color: light-dark(#0d5a3a, #93d6b4); }
+  .tag.youth { background: light-dark(#fff1d6, #33260c); color: light-dark(#8a5700, #e9be6a); }
+  .tag.bells { background: light-dark(#f1e7f5, #2b1d33); color: light-dark(#4a1e6a, #cfa9e0); }
+  .tag.organ { background: light-dark(#e7eef5, #172635); color: light-dark(#1f3a5a, #9ec3e8); }
+  .tag.piano { background: light-dark(#e5e0ec, #221d38); color: light-dark(#3a2a6a, #b7a9e8); }
+  .tag.flute { background: light-dark(#d7eeea, #10302e); color: light-dark(#0a5c58, #7fd4cb); }
+  .tag.violin { background: light-dark(#f5e7e7, #331b1b); color: light-dark(#6a1e1e, #e2a3a3); }
+  .tag.vocalist { background: light-dark(#f5ebe0, #302213); color: light-dark(#6a3a0c, #ddb48a); }
+  .tag.assembly { background: light-dark(#e5e7eb, #232a32); color: light-dark(#374151, #b6c2cf); }
 
   @media (max-width: 620px) {
     .cover-float { float: none; width: 160px; margin: 0 auto 0.7rem; display: block; }
@@ -325,7 +380,7 @@
 <h1>2025–26 Music Calendar — Trinity Lemoyne</h1>
 <p class="page-sub">Special music offered for each service of the 2025–26 lectionary year, with brief notes on how each piece connects to the theme of the day. Some titles link to reference recordings; ★ marks feasts and festivals.</p>
 
-<aside class="join-invite" aria-label="Season playlist" style="margin: 0.4rem auto 1.4rem; background: linear-gradient(135deg, #e9f1ec 0%, #d6e7db 100%); border-left-color: var(--teal-600);">
+<aside class="join-invite join-invite--listen" aria-label="Season playlist">
   <strong style="color: var(--teal-800);">🎧 Listen to the whole year.</strong> The <a href="https://music.youtube.com/playlist?list=PLIMP0jUmTAjtryIaru56lG-Di0vOOOakS" target="_blank" rel="noopener" style="color: var(--teal-600);">2025–26 Program Year Music playlist</a> on YouTube Music gathers every prelude, anthem, offertory, and postlude — in the order we offered them in worship.
 </aside>
 

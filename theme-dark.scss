@@ -1,0 +1,88 @@
+/*-- scss:defaults --*/
+// Dark theme: litera recompiled over a deep teal-tinted palette.
+// Companion values live in styles.css under `body.quarto-dark`; every pair
+// used for text was checked against WCAG AA (all ≥ 4.5:1, most ≥ 7:1).
+
+$body-bg: #0e1719;
+$body-color: #d7e0e2;
+$body-secondary-color: #a7b6ba;
+$body-tertiary-color: #8b9ba0;
+$headings-color: #e9f0f1;
+
+$primary: #2e969c;
+$secondary: #3a4b50;
+$success: #6ecf94;
+$info: #7fd4d9;
+$warning: #e5b845;
+$danger: #e06c5f;
+$light: #1a282c;
+$dark: #0b1214;
+
+$link-color: #7fd4d9;
+$link-hover-color: #a9e4e8;
+
+$border-color: #253439;
+$border-color-translucent: rgba(127, 212, 217, 0.13);
+
+// Quarto navbar variables — the toggler icon and mobile menu colors are
+// derived from these at compile time.
+$navbar-bg: #111c1f;
+$navbar-fg: #c4d2d5;
+$navbar-hl: #8fd7dc;
+
+$card-bg: #152124;
+$card-border-color: #253439;
+
+$input-bg: #131f22;
+$input-color: #d7e0e2;
+$input-border-color: #2b3d43;
+$input-placeholder-color: #7c8d92;
+$input-focus-bg: #131f22;
+$input-focus-color: #e9f0f1;
+$input-focus-border-color: #7fd4d9;
+$input-group-addon-bg: #1a282c;
+
+$dropdown-bg: #152124;
+$dropdown-border-color: #2b3d43;
+$dropdown-link-color: #d7e0e2;
+$dropdown-link-hover-color: #ffffff;
+$dropdown-link-hover-bg: #1e2f34;
+$dropdown-header-color: #a7b6ba;
+
+$code-color: #ffd894;
+$code-bg: #1a282c;
+$code-block-bg: #121e21;
+
+$table-border-color: #253439;
+$table-striped-bg: #141f22;
+$table-hover-bg: #182b2e;
+
+// Search-landing highlight (<mark>) — readable gold on dark.
+$mark-bg: #57470f;
+$mark-color: #f4e9c3;
+
+$popover-bg: #152124;
+$popover-body-color: #d7e0e2;
+$popover-header-bg: #1a282c;
+$popover-header-color: #e9f0f1;
+
+$tooltip-bg: #223338;
+$tooltip-color: #e9f0f1;
+
+$modal-content-bg: #131f22;
+$modal-content-border-color: #2b3d43;
+
+$list-group-bg: #152124;
+$list-group-border-color: #253439;
+$list-group-color: #d7e0e2;
+$list-group-hover-bg: #1a282c;
+
+$progress-bg: #1a282c;
+$btn-close-color: #d7e0e2;
+
+/*-- scss:rules --*/
+// litera draws the navbar with `border: 1px solid rgba(0,0,0,.1)`, invisible
+// against the dark navbar — replace with a faint teal hairline.
+.navbar {
+  border-color: rgba(127, 212, 217, 0.12);
+}
