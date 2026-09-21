@@ -42,7 +42,7 @@ function load(){var w=WEEKS[idx(cur)];if(!w){document.body.innerHTML='<div id="e
   sel.value=cur;zhb.classList.toggle('on',lang==='zh');enb.classList.toggle('on',lang==='en');zhb.disabled=!w.zh;enb.disabled=!w.en;
   prev.disabled=idx(cur)>=WEEKS.length-1;next.disabled=idx(cur)<=0;
   try{localStorage.setItem('lang',lang);}catch(e){}
-  try{history.replaceState(null,'','/church/?d='+cur+'&lang='+lang);}catch(e){}}
+}
 sel.addEventListener('change',function(){cur=sel.value;load();});
 prev.addEventListener('click',function(){var i=idx(cur);if(i<WEEKS.length-1){cur=WEEKS[i+1].d;load();}});
 next.addEventListener('click',function(){var i=idx(cur);if(i>0){cur=WEEKS[i-1].d;load();}});
