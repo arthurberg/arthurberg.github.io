@@ -8,6 +8,7 @@ project:
   resources:
     - images/*.jpg
     - church/**
+    - church.html
   post-render:
     - python3 scripts/fix_sitemap.py
 

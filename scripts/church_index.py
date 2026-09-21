@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Rebuild church/index.html from the dated pages church/YYYY-MM-DD.html (newest first)
-and make sure every weekly page carries the manifest link + offline-cache registration."""
-import re, pathlib, datetime
+"""Rebuild church/index.html — the single-page worship-guide app — from the dated pages
+church/YYYY-MM-DD.html (Chinese) and church/YYYY-MM-DD-en.html (English), and make sure every
+weekly page carries the manifest link + offline-cache registration."""
+import re, json, pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent / "church"
 HEAD_TAGS = '<link rel="manifest" href="/church/manifest.webmanifest"><meta name="theme-color" content="#7A1F1F">'
 SW_TAG = '<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/church/sw.js").catch(function(){});}</script>'
-WEEKDAY = "一二三四五六日"
 
 def patch(page: pathlib.Path):
     t = page.read_text(encoding="utf-8")
@@ -15,55 +15,70 @@ def patch(page: pathlib.Path):
         t = t.replace("</body>", SW_TAG + "</body>", 1)
     page.write_text(t, encoding="utf-8")
 
-def title_of(page: pathlib.Path):
-    m = re.search(r"<title>(.*?)</title>", page.read_text(encoding="utf-8"), re.S)
-    return re.sub(r"\s+", " ", m.group(1)).strip() if m else ""
-
-import collections
-dates = collections.OrderedDict()
-for p in sorted(ROOT.glob("*.html"), reverse=True):
+weeks = {}
+for p in sorted(ROOT.glob("*.html")):
     m = re.match(r"^(\d{4}-\d{2}-\d{2})(-en)?\.html$", p.name)
     if not m:
         continue
     patch(p)
-    dates.setdefault(m.group(1), {})["en" if m.group(2) else "zh"] = p.name
-items = []
-for ds, files in sorted(dates.items(), reverse=True):
-    d = datetime.date.fromisoformat(ds)
-    label = f"{d.year}年{d.month}月{d.day}日（星期{WEEKDAY[d.weekday()]}）"
-    links = ""
-    if "zh" in files:
-        links += f'<a class="b" href="/church/{files["zh"]}">中文</a>'
-    if "en" in files:
-        links += f'<a class="b en" href="/church/{files["en"]}">English</a>'
-    items.append(f'<li><span class="d">{label}</span><span class="bs">{links}</span></li>')
-pages = [ROOT / f for f in files.values() for files in [dates[k] for k in dates]]
-html = f'''<!DOCTYPE html>
+    weeks.setdefault(m.group(1), {"d": m.group(1)})["en" if m.group(2) else "zh"] = p.name
+WEEKS = [weeks[k] for k in sorted(weeks, reverse=True)]  # newest first
+
+html = '''<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>沙市堂 主日崇拜指南</title>{HEAD_TAGS}
+<title>沙市堂 主日崇拜指南</title>''' + HEAD_TAGS + '''
 <link rel="icon" href="/church/icon-192.png">
 <style>
-:root{{color-scheme:light dark;--fg:#111;--bg:#fff;--sect:#7A1F1F;--rule:#c9b8b8;--chip:#f3ecec}}
-@media (prefers-color-scheme:dark){{:root{{--fg:#e8e8e8;--bg:#121212;--sect:#e39a9a;--rule:#5a4444;--chip:#2a2222}}}}
-body{{margin:0;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 40px;background:var(--bg);color:var(--fg);font-family:"PingFang SC","HarmonyOS Sans SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;font-size:24px;line-height:1.5}}
-h1{{font-size:1.25em;color:var(--sect);margin:10px 0 4px;border-bottom:2px solid var(--sect);padding-bottom:4px}}
-p{{margin:6px 0 12px}}
-ul{{list-style:none;padding:0;margin:0}}
-li{{padding:12px 14px;margin:0 0 12px;border:1px solid var(--rule);border-radius:12px;background:var(--chip)}}
-.d{{display:block;font-weight:bold;color:var(--sect);margin-bottom:8px}}
-.bs{{display:flex;gap:10px}}
-.b{{flex:1;text-align:center;padding:12px 8px;border-radius:10px;background:var(--sect);color:#fff;text-decoration:none;font-weight:bold}}
-.b.en{{background:#1F4E79}}
-.tip{{font-size:.8em;opacity:.8}}
+:root{color-scheme:light dark;--fg:#111;--bg:#fff;--sect:#7A1F1F;--en:#1F4E79;--rule:#c9b8b8;--chip:#f3ecec}
+@media (prefers-color-scheme:dark){:root{--fg:#e8e8e8;--bg:#121212;--sect:#e39a9a;--en:#8fb8ea;--rule:#5a4444;--chip:#2a2222}}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"PingFang SC","HarmonyOS Sans SC","Noto Sans CJK SC","Helvetica Neue",Arial,sans-serif}
+#bar{position:fixed;top:0;left:0;right:0;height:58px;padding:env(safe-area-inset-top,0px) 6px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--rule);background:var(--bg);font-size:18px;z-index:2}
+#bar button,#bar select{font:inherit;min-height:46px;border:1px solid var(--rule);border-radius:10px;background:var(--chip);color:var(--fg)}
+#prev,#next{font-size:20px;padding:0 13px}
+#sel{flex:1;min-width:0;text-align:center;font-weight:bold;color:var(--sect);padding:0 4px;-webkit-appearance:none;appearance:none}
+#lang{display:flex;gap:4px}
+#lang button{padding:0 10px;font-weight:bold}
+#lang .on{background:var(--sect);color:#fff;border-color:var(--sect)}
+#lang .en.on{background:var(--en);border-color:var(--en)}
+#bar button:disabled{opacity:.35}
+#f{position:fixed;left:0;right:0;bottom:0;top:calc(58px + env(safe-area-inset-top,0px));width:100%;height:calc(100% - 58px - env(safe-area-inset-top,0px));border:0;background:var(--bg)}
+#empty{padding:80px 20px;font-size:22px;text-align:center}
 </style></head><body>
-<h1>沙市堂 主日崇拜指南</h1>
-<p>请点下面的日期，打开当天的崇拜指南。</p>
-<ul>
-{chr(10).join(items)}
-</ul>
-<p class="tip">带虚线的词，点一下可以看解释。打开过的页面，没有网络时也能看。</p>
-{SW_TAG}
+<div id="bar"><button id="prev" type="button" aria-label="上一周">◀</button><select id="sel" aria-label="日期"></select><button id="next" type="button" aria-label="下一周">▶</button>
+<span id="lang"><button class="zh" type="button">中文</button><button class="en" type="button">English</button></span></div>
+<iframe id="f" title="主日崇拜指南"></iframe>
+<script>
+var WEEKS=''' + json.dumps(WEEKS, ensure_ascii=False) + ''';
+(function(){
+var f=document.getElementById('f'),sel=document.getElementById('sel'),prev=document.getElementById('prev'),next=document.getElementById('next'),
+    zhb=document.querySelector('#lang .zh'),enb=document.querySelector('#lang .en');
+function fmt(d){var p=d.split('-'),dt=new Date(+p[0],+p[1]-1,+p[2]);return p[0]+'年'+(+p[1])+'月'+(+p[2])+'日 星期'+'日一二三四五六'.charAt(dt.getDay());}
+function pad(n){return (n<10?'0':'')+n;}
+function pick(){var t=new Date(),today=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
+  var fut=WEEKS.filter(function(w){return w.d>=today;});   /* next Sunday (or today) if its guide is up */
+  if(fut.length)return fut[fut.length-1].d;                /* WEEKS is newest-first, so the last future one is the nearest */
+  return WEEKS.length?WEEKS[0].d:null;}                    /* otherwise the most recent past Sunday */
+function idx(d){for(var i=0;i<WEEKS.length;i++)if(WEEKS[i].d===d)return i;return -1;}
+var q=new URLSearchParams(location.search),stored=null;try{stored=localStorage.getItem('lang');}catch(e){}
+var lang=q.get('lang')||stored||'zh',cur=(q.get('d')&&idx(q.get('d'))>=0)?q.get('d'):pick();
+WEEKS.forEach(function(w){var o=document.createElement('option');o.value=w.d;o.textContent=fmt(w.d);sel.appendChild(o);});
+function load(){var w=WEEKS[idx(cur)];if(!w){document.body.innerHTML='<div id="empty">还没有内容。</div>';return;}
+  if(lang==='en'&&!w.en)lang='zh';if(lang==='zh'&&!w.zh)lang='en';
+  var file=lang==='en'?w.en:w.zh;if(f.getAttribute('src')!=='/church/'+file)f.src='/church/'+file;
+  sel.value=cur;zhb.classList.toggle('on',lang==='zh');enb.classList.toggle('on',lang==='en');zhb.disabled=!w.zh;enb.disabled=!w.en;
+  prev.disabled=idx(cur)>=WEEKS.length-1;next.disabled=idx(cur)<=0;
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  try{history.replaceState(null,'','/church/?d='+cur+'&lang='+lang);}catch(e){}}
+sel.addEventListener('change',function(){cur=sel.value;load();});
+prev.addEventListener('click',function(){var i=idx(cur);if(i<WEEKS.length-1){cur=WEEKS[i+1].d;load();}});
+next.addEventListener('click',function(){var i=idx(cur);if(i>0){cur=WEEKS[i-1].d;load();}});
+zhb.addEventListener('click',function(){lang='zh';load();});
+enb.addEventListener('click',function(){lang='en';load();});
+load();
+})();
+</script>''' + SW_TAG + '''
 </body></html>
 '''
 (ROOT / "index.html").write_text(html, encoding="utf-8")
-print(f"index.html written with {len(items)} week(s):", ", ".join(dates))
+(ROOT.parent / "church.html").write_text('<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=/church/"><title>沙市堂 主日崇拜指南</title></head><body><a href="/church/">/church/</a></body></html>\n', encoding="utf-8")
+print("index.html (app) written with weeks:", ", ".join(w["d"] for w in WEEKS), "| church.html redirect written")
