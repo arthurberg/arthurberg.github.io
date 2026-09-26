@@ -74,7 +74,7 @@ function buildSections(){sec.innerHTML='';var d=null;try{d=f.contentDocument;}ca
   var o=document.createElement('option');o.value='';o.textContent=(lang==='en'?'Sections':'目录')+' ▾';sec.appendChild(o);if(!d)return;
   var hs=d.querySelectorAll('h1[id],h2[id],h3[id]');for(var i=0;i<hs.length;i++){var h=hs[i],c=h.cloneNode(true),ups=c.querySelectorAll('a');
     for(var j=0;j<ups.length;j++)ups[j].parentNode.removeChild(ups[j]);
-    var txt=(c.textContent||'').replace(/\s+/g,' ').trim(),k=txt.indexOf(' — ');if(k>8)txt=txt.slice(0,k);if(!txt)continue;
+    var txt=(c.textContent||'').replace(/\\s+/g,' ').trim(),k=txt.indexOf(' — ');if(k>8)txt=txt.slice(0,k);if(!txt)continue;
     var op=document.createElement('option');op.value=h.id;op.textContent=(h.tagName==='H1'?'':'· ')+txt;sec.appendChild(op);}}
 f.addEventListener('load',buildSections);
 sec.addEventListener('change',function(){var id=sec.value;sec.selectedIndex=0;if(!id)return;var d=null;try{d=f.contentDocument;}catch(e){}
