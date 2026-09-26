@@ -44,7 +44,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--
 #f{position:fixed;left:0;right:0;bottom:0;top:50px;width:100%;height:calc(100% - 50px);border:0;background:var(--bg)}
 #empty{padding:80px 20px;font-size:22px;text-align:center}
 </style></head><body>
-<div id="bar"><select id="sel" aria-label="日期"></select><select id="sec" aria-label="章节"></select>
+<div id="bar"><select id="sel" aria-label="日期" autocomplete="off"></select><select id="sec" aria-label="章节" autocomplete="off"></select>
 <span id="lang"><button id="lb" type="button" aria-label="语言">E</button></span></div>
 <iframe id="f" title="主日崇拜指南"></iframe>
 <script>
@@ -66,17 +66,25 @@ var lang=q.get('lang')||stored||'zh',cur=(q.get('d')&&idx(q.get('d'))>=0)?q.get(
 WEEKS.forEach(function(w){var o=document.createElement('option');o.value=w.d;o.textContent=fmt(w.d);sel.appendChild(o);});
 function load(){var w=WEEKS[idx(cur)];if(!w){document.body.innerHTML='<div id="empty">还没有内容。</div>';return;}
   if(lang==='en'&&!w.en)lang='zh';if(lang==='zh'&&!w.zh)lang='en';
-  var file=lang==='en'?w.en:w.zh;if(f.getAttribute('src')!=='/church/'+file)f.src='/church/'+file;
+  var file=lang==='en'?w.en:w.zh;if(f.getAttribute('src')!=='/church/'+file)f.src='/church/'+file;watchSections();
   sel.value=cur;lb.textContent=lang==='en'?'中':'E';lb.className=lang==='en'?'':'toen';lb.disabled=lang==='en'?!w.zh:!w.en;
   try{localStorage.setItem('lang',lang);}catch(e){}
 }
 function buildSections(){sec.innerHTML='';var d=null;try{d=f.contentDocument;}catch(e){}
-  var o=document.createElement('option');o.value='';o.textContent=(lang==='en'?'Sections':'目录')+' ▾';sec.appendChild(o);if(!d)return;
-  var hs=d.querySelectorAll('h1[id],h2[id],h3[id]');for(var i=0;i<hs.length;i++){var h=hs[i],c=h.cloneNode(true),ups=c.querySelectorAll('a');
+  var o=document.createElement('option');o.value='';o.textContent=(lang==='en'?'Sections':'目录')+' ▾';sec.appendChild(o);
+  var n=0;if(d){var hs=d.querySelectorAll('h1[id],h2[id],h3[id]');for(var i=0;i<hs.length;i++){var h=hs[i],c=h.cloneNode(true),ups=c.querySelectorAll('a');
     for(var j=0;j<ups.length;j++)ups[j].parentNode.removeChild(ups[j]);
     var txt=(c.textContent||'').replace(/\\s+/g,' ').trim(),k=txt.indexOf(' — ');if(k>8)txt=txt.slice(0,k);if(!txt)continue;
-    var op=document.createElement('option');op.value=h.id;op.textContent=(h.tagName==='H1'?'':'· ')+txt;sec.appendChild(op);}}
-f.addEventListener('load',buildSections);
+    var op=document.createElement('option');op.value=h.id;op.textContent=(h.tagName==='H1'?'':'· ')+txt;sec.appendChild(op);n++;}}
+  sec.selectedIndex=0;return n;}
+var secTimer=null;
+function watchSections(){if(secTimer)clearInterval(secTimer);var tries=0;secTimer=setInterval(function(){tries++;var ready=false;
+  try{var d=f.contentDocument;ready=!!(d&&d.readyState==='complete'&&d.querySelector('h1[id],h2[id],h3[id]'));}catch(e){}
+  if(ready||tries>60){buildSections();clearInterval(secTimer);secTimer=null;}},250);}
+f.addEventListener('load',function(){buildSections();watchSections();});
+window.addEventListener('pageshow',function(){buildSections();watchSections();});
+sec.addEventListener('focus',function(){if(sec.options.length<2)buildSections();});
+sec.addEventListener('touchstart',function(){if(sec.options.length<2)buildSections();},{passive:true});
 sec.addEventListener('change',function(){var id=sec.value;sec.selectedIndex=0;if(!id)return;var d=null;try{d=f.contentDocument;}catch(e){}
   var el=d&&d.getElementById(id);if(el){el.scrollIntoView({block:'start'});}});
 sel.addEventListener('change',function(){cur=sel.value;load();});
