@@ -17,12 +17,15 @@ span.t.sel{background:#ffd98a;color:#111;box-shadow:0 0 0 3px #ffd98a;border-rad
 
 (function(){var ib=document.getElementById('ib'),cur=null;
 function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
-function close(){ib.hidden=true;if(cur){cur.classList.remove('sel');cur=null;}}
+function close(){ib.hidden=true;if(cur){cur.classList.remove('sel');cur=null;}try{if(window.parent&&window.parent!==window)window.parent.postMessage({type:'gloss-close'},'*');}catch(x){}}
 function show(t){var e=INFO[t.getAttribute('data-k')];if(!e)return;
  if(cur)cur.classList.remove('sel');cur=t;t.classList.add('sel');
- ib.innerHTML='<div class="h"></div><div class="t1">'+esc(e[0])+'</div><div>'+esc(e[1])+'</div><button class="x" type="button">✕ 关闭</button>';ib.hidden=false;ib.scrollTop=0;
- var r=t.getBoundingClientRect(),top=window.innerHeight-ib.offsetHeight;
+ var h='<div class="h"></div><div class="t1">'+esc(e[0])+'</div><div>'+esc(e[1])+'</div><button class="x" type="button">✕ 关闭</button>';
+ var framed=false;try{framed=window.parent&&window.parent!==window;}catch(x){}
+ if(framed){try{window.parent.postMessage({type:'gloss',html:h},'*');}catch(x){}ib.hidden=true;}else{ib.innerHTML=h;ib.hidden=false;ib.scrollTop=0;}
+ var r=t.getBoundingClientRect(),top=framed?window.innerHeight*0.52:window.innerHeight-ib.offsetHeight;
  if(r.bottom>top-8)window.scrollBy({top:r.bottom-top+40,left:0,behavior:'smooth'});}
+window.addEventListener('message',function(ev){if(ev.data&&ev.data.type==='gloss-closed'){if(cur){cur.classList.remove('sel');cur=null;}}});
 document.addEventListener('click',function(ev){var el=ev.target,t=el.closest?el.closest('span.t'):null;
  if(t){show(t);ev.preventDefault();return;}
  if(ib.contains(el)){if(el.closest&&el.closest('.x'))close();return;}

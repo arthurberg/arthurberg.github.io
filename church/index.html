@@ -17,10 +17,19 @@ html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--
 #bar button:disabled{opacity:.35}
 #f{position:fixed;left:0;right:0;bottom:0;top:50px;width:100%;height:calc(100% - 50px);border:0;background:var(--bg)}
 #empty{padding:80px 20px;font-size:22px;text-align:center}
+#gl{position:fixed;left:0;right:0;bottom:0;z-index:9;max-height:50vh;overflow:auto;background:var(--bg);color:var(--fg);border-top:3px solid #B34700;box-shadow:0 -4px 18px rgba(0,0,0,.28);padding:8px 16px calc(14px + env(safe-area-inset-bottom,0px)) 16px;font-size:19px;line-height:1.4;font-family:"Helvetica Neue",Helvetica,Arial,"PingFang SC","HarmonyOS Sans SC","Noto Sans CJK SC",sans-serif}
+#gl .gh,#gl .h{width:48px;height:5px;border-radius:3px;background:var(--rule);margin:0 auto 8px}
+#gl .gw,#gl .t1{font-size:26px;font-weight:bold}
+#gl .gp{color:var(--en);font-weight:normal;font-size:20px;margin-left:4px}
+#gl .gd{margin-top:3px}
+#gl .gc{margin-top:8px;font-size:16px;opacity:.85;display:flex;flex-wrap:wrap;gap:3px 14px}
+#gl .gk{margin-top:10px;padding:8px 10px;border-radius:8px;background:var(--chip);font-size:17px;line-height:1.35}
+#gl .gx,#gl .x{display:block;width:100%;margin:12px 0 0;padding:12px;font:inherit;font-size:20px;font-weight:bold;border:1px solid var(--rule);border-radius:10px;background:var(--chip);color:var(--sect)}
 </style></head><body>
 <div id="bar"><select id="sel" aria-label="日期" autocomplete="off"></select><select id="sec" aria-label="章节" autocomplete="off"></select>
 <span id="lang"><button id="lb" type="button" aria-label="语言">E</button></span></div>
 <iframe id="f" title="主日崇拜指南"></iframe>
+<div id="gl" hidden></div>
 <script>
 var WEEKS=[{"d": "2026-09-27", "en": "2026-09-27-en.html", "zh": "2026-09-27.html"}, {"d": "2026-09-20", "en": "2026-09-20-en.html", "zh": "2026-09-20.html"}];
 (function(){
@@ -61,6 +70,12 @@ sec.addEventListener('focus',function(){if(sec.options.length<2)buildSections();
 sec.addEventListener('touchstart',function(){if(sec.options.length<2)buildSections();},{passive:true});
 sec.addEventListener('change',function(){var id=sec.value;sec.selectedIndex=0;if(!id)return;var d=null;try{d=f.contentDocument;}catch(e){}
   var el=d&&d.getElementById(id);if(el){el.scrollIntoView({block:'start'});}});
+var gl=document.getElementById('gl');
+function glClose(){gl.hidden=true;try{f.contentWindow.postMessage({type:'gloss-closed'},'*');}catch(e){}}
+window.addEventListener('message',function(ev){var d=ev.data;if(!d||!d.type)return;
+  if(d.type==='gloss'){gl.innerHTML=d.html;gl.hidden=false;gl.scrollTop=0;}
+  else if(d.type==='gloss-close'){gl.hidden=true;}});
+gl.addEventListener('click',function(ev){var b=ev.target.closest?ev.target.closest('.gx,.x'):null;if(b)glClose();});
 sel.addEventListener('change',function(){cur=sel.value;load();});
 lb.addEventListener('click',function(){lang=(lang==='en')?'zh':'en';load();});
 load();
