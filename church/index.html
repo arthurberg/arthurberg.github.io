@@ -8,9 +8,8 @@
 html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"PingFang SC","HarmonyOS Sans SC","Noto Sans CJK SC","Helvetica Neue",Arial,sans-serif}
 #bar{position:fixed;top:0;left:0;right:0;min-height:50px;padding:calc(3px + env(safe-area-inset-top,0px)) 5px 3px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 5px;border-bottom:1px solid var(--rule);background:var(--bg);font-size:16px;z-index:2;-webkit-text-size-adjust:none;text-size-adjust:none}
 #bar button,#bar select{font:inherit;min-height:42px;border:1px solid var(--rule);border-radius:10px;background:var(--chip);color:var(--fg)}
-#prev,#next{font-size:16px;padding:0 8px;flex:0 0 auto}
 #sel,#sec{min-width:0;font-weight:bold;color:var(--sect);padding:0 4px;-webkit-appearance:none;appearance:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
-#sel{flex:0 0 auto;width:5.2em}
+#sel{flex:0 0 auto;width:6.4em}
 #sec{flex:1 1 130px;min-width:130px;color:var(--fg);font-weight:normal}
 #lang{display:flex;flex:0 0 auto}
 #lang button{padding:0 10px;min-width:42px;font-weight:bold;color:#fff;background:var(--sect);border-color:var(--sect)}
@@ -19,15 +18,15 @@ html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--
 #f{position:fixed;left:0;right:0;bottom:0;top:50px;width:100%;height:calc(100% - 50px);border:0;background:var(--bg)}
 #empty{padding:80px 20px;font-size:22px;text-align:center}
 </style></head><body>
-<div id="bar"><button id="prev" type="button" aria-label="上一周">◀</button><select id="sel" aria-label="日期"></select><select id="sec" aria-label="章节"></select><button id="next" type="button" aria-label="下一周">▶</button>
+<div id="bar"><select id="sel" aria-label="日期"></select><select id="sec" aria-label="章节"></select>
 <span id="lang"><button id="lb" type="button" aria-label="语言">E</button></span></div>
 <iframe id="f" title="主日崇拜指南"></iframe>
 <script>
 var WEEKS=[{"d": "2026-09-27", "en": "2026-09-27-en.html", "zh": "2026-09-27.html"}, {"d": "2026-09-20", "en": "2026-09-20-en.html", "zh": "2026-09-20.html"}];
 (function(){
-var f=document.getElementById('f'),sel=document.getElementById('sel'),prev=document.getElementById('prev'),next=document.getElementById('next'),
+var f=document.getElementById('f'),sel=document.getElementById('sel'),
     lb=document.getElementById('lb'),sec=document.getElementById('sec');
-function fmt(d){var p=d.split('-');return (+p[1])+'/'+(+p[2]);}
+function fmt(d){var p=d.split('-');return (+p[1])+'月'+(+p[2])+'日';}
 function fit(){var h=document.getElementById('bar').offsetHeight;f.style.top=h+'px';f.style.height='calc(100% - '+h+'px)';}
 window.addEventListener('resize',fit);window.addEventListener('load',fit);
 function pad(n){return (n<10?'0':'')+n;}
@@ -43,7 +42,6 @@ function load(){var w=WEEKS[idx(cur)];if(!w){document.body.innerHTML='<div id="e
   if(lang==='en'&&!w.en)lang='zh';if(lang==='zh'&&!w.zh)lang='en';
   var file=lang==='en'?w.en:w.zh;if(f.getAttribute('src')!=='/church/'+file)f.src='/church/'+file;
   sel.value=cur;lb.textContent=lang==='en'?'中':'E';lb.className=lang==='en'?'':'toen';lb.disabled=lang==='en'?!w.zh:!w.en;
-  prev.disabled=idx(cur)>=WEEKS.length-1;next.disabled=idx(cur)<=0;
   try{localStorage.setItem('lang',lang);}catch(e){}
 }
 function buildSections(){sec.innerHTML='';var d=null;try{d=f.contentDocument;}catch(e){}
@@ -56,8 +54,6 @@ f.addEventListener('load',buildSections);
 sec.addEventListener('change',function(){var id=sec.value;sec.selectedIndex=0;if(!id)return;var d=null;try{d=f.contentDocument;}catch(e){}
   var el=d&&d.getElementById(id);if(el){el.scrollIntoView({block:'start'});}});
 sel.addEventListener('change',function(){cur=sel.value;load();});
-prev.addEventListener('click',function(){var i=idx(cur);if(i<WEEKS.length-1){cur=WEEKS[i+1].d;load();}});
-next.addEventListener('click',function(){var i=idx(cur);if(i>0){cur=WEEKS[i-1].d;load();}});
 lb.addEventListener('click',function(){lang=(lang==='en')?'zh':'en';load();});
 load();
 })();
