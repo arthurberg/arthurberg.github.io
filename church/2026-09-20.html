@@ -20,7 +20,7 @@ function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;
 function close(){ib.hidden=true;if(cur){cur.classList.remove('sel');cur=null;}}
 function show(t){var e=INFO[t.getAttribute('data-k')];if(!e)return;
  if(cur)cur.classList.remove('sel');cur=t;t.classList.add('sel');
- ib.innerHTML='<div class="h"></div><div class="t1">'+esc(e[0])+'</div><div>'+esc(e[1])+'</div><button class="x" type="button">✕ 关闭</button>';ib.hidden=false;
+ ib.innerHTML='<div class="h"></div><div class="t1">'+esc(e[0])+'</div><div>'+esc(e[1])+'</div><button class="x" type="button">✕ 关闭</button>';ib.hidden=false;ib.scrollTop=0;
  var r=t.getBoundingClientRect(),top=window.innerHeight-ib.offsetHeight;
  if(r.bottom>top-8)window.scrollBy({top:r.bottom-top+40,left:0,behavior:'smooth'});}
 document.addEventListener('click',function(ev){var el=ev.target,t=el.closest?el.closest('span.t'):null;

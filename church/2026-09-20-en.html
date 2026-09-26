@@ -1114,7 +1114,7 @@ function show(el){var w=el.textContent,e=W[w];if(!e)return;
  if(e[2]){h+='<div class="gc">';e[2].forEach(function(c){h+='<span><b>'+esc(c[0])+'</b> '+esc(c[1])+(c[2]?' — '+esc(c[2]):'')+'</span>';});h+='</div>';}
  var cx=el.getAttribute('data-c'),ce=cx?W[cx]:null;if(ce){h+='<div class="gk"><b>'+esc(cx)+'</b> '+esc(ce[0])+'<br>'+esc(ce[1])+'</div>';}
  h+='<button class="gx" type="button">✕ Close 关闭</button>';
- sheet.innerHTML=h;sheet.hidden=false;
+ sheet.innerHTML=h;sheet.hidden=false;sheet.scrollTop=0;
  var r=el.getBoundingClientRect(),top=window.innerHeight-sheet.offsetHeight;
  if(r.bottom>top-8)window.scrollBy({top:r.bottom-top+40,left:0,behavior:'smooth'});
 }
