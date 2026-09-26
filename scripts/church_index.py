@@ -32,17 +32,17 @@ html = '''<!DOCTYPE html>
 :root{color-scheme:light dark;--fg:#111;--bg:#fff;--sect:#7A1F1F;--en:#1F4E79;--rule:#c9b8b8;--chip:#f3ecec}
 @media (prefers-color-scheme:dark){:root{--fg:#e8e8e8;--bg:#121212;--sect:#e39a9a;--en:#8fb8ea;--rule:#5a4444;--chip:#2a2222}}
 html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"PingFang SC","HarmonyOS Sans SC","Noto Sans CJK SC","Helvetica Neue",Arial,sans-serif}
-#bar{position:fixed;top:0;left:0;right:0;height:58px;padding:env(safe-area-inset-top,0px) 6px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--rule);background:var(--bg);font-size:17px;z-index:2;-webkit-text-size-adjust:none;text-size-adjust:none}
-#bar button,#bar select{font:inherit;min-height:46px;border:1px solid var(--rule);border-radius:10px;background:var(--chip);color:var(--fg)}
-#prev,#next{font-size:17px;padding:0 9px;flex:0 0 auto}
-#sel,#sec{min-width:0;font-weight:bold;color:var(--sect);padding:0 6px;-webkit-appearance:none;appearance:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
-#sel{flex:0 1 auto;max-width:34%}
-#sec{flex:1 1 auto;width:0;color:var(--fg);font-weight:normal}
+#bar{position:fixed;top:0;left:0;right:0;min-height:50px;padding:calc(3px + env(safe-area-inset-top,0px)) 5px 3px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 5px;border-bottom:1px solid var(--rule);background:var(--bg);font-size:16px;z-index:2;-webkit-text-size-adjust:none;text-size-adjust:none}
+#bar button,#bar select{font:inherit;min-height:42px;border:1px solid var(--rule);border-radius:10px;background:var(--chip);color:var(--fg)}
+#prev,#next{font-size:16px;padding:0 8px;flex:0 0 auto}
+#sel,#sec{min-width:0;font-weight:bold;color:var(--sect);padding:0 4px;-webkit-appearance:none;appearance:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+#sel{flex:0 0 auto;width:5.2em}
+#sec{flex:1 1 130px;min-width:130px;color:var(--fg);font-weight:normal}
 #lang{display:flex;flex:0 0 auto}
-#lang button{padding:0 12px;min-width:44px;font-weight:bold;color:#fff;background:var(--sect);border-color:var(--sect)}
+#lang button{padding:0 10px;min-width:42px;font-weight:bold;color:#fff;background:var(--sect);border-color:var(--sect)}
 #lang button.toen{background:var(--en);border-color:var(--en)}
 #bar button:disabled{opacity:.35}
-#f{position:fixed;left:0;right:0;bottom:0;top:calc(58px + env(safe-area-inset-top,0px));width:100%;height:calc(100% - 58px - env(safe-area-inset-top,0px));border:0;background:var(--bg)}
+#f{position:fixed;left:0;right:0;bottom:0;top:50px;width:100%;height:calc(100% - 50px);border:0;background:var(--bg)}
 #empty{padding:80px 20px;font-size:22px;text-align:center}
 </style></head><body>
 <div id="bar"><button id="prev" type="button" aria-label="上一周">◀</button><select id="sel" aria-label="日期"></select><select id="sec" aria-label="章节"></select><button id="next" type="button" aria-label="下一周">▶</button>
@@ -53,7 +53,9 @@ var WEEKS=''' + json.dumps(WEEKS, ensure_ascii=False) + ''';
 (function(){
 var f=document.getElementById('f'),sel=document.getElementById('sel'),prev=document.getElementById('prev'),next=document.getElementById('next'),
     lb=document.getElementById('lb'),sec=document.getElementById('sec');
-function fmt(d){var p=d.split('-');return (+p[1])+'月'+(+p[2])+'日';}
+function fmt(d){var p=d.split('-');return (+p[1])+'/'+(+p[2]);}
+function fit(){var h=document.getElementById('bar').offsetHeight;f.style.top=h+'px';f.style.height='calc(100% - '+h+'px)';}
+window.addEventListener('resize',fit);window.addEventListener('load',fit);
 function pad(n){return (n<10?'0':'')+n;}
 function pick(){var t=new Date(),today=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
   var fut=WEEKS.filter(function(w){return w.d>=today;});   /* next Sunday (or today) if its guide is up */
