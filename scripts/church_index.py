@@ -32,27 +32,26 @@ html = '''<!DOCTYPE html>
 :root{color-scheme:light dark;--fg:#111;--bg:#fff;--sect:#7A1F1F;--en:#1F4E79;--rule:#c9b8b8;--chip:#f3ecec}
 @media (prefers-color-scheme:dark){:root{--fg:#e8e8e8;--bg:#121212;--sect:#e39a9a;--en:#8fb8ea;--rule:#5a4444;--chip:#2a2222}}
 html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"PingFang SC","HarmonyOS Sans SC","Noto Sans CJK SC","Helvetica Neue",Arial,sans-serif}
-#bar{position:fixed;top:0;left:0;right:0;height:58px;padding:env(safe-area-inset-top,0px) 6px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--rule);background:var(--bg);font-size:18px;z-index:2}
+#bar{position:fixed;top:0;left:0;right:0;height:58px;padding:env(safe-area-inset-top,0px) 6px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--rule);background:var(--bg);font-size:17px;z-index:2;-webkit-text-size-adjust:none;text-size-adjust:none}
 #bar button,#bar select{font:inherit;min-height:46px;border:1px solid var(--rule);border-radius:10px;background:var(--chip);color:var(--fg)}
-#prev,#next{font-size:20px;padding:0 13px}
-#sel{flex:1;min-width:0;text-align:center;font-weight:bold;color:var(--sect);padding:0 4px;-webkit-appearance:none;appearance:none}
-#lang{display:flex;gap:4px}
-#lang button{padding:0 10px;font-weight:bold}
-#lang .on{background:var(--sect);color:#fff;border-color:var(--sect)}
-#lang .en.on{background:var(--en);border-color:var(--en)}
+#prev,#next{font-size:18px;padding:0 11px;flex:0 0 auto}
+#sel{flex:1 1 auto;min-width:0;width:0;text-align:center;font-weight:bold;color:var(--sect);padding:0 4px;-webkit-appearance:none;appearance:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lang{display:flex;flex:0 0 auto}
+#lang button{padding:0 12px;font-weight:bold;color:#fff;background:var(--sect);border-color:var(--sect)}
+#lang button.toen{background:var(--en);border-color:var(--en)}
 #bar button:disabled{opacity:.35}
 #f{position:fixed;left:0;right:0;bottom:0;top:calc(58px + env(safe-area-inset-top,0px));width:100%;height:calc(100% - 58px - env(safe-area-inset-top,0px));border:0;background:var(--bg)}
 #empty{padding:80px 20px;font-size:22px;text-align:center}
 </style></head><body>
 <div id="bar"><button id="prev" type="button" aria-label="上一周">◀</button><select id="sel" aria-label="日期"></select><button id="next" type="button" aria-label="下一周">▶</button>
-<span id="lang"><button class="zh" type="button">中文</button><button class="en" type="button">English</button></span></div>
+<span id="lang"><button id="lb" type="button">English</button></span></div>
 <iframe id="f" title="主日崇拜指南"></iframe>
 <script>
 var WEEKS=''' + json.dumps(WEEKS, ensure_ascii=False) + ''';
 (function(){
 var f=document.getElementById('f'),sel=document.getElementById('sel'),prev=document.getElementById('prev'),next=document.getElementById('next'),
-    zhb=document.querySelector('#lang .zh'),enb=document.querySelector('#lang .en');
-function fmt(d){var p=d.split('-'),dt=new Date(+p[0],+p[1]-1,+p[2]);return p[0]+'年'+(+p[1])+'月'+(+p[2])+'日 星期'+'日一二三四五六'.charAt(dt.getDay());}
+    lb=document.getElementById('lb');
+function fmt(d){var p=d.split('-');return (+p[1])+'月'+(+p[2])+'日';}
 function pad(n){return (n<10?'0':'')+n;}
 function pick(){var t=new Date(),today=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
   var fut=WEEKS.filter(function(w){return w.d>=today;});   /* next Sunday (or today) if its guide is up */
@@ -65,15 +64,14 @@ WEEKS.forEach(function(w){var o=document.createElement('option');o.value=w.d;o.t
 function load(){var w=WEEKS[idx(cur)];if(!w){document.body.innerHTML='<div id="empty">还没有内容。</div>';return;}
   if(lang==='en'&&!w.en)lang='zh';if(lang==='zh'&&!w.zh)lang='en';
   var file=lang==='en'?w.en:w.zh;if(f.getAttribute('src')!=='/church/'+file)f.src='/church/'+file;
-  sel.value=cur;zhb.classList.toggle('on',lang==='zh');enb.classList.toggle('on',lang==='en');zhb.disabled=!w.zh;enb.disabled=!w.en;
+  sel.value=cur;lb.textContent=lang==='en'?'中文':'English';lb.className=lang==='en'?'':'toen';lb.disabled=lang==='en'?!w.zh:!w.en;
   prev.disabled=idx(cur)>=WEEKS.length-1;next.disabled=idx(cur)<=0;
   try{localStorage.setItem('lang',lang);}catch(e){}
 }
 sel.addEventListener('change',function(){cur=sel.value;load();});
 prev.addEventListener('click',function(){var i=idx(cur);if(i<WEEKS.length-1){cur=WEEKS[i+1].d;load();}});
 next.addEventListener('click',function(){var i=idx(cur);if(i>0){cur=WEEKS[i-1].d;load();}});
-zhb.addEventListener('click',function(){lang='zh';load();});
-enb.addEventListener('click',function(){lang='en';load();});
+lb.addEventListener('click',function(){lang=(lang==='en')?'zh':'en';load();});
 load();
 })();
 </script>''' + SW_TAG + '''
